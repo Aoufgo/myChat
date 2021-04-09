@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ai.chat.mapper.UserMapper">
+    <resultMap type="com.ai.chat.pojo.User" id="userResultMap">
+        <id column="id" property="name"/>
+        <result column="name" property="name"/>
+        <result column="age" property="age"/>
+        <result column="sex" property="sex"/>
+        <result column="phone" property="phone"/>
+        <result column="password" property="password"/>
+        <result column="nickname" property="nickname"/>
+        <result column="status" property="status"/>
+        <result column="accStatus" property="accStatus"/>
+        <result column="createTime" property="createTime"/>
+        <result column="lastLoginTime" property="lastLoginTime"/>
+        <result column="faceUrl" property="faceUrl"/>
+        <result column="facePath" property="facePath"/>
+    </resultMap>
+    <insert id="add" parameterType="com.ai.chat.pojo.User">
+        insert into `user` (id,name,nickname,password,sex,age,phone)
+        values (#{id},#{name},#{nickname},#{password},#{sex},#{age},#{phone})
+    </insert>
+    <delete id="del" parameterType="string">
+        delete from `user` where id = #{id}
+    </delete>
+    <select id="queryAll" resultType="map">
+        select * from `user`
+    </select>
+    <select id="queryById" parameterType="string" resultType="com.ai.chat.pojo.User">
+        select * from `user` where id = #{id}
+    </select>
+    <select id="query" parameterType="com.ai.chat.pojo.User" resultType="com.ai.chat.pojo.User">
+        select * from `user`
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and name like CONCAT('%','${name}','%')
+            </if>
+            <if test="sex != null and sex != ''">
+                and sex = #{sex}
+            </if>
+        </where>
+    </select>
+    <select id="queryByNP" parameterType="com.ai.chat.pojo.User" resultType="com.ai.chat.pojo.User">
+        select * from `user` where name = #{name} and password = #{password}
+    </select>
+    <update id="update" parameterType="com.ai.chat.pojo.User">
+        update `user` set nickname = #{nickname},password = #{password},
+        sex = #{sex},phone = #{phone},accStatus = #{accStatus},status = #{status},age = #{age} where id = #{id}
+    </update>
+
+
+</mapper>
