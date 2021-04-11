@@ -159,7 +159,7 @@
 </div>
 </div>
 <script>
-    var a = ${param.type};
+    var a = ${type};
     if(a === 0){
         layer.msg("注册失败",{icon:2})
     }

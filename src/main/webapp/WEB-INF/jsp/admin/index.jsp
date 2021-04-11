@@ -106,7 +106,7 @@
                             <a class="J_menuItem" href="${pageContext.request.contextPath}/admin/queryUser" data-index="0">用户查询</a>
                         </li>
                         <li>
-                            <a class="J_menuItem" href="addUser.jsp">用户添加</a>
+                            <a class="J_menuItem" href="${pageContext.request.contextPath}/admin_page/userAdd">用户添加</a>
                         </li>
                     </ul>
                 </li>

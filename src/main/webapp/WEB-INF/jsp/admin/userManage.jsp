@@ -181,7 +181,7 @@
         layer.msg("修改成功",{icon:1})
     }
     if (${!empty error}){
-        layer.msg(${error})
+        layer.msg("${error}")
     }
 </script>
 </html>

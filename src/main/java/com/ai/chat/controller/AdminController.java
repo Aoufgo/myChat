@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
+
 /**
  * @author aoufgo
  * @date 2021/4/5 下午4:35
@@ -17,8 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
-    @Autowired
-    @Qualifier("adminServiceImpl")
+
+    @Resource(name = "adminServiceImpl")
     AdminService adminService;
 
     @RequestMapping("queryUser")
@@ -29,10 +31,13 @@ public class AdminController {
     public ModelAndView updateUser(User user){
         return adminService.updateUser(user);
     }
-
     @GetMapping("delUser")
     public ModelAndView delUser(String id){
         return adminService.delUser(id);
+    }
+    @RequestMapping("addUser")
+    public ModelAndView addUser(User user){
+        return adminService.addUser(user);
     }
     /**
      * @param id 用户id

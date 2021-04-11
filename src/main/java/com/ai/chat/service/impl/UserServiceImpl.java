@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
             mav.addObject("type",1);
             mav.setViewName("login");
         } catch (Exception e) {
-            mav.addObject("msg",e.getMessage());
+            mav.addObject("msg",e.getCause().toString());
             e.printStackTrace();
         }
         return mav;
@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
                 mav.addObject("type",4);
             }
         } catch (Exception e) {
-            mav.addObject("error",e.getMessage());
+            mav.addObject("error",e.getCause().toString());
             e.printStackTrace();
         }
         mav.setViewName("login");

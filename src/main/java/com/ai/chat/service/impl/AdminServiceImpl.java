@@ -3,6 +3,8 @@ package com.ai.chat.service.impl;
 import com.ai.chat.mapper.UserMapper;
 import com.ai.chat.pojo.User;
 import com.ai.chat.service.AdminService;
+import com.ai.chat.util.GenerateIdUtil;
+import com.ai.chat.util.Md5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -30,7 +32,7 @@ public class AdminServiceImpl implements AdminService{
             mav.addObject("users", users);
 
         }catch (Exception e){
-            mav.addObject("error",e.getMessage());
+            mav.addObject("error",e.getCause().toString());
             e.printStackTrace();
         }
         mav.setViewName("admin/userManage");
@@ -52,7 +54,7 @@ public class AdminServiceImpl implements AdminService{
             userMapper.del(id);
             mav.addObject("type",5);
         }catch (Exception e){
-            mav.addObject("error",e.getMessage());
+            mav.addObject("error",e.getCause().toString());
             mav.addObject("type",4);
             e.printStackTrace();
         }
@@ -66,7 +68,7 @@ public class AdminServiceImpl implements AdminService{
             userMapper.update(user);
             mav.addObject("type",7);
         }catch (Exception e){
-            mav.addObject("error",e.getMessage());
+            mav.addObject("error",e.getCause().toString());
             mav.addObject("type",6);
             e.printStackTrace();
         }
@@ -76,14 +78,22 @@ public class AdminServiceImpl implements AdminService{
     @Override
     public ModelAndView addUser(User user) {
         try {
+            //随机生成id
+            user.setId(GenerateIdUtil.generateId());
+            String id = user.getId();
+            //设置用户昵称
+            user.setNickname("用户"+id);
+            //对密码Md5加密
+            String password = Md5Util.md5(user.getPassword());
+            user.setPassword(password);
             userMapper.add(user);
-            mav.addObject("type",7);
+            mav.addObject("type",1);
         }catch (Exception e){
-            mav.addObject("error",e.getMessage());
-            mav.addObject("type",6);
+            mav.addObject("error",e.getCause().toString());
+            mav.addObject("type",2);
             e.printStackTrace();
         }
-        mav.setViewName("admin/addUser");
+        mav.setViewName("admin/userAdd");
         return mav;
     }
 }
