@@ -197,8 +197,8 @@
     <!-- 账号登录表单 -->
     <div class='div_numberLogin' id='numberLogin'>
         <form name='numberLogin_form' method="post" action="${pageContext.request.contextPath}/user/login">
-            <input name="name" id="userName" class="textbox" type="text"  placeholder="请输入用户名" value=""/><br/>
-            <input name = "password" id="userPassword"  class="textbox" type="password" placeholder="请输入密码" autocomplete="off" value=""/><br/>
+            <input name="id"  class="textbox" type="text"  placeholder="请输入账号" value=""/><br/>
+            <input name = "password"  class="textbox" type="password" placeholder="请输入密码" autocomplete="off" value=""/><br/>
             <div style="height:20px;"></div>
             <input id="input_numberLogin_submit" class='btn' type="submit" name='login' value='登录' />
             <p><i class="far fa-smile-wink" style="size:1px"></i>
@@ -282,7 +282,7 @@
 </script>
 <script>
     if (${!empty error}){
-        layer.msg(${error})
+        layer.msg("${error}")
     }
 </script>
 </html>

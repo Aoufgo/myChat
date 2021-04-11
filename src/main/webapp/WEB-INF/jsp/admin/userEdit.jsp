@@ -62,9 +62,9 @@
     <div class="form-group">
     手机号码:<input type="text" name="phone" value="${user.phone}" class="form-control"><br>
     </div>
-    <div class="form-group">
-    密码:<input type="text" name="password" value="${user.password}" class="form-control"><br>
-    </div>
+<%--    <div class="form-group">--%>
+<%--    密码:<input type="text" name="password" value="${user.password}" class="form-control"><br>--%>
+<%--    </div>--%>
     <div class="form-group">
         账号状态:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
         <c:if test="${user.accStatus == 0}">

@@ -55,6 +55,11 @@ public class UserServiceImpl implements UserService {
             if (mapper.queryByNP(user)==null){
                 mav.addObject("type",7);
             }else {
+                //将user对象存入session域对象
+                session.setAttribute("user",user);
+                //修改在线状态为'在线'
+                user.setStatus(1);
+                mapper.update(user);
                 mav.addObject("type",4);
             }
         } catch (Exception e) {

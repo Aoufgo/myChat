@@ -46,11 +46,35 @@
         </where>
     </select>
     <select id="queryByNP" parameterType="com.ai.chat.pojo.User" resultType="com.ai.chat.pojo.User">
-        select * from `user` where name = #{name} and password = #{password}
+        select * from `user` where id = #{id} and password = #{password}
     </select>
+<!--    传什么就修改什么-->
     <update id="update" parameterType="com.ai.chat.pojo.User">
-        update `user` set nickname = #{nickname},password = #{password},
-        sex = #{sex},phone = #{phone},accStatus = #{accStatus},status = #{status},age = #{age} where id = #{id}
+        update `user`
+        <set>
+            <if test="nickname != null and nickname != ''">
+                nickname = #{nickname},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="sex != null and sex != ''">
+                sex = #{sex},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="accStatus != null and accStatus != ''">
+                accStatus = #{accStatus},
+            </if>
+            <if test="status != null and status != ''">
+                status = #{status},
+            </if>
+            <if test="age != null and age != ''">
+                age = #{age},
+            </if>
+        </set>
+        where id = #{id}
     </update>
 
 

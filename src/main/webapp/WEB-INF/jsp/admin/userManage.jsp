@@ -121,7 +121,7 @@
                                     <a type="button" style="cursor: pointer;" onclick="layer.open({
                                             type:2,
                                             title:['修改会员信息','text-align:center;font-size:20px'],
-                                            area:['800px','600px'],
+                                            area:['600px','500px'],
                                             shade:0.6,
                                             maxmin:true,
                                             content:'${pageContext.request.contextPath}/admin/getUser?id=${user.id}'

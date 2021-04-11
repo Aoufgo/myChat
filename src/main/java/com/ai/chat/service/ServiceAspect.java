@@ -29,9 +29,6 @@ public class ServiceAspect {
         //获取方法的定义
         System.out.println("方法的定义:"+jp.getSignature());
         System.out.println("方法的名称:"+jp.getSignature().getName());
-        //获取方法的实参
-        Object[] objects = jp.getArgs();
-        System.out.println(objects.toString());
         System.out.println("业务执行的时间为"+new Date());
     }
 }
