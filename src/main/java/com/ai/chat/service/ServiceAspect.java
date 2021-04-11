@@ -22,7 +22,7 @@ public class ServiceAspect {
      * 4.可以有参数,也可以无
      */
     /**
-     * 向所有service方法前置获得时间
+     * 在所有service方法执行前获得时间
      */
     @Before(value = "execution(* *..*Impl.*(..))")
     public void timeBefore(JoinPoint jp){

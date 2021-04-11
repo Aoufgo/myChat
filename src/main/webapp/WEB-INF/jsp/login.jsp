@@ -183,7 +183,6 @@
     </font>
 </div>
 <body id="body" class="body">
-<input type="hidden" id="result" value="${result}">
 <div id="login_div" class="login_div animate__animated animate__fadeInUp animate__faster">
     <!-- 导航栏 -->
     <div id="login_title_div" class="login_title_div" onmousedown="titleMove(this)" onmousemove="cursorToMove(this)">
@@ -246,37 +245,37 @@
     }
 </script>
 <script>
-    var a=${type};
-    if (a==3){
+    var a=${type}
+    if (a===3){
         layer.msg("您还未登录，请登录",{icon:2})
     }
-    if (a==2){
+    if (a===2){
         layer.msg("登录失败，不存在此手机号",{icon:2})
         const element = document.querySelector('.login_div');
         element.classList.add('animate__animated', 'animate__headShake');
     }
-    if (a==7){
+    if (a===7){
         layer.msg("登录失败，用户名或密码错误，请重新登录.",{icon:2})
         const element = document.querySelector('.login_div');
         element.classList.remove('animate__fadeInUp','animate__faster')
         element.classList.add('animate__animated', 'animate__headShake');
     }
-    if (a==5){
+    if (a===5){
         layer.msg("验证码错误",{icon:2})
         const element = document.querySelector('.login_div');
         element.classList.remove('animate__fadeInUp','animate__faster')
         element.classList.add('animate__animated', 'animate__headShake');
     }
-    if (a==1){
+    if (a===1){
         layer.msg("注册成功，请登录。",{icon:1})
     }
-    if (a==4){
+    if (a===4){
         const element = document.querySelector('.login_div');
         element.classList.add('animate__animated', 'animate__fadeOutUp','animate__faster');
         layer.msg("登录成功",{icon:1});
-        setTimeout("window.location = 'center'",500); //延迟
+        setTimeout("window.location = '${pageContext.request.contextPath}/chat'",500); //延迟
     }
-    if (a==6){
+    if (a===6){
         layer.msg("退出成功",{icon:1})
     }
 

@@ -73,4 +73,17 @@ public class AdminServiceImpl implements AdminService{
         mav.setViewName("redirect:/admin/queryUser");
         return mav;
     }
+    @Override
+    public ModelAndView addUser(User user) {
+        try {
+            userMapper.add(user);
+            mav.addObject("type",7);
+        }catch (Exception e){
+            mav.addObject("error",e.getMessage());
+            mav.addObject("type",6);
+            e.printStackTrace();
+        }
+        mav.setViewName("admin/addUser");
+        return mav;
+    }
 }

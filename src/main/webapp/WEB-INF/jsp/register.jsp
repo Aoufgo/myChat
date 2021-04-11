@@ -160,7 +160,7 @@
 </div>
 <script>
     var a = ${param.type};
-    if(a == 0){
+    if(a === 0){
         layer.msg("注册失败",{icon:2})
     }
 </script>

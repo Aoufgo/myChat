@@ -40,4 +40,11 @@ public interface AdminService {
      */
     ModelAndView updateUser(User user);
 
+    /**
+     * 添加用户信息方法
+     * @param user 用户的信息
+     * @return mav
+     */
+    ModelAndView addUser(User user);
+
 }
