@@ -5,7 +5,7 @@
 </head>
 <frameset rows="32px,*" border="0" bordercolor="#c4c4c4">
     <frame  src="top" name="topframe" noresize="noresize" scrolling="no" >
-    <frame src="book?method=queryAll" name="bottom" noresize="noresize" scrolling="">
+    <frame src="chat" name="bottom" noresize="noresize" scrolling="">
 </frameset>
 
 </html>

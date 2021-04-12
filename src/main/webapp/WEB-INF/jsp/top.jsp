@@ -54,25 +54,25 @@
                     <font style="color: #FFFFFF; font-size: 13.333333px">
                     欢迎用户
                         <font style="color: #ff2b2a">
-                                ${user.userName}
+                                ${user.name}
                         </font>登录AiChat系统!
                     </font>
                 </span><!--文字可以使用span标签放置-->
             </li>
             <li>
                 <i class="fas fa-user-edit"></i>
-                <a href="user/center.jsp" target="bottom">个人中心</a>
+                <a href="center" target="bottom">个人中心</a>
             </li>
         </c:if>
     </ul>
     <ul class="top-nav-right">
         <li>
             <i class="fas fa-book"></i>
-            <a href="borrow?method=queryByIdBorrow2&userId=${user.userId}" target="bottom">查看借阅的书</a>
+            <a href="borrow?method=queryByIdBorrow2&userId=${user.id}" target="bottom">xxx</a>
         </li>
         <li>
             <i class="fas fa-shopping-cart"></i>
-            <a href="sold?method=queryByIdSold1&userId=${user.userId}" target="bottom">查看购买的书</a>
+            <a href="sold?method=queryByIdSold1&userId=${user.id}" target="bottom">xxx</a>
         </li>
         <li>
             <i class="fas fa-question-circle"></i>

@@ -53,7 +53,7 @@
                 </div>
                 <div class="txt" id="userNick">${user.name}</div>
                 <div style="height: 20px"></div>
-                <div class="txt" id="userBalance" style="text-align: center"><font style="font-size: 15px;color: #ff2b2a">余额:<font style="font-family:'Comic Sans MS'">&nbsp&nbsp&nbsp¥</font></font>
+                <div class="txt" id="userBalance" style="text-align: center"><font style="font-size: 15px;color: #ff2b2a">SVIP<font style="font-family:'Comic Sans MS'">&nbsp&nbsp&nbsp¥</font></font>
                     <span> </span>
 <%--                    <input type="text" name="userBalance" readonly = readonly value="${user.userBalance}" style="width: 80px; height: 30px;">--%>
                 </div>
@@ -67,10 +67,10 @@
                 <ul>
 
                     <li data-type="Comment" class="now" data-now="now">
-                        <a href="#"  class="nav02"><span class="icon"></span>查看购买的书</a>
+                        <a href="#"  class="nav02"><span class="icon"></span>xxx</a>
                     </li>
                     <li data-type="News" class="" data-now="">
-                        <a href="javascript:" class="nav03"><span class="icon"></span>查看借阅的书<span class="dot" style="display:none;"></span></a>
+                        <a href="javascript:" class="nav03"><span class="icon"></span>xxx<span class="dot" style="display:none;"></span></a>
                     </li>
                     <li data-type="Setup" class="" data-now="">
                         <a href="javascript:" class="nav04"><span class="icon"></span>个人设置</a>

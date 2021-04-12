@@ -17,6 +17,9 @@
 
     <!-- App styles -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/app.min.css">
+
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/animate.min.css"/>
+
 </head>
 <body>
 
@@ -507,9 +510,9 @@
 <!-- Header -->
 <header class="main-header">
     <div id="logo">
-        <a href="#">
-            <img src="dist/media/img/logo.png" alt="logo">
-        </a>
+<%--        <a href="#">--%>
+<%--            <img src="dist/media/img/logo.png" alt="logo">--%>
+<%--        </a>--%>
     </div>
     <div class="header-nav">
         <ul class="nav">
@@ -520,24 +523,24 @@
         </ul>
     </div>
     <div class="header-right">
-        <div class="navbar-toggler">
-            <a href="#">
-                <i data-feather="menu"></i>
-            </a>
-        </div>
-        <div class="dropdown">
-            <a href="#" data-toggle="dropdown">
-                <span class="mr-2 d-none d-sm-inline-block">Mirabelle Tow</span>
-                <figure class="avatar">
-                    <img src="./dist/media/img/avatar3.png" class="rounded-circle" alt="image">
-                </figure>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right">
-                <a href="#" class="dropdown-item" data-navigation-target="contact-information">Profile</a>
-                <a href="#" class="dropdown-item" data-toggle="modal" data-target="#settingModal">Settings</a>
-                <div class="dropdown-divider"></div>
-                <a href="login.html" class="dropdown-item text-danger">Logout</a>
-            </div>
+<%--        <div class="navbar-toggler">--%>
+<%--            <a href="#">--%>
+<%--                <i data-feather="menu"></i>--%>
+<%--            </a>--%>
+<%--        </div>--%>
+<%--        <div class="dropdown">--%>
+<%--            <a href="#" data-toggle="dropdown">--%>
+<%--                <span class="mr-2 d-none d-sm-inline-block">Mirabelle Tow</span>--%>
+<%--                <figure class="avatar">--%>
+<%--&lt;%&ndash;                    <img src="./dist/media/img/avatar3.png" class="rounded-circle" alt="image">&ndash;%&gt;--%>
+<%--                </figure>--%>
+<%--            </a>--%>
+<%--            <div class="dropdown-menu dropdown-menu-right">--%>
+<%--                <a href="#" class="dropdown-item" data-navigation-target="contact-information">Profile</a>--%>
+<%--                <a href="#" class="dropdown-item" data-toggle="modal" data-target="#settingModal">Settings</a>--%>
+<%--                <div class="dropdown-divider"></div>--%>
+<%--                <a href="login.html" class="dropdown-item text-danger">Logout</a>--%>
+<%--            </div>--%>
         </div>
     </div>
 </header>
@@ -549,371 +552,10 @@
     <!-- Content -->
     <div class="content">
 
-        <!-- Chats sidebar -->
-        <div id="chats" class="sidebar chat-list active">
-            <header>
-                <span>Chats</span>
-            </header>
-            <form>
-                <input type="text" class="form-control" placeholder="Search">
-            </form>
-            <div class="sidebar-body">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <figure class="avatar avatar-state-success">
-                            <img src="./dist/media/img/avatar1.png" class="rounded-circle" alt="image">
-                        </figure>
-                        <div class="users-list-body">
-                            <div>
-                                <h5 class="text-primary">Townsend Seary</h5>
-                                <p>What's up, how are you?</p>
-                            </div>
-                            <div class="users-list-action">
-                                <div class="new-message-count">3</div>
-                                <small class="text-primary">03:41 PM</small>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <figure class="avatar avatar-state-warning">
-                            <img src="./dist/media/img/avatar2.png" class="rounded-circle" alt="image">
-                        </figure>
-                        <div class="users-list-body">
-                            <div>
-                                <h5 class="text-primary">Forest Kroch</h5>
-                                <p>
-                                    <i class="fa fa-camera mr-1"></i> Photo
-                                </p>
-                            </div>
-                            <div class="users-list-action">
-                                <div class="new-message-count">1</div>
-                                <small class="text-primary">Yesterday</small>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="list-group-item active-chat">
-                        <div>
-                            <figure class="avatar">
-                                <img src="./dist/media/img/avatar3.png" class="rounded-circle" alt="image">
-                            </figure>
-                        </div>
-                        <div class="users-list-body">
-                            <div>
-                                <h5>Byrom Guittet</h5>
-                                <p>I sent you all the files. Good luck with 😃</p>
-                            </div>
-                            <div class="users-list-action">
-                                <small class="text-muted">11:05 AM</small>
-                                <div class="action-toggle">
-                                    <div class="dropdown">
-                                        <a data-toggle="dropdown" href="#">
-                                            <i data-feather="more-horizontal"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a href="#" class="dropdown-item btn-open-chat">Open</a>
-                                            <a href="#" data-navigation-target="contact-information"
-                                               class="dropdown-item">Profile</a>
-                                            <a href="#" class="dropdown-item">Add to archive</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a href="#" class="dropdown-item text-danger">Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div>
-                            <figure class="avatar">
-                                <img src="./dist/media/img/avatar4.png" class="rounded-circle" alt="image">
-                            </figure>
-                        </div>
-                        <div class="users-list-body">
-                            <div>
-                                <h5>Margaretta Worvell</h5>
-                                <p>I need you today. Can you come with me?</p>
-                            </div>
-                            <div class="users-list-action">
-                                <small class="text-muted">03:41 PM</small>
-                                <div class="action-toggle">
-                                    <div class="dropdown">
-                                        <a data-toggle="dropdown" href="#">
-                                            <i data-feather="more-horizontal"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a href="#" class="dropdown-item btn-open-chat">Open</a>
-                                            <a href="#" data-navigation-target="contact-information"
-                                               class="dropdown-item">Profile</a>
-                                            <a href="#" class="dropdown-item">Add to archive</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a href="#" class="dropdown-item text-danger">Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <figure class="avatar">
-                                <span class="avatar-title bg-warning bg-success rounded-circle">
-                                    <i class="fa fa-users"></i>
-                                </span>
-                        </figure>
-                        <div class="users-list-body">
-                            <div>
-                                <h5>😍 My Family 😍</h5>
-                                <p><strong>Maher Ruslandi: </strong>Hello!!!</p>
-                            </div>
-                            <div class="users-list-action">
-                                <small class="text-muted">Yesterday</small>
-                                <div class="action-toggle">
-                                    <div class="dropdown">
-                                        <a data-toggle="dropdown" href="#">
-                                            <i data-feather="more-horizontal"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a href="#" class="dropdown-item btn-open-chat">Open</a>
-                                            <a href="#" data-navigation-target="contact-information"
-                                               class="dropdown-item">Profile</a>
-                                            <a href="#" class="dropdown-item">Add to archive</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a href="#" class="dropdown-item text-danger">Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div>
-                            <figure class="avatar avatar-state-warning">
-                                <img src="./dist/media/img/avatar5.png" class="rounded-circle" alt="image">
-                            </figure>
-                        </div>
-                        <div class="users-list-body">
-                            <div>
-                                <h5>Jennica Kindred</h5>
-                                <p>
-                                    <i class="fa fa-video-camera mr-1"></i>
-                                    Video
-                                </p>
-                            </div>
-                            <div class="users-list-action">
-                                <small class="text-muted">03:41 PM</small>
-                                <div class="action-toggle">
-                                    <div class="dropdown">
-                                        <a data-toggle="dropdown" href="#">
-                                            <i data-feather="more-horizontal"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a href="#" class="dropdown-item btn-open-chat">Open</a>
-                                            <a href="#" data-navigation-target="contact-information"
-                                               class="dropdown-item">Profile</a>
-                                            <a href="#" class="dropdown-item">Add to archive</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a href="#" class="dropdown-item text-danger">Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div>
-                            <figure class="avatar">
-                                <span class="avatar-title bg-info rounded-circle">M</span>
-                            </figure>
-                        </div>
-                        <div class="users-list-body">
-                            <div>
-                                <h5>Marvin Rohan</h5>
-                                <p>Have you prepared the files?</p>
-                            </div>
-                            <div class="users-list-action">
-                                <small class="text-muted">Yesterday</small>
-                                <div class="action-toggle">
-                                    <div class="dropdown">
-                                        <a data-toggle="dropdown" href="#">
-                                            <i data-feather="more-horizontal"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a href="#" class="dropdown-item btn-open-chat">Open</a>
-                                            <a href="#" data-navigation-target="contact-information"
-                                               class="dropdown-item">Profile</a>
-                                            <a href="#" class="dropdown-item">Add to archive</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a href="#" class="dropdown-item text-danger">Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div>
-                            <figure class="avatar">
-                                <img src="./dist/media/img/avatar5.png" class="rounded-circle" alt="image">
-                            </figure>
-                        </div>
-                        <div class="users-list-body">
-                            <div>
-                                <h5>Townsend Seary</h5>
-                                <p>Where are you?</p>
-                            </div>
-                            <div class="users-list-action">
-                                <small class="text-muted">03:41 PM</small>
-                                <div class="action-toggle">
-                                    <div class="dropdown">
-                                        <a data-toggle="dropdown" href="#">
-                                            <i data-feather="more-horizontal"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a href="#" class="dropdown-item btn-open-chat">Open</a>
-                                            <a href="#" data-navigation-target="contact-information"
-                                               class="dropdown-item">Profile</a>
-                                            <a href="#" class="dropdown-item">Add to archive</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a href="#" class="dropdown-item text-danger">Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div>
-                            <figure class="avatar">
-                                <span class="avatar-title bg-secondary rounded-circle">G</span>
-                            </figure>
-                        </div>
-                        <div class="users-list-body">
-                            <div>
-                                <h5>Gibb Ivanchin</h5>
-                                <p>I want to visit them.</p>
-                            </div>
-                            <div class="users-list-action">
-                                <small class="text-muted">03:41 PM</small>
-                                <div class="action-toggle">
-                                    <div class="dropdown">
-                                        <a data-toggle="dropdown" href="#">
-                                            <i data-feather="more-horizontal"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a href="#" class="dropdown-item btn-open-chat">Open</a>
-                                            <a href="#" data-navigation-target="contact-information"
-                                               class="dropdown-item">Profile</a>
-                                            <a href="#" class="dropdown-item">Add to archive</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a href="#" class="dropdown-item text-danger">Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div>
-                            <figure class="avatar">
-                                <img src="./dist/media/img/avatar7.png" class="rounded-circle" alt="image">
-                            </figure>
-                        </div>
-                        <div class="users-list-body">
-                            <div>
-                                <h5>Harald Kowalski</h5>
-                                <p>Reports are ready.</p>
-                            </div>
-                            <div class="users-list-action">
-                                <small class="text-muted">03:41 PM</small>
-                                <div class="action-toggle">
-                                    <div class="dropdown">
-                                        <a data-toggle="dropdown" href="#">
-                                            <i data-feather="more-horizontal"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a href="#" class="dropdown-item btn-open-chat">Open</a>
-                                            <a href="#" data-navigation-target="contact-information"
-                                               class="dropdown-item">Profile</a>
-                                            <a href="#" class="dropdown-item">Add to archive</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a href="#" class="dropdown-item text-danger">Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div>
-                            <figure class="avatar">
-                                <span class="avatar-title bg-success rounded-circle">A</span>
-                            </figure>
-                        </div>
-                        <div class="users-list-body">
-                            <div>
-                                <h5>Afton McGilvra</h5>
-                                <p>I do not know where is it. Don't ask me, please.</p>
-                            </div>
-                            <div class="users-list-action">
-                                <small class="text-muted">03:41 PM</small>
-                                <div class="action-toggle">
-                                    <div class="dropdown">
-                                        <a data-toggle="dropdown" href="#">
-                                            <i data-feather="more-horizontal"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a href="#" class="dropdown-item btn-open-chat">Open</a>
-                                            <a href="#" data-navigation-target="contact-information"
-                                               class="dropdown-item">Profile</a>
-                                            <a href="#" class="dropdown-item">Add to archive</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a href="#" class="dropdown-item text-danger">Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div>
-                            <figure class="avatar">
-                                <img src="./dist/media/img/avatar8.png" class="rounded-circle" alt="image">
-                            </figure>
-                        </div>
-                        <div class="users-list-body">
-                            <div>
-                                <h5>Alexandr Donnelly</h5>
-                                <p>Can anyone enter the meeting?</p>
-                            </div>
-                            <div class="users-list-action">
-                                <small class="text-muted">03:41 PM</small>
-                                <div class="action-toggle">
-                                    <div class="dropdown">
-                                        <a data-toggle="dropdown" href="#">
-                                            <i data-feather="more-horizontal"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a href="#" class="dropdown-item btn-open-chat">Open</a>
-                                            <a href="#" data-navigation-target="contact-information"
-                                               class="dropdown-item">Profile</a>
-                                            <a href="#" class="dropdown-item">Add to archive</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a href="#" class="dropdown-item text-danger">Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="p-3">
-                <button data-navigation-target="new-chat" class="btn btn-primary btn-block btn-lg">New Chat</button>
-            </div>
-        </div>
-        <!-- ./ Chats sidebar -->
+
 
         <!-- Friends sidebar -->
-        <div id="friends" class="sidebar">
+        <div id="friends" class="sidebar animate__animated animate__slideInLeft">
             <header>
                 <span>Friends</span>
                 <ul class="list-inline">
@@ -922,24 +564,20 @@
                             <i data-feather="user-plus"></i>
                         </a>
                     </li>
-                    <li class="list-inline-item">
-                        <a href="#" class="btn btn-danger sidebar-close">
-                            <i data-feather="x"></i>
-                        </a>
-                    </li>
+
                 </ul>
             </header>
             <form>
                 <input type="text" class="form-control" placeholder="Search">
             </form>
             <div class="sidebar-body">
-                <p>137 Friends</p>
+                <p>6 Friends</p>
                 <div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">
                             <div>
                                 <figure class="avatar">
-                                    <img src="./dist/media/img/avatar3.png" class="rounded-circle" alt="image">
+                                    <span class="avatar-title bg-success rounded-circle">H</span>
                                 </figure>
                             </div>
                             <div class="users-list-body">
@@ -997,7 +635,7 @@
                         <li class="list-group-item">
                             <div>
                                 <figure class="avatar avatar-state-success">
-                                    <img src="./dist/media/img/avatar8.png" class="rounded-circle" alt="image">
+                                    <span class="avatar-title bg-success rounded-circle">B</span>
                                 </figure>
                             </div>
                             <div class="users-list-body">
@@ -1026,7 +664,7 @@
                         <li class="list-group-item">
                             <div>
                                 <figure class="avatar avatar-state-success">
-                                    <img src="./dist/media/img/avatar6.png" class="rounded-circle" alt="image">
+                                    <span class="avatar-title bg-success rounded-circle">K</span>
                                 </figure>
                             </div>
                             <div class="users-list-body">
@@ -1055,7 +693,7 @@
                         <li class="list-group-item">
                             <div>
                                 <figure class="avatar">
-                                    <img src="./dist/media/img/avatar5.png" class="rounded-circle" alt="image">
+                                    <span class="avatar-title bg-success rounded-circle">J</span>
                                 </figure>
                             </div>
                             <div class="users-list-body">
@@ -1091,122 +729,6 @@
                                 <div>
                                     <h5>Alina Derington</h5>
                                     <p>Nurse</p>
-                                </div>
-                                <div class="users-list-action">
-                                    <div class="action-toggle">
-                                        <div class="dropdown">
-                                            <a data-toggle="dropdown" href="#">
-                                                <i data-feather="more-horizontal"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a href="#" class="dropdown-item">New chat</a>
-                                                <a href="#" data-navigation-target="contact-information"
-                                                   class="dropdown-item">Profile</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a href="#" class="dropdown-item text-danger">Block</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div>
-                                <figure class="avatar avatar-state-secondary">
-                                    <span class="avatar-title bg-warning rounded-circle">S</span>
-                                </figure>
-                            </div>
-                            <div class="users-list-body">
-                                <div>
-                                    <h5>Stevy Kermeen</h5>
-                                    <p>Associate Professor</p>
-                                </div>
-                                <div class="users-list-action">
-                                    <div class="action-toggle">
-                                        <div class="dropdown">
-                                            <a data-toggle="dropdown" href="#">
-                                                <i data-feather="more-horizontal"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a href="#" class="dropdown-item">New chat</a>
-                                                <a href="#" data-navigation-target="contact-information"
-                                                   class="dropdown-item">Profile</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a href="#" class="dropdown-item text-danger">Block</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div>
-                                <figure class="avatar">
-                                    <img src="./dist/media/img/avatar1.png" class="rounded-circle" alt="image">
-                                </figure>
-                            </div>
-                            <div class="users-list-body">
-                                <div>
-                                    <h5>Stevy Kermeen</h5>
-                                    <p>Senior Quality Engineer</p>
-                                </div>
-                                <div class="users-list-action">
-                                    <div class="action-toggle">
-                                        <div class="dropdown">
-                                            <a data-toggle="dropdown" href="#">
-                                                <i data-feather="more-horizontal"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a href="#" class="dropdown-item">New chat</a>
-                                                <a href="#" data-navigation-target="contact-information"
-                                                   class="dropdown-item">Profile</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a href="#" class="dropdown-item text-danger">Block</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div>
-                                <figure class="avatar">
-                                    <img src="./dist/media/img/avatar7.png" class="rounded-circle" alt="image">
-                                </figure>
-                            </div>
-                            <div class="users-list-body">
-                                <div>
-                                    <h5>Gloriane Shimmans</h5>
-                                    <p>Web Designer</p>
-                                </div>
-                                <div class="users-list-action">
-                                    <div class="action-toggle">
-                                        <div class="dropdown">
-                                            <a data-toggle="dropdown" href="#">
-                                                <i data-feather="more-horizontal"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a href="#" class="dropdown-item">New chat</a>
-                                                <a href="#" data-navigation-target="contact-information"
-                                                   class="dropdown-item">Profile</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a href="#" class="dropdown-item text-danger">Block</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div>
-                                <figure class="avatar avatar-state-warning">
-                                    <span class="avatar-title bg-secondary rounded-circle">B</span>
-                                </figure>
-                            </div>
-                            <div class="users-list-body">
-                                <div>
-                                    <h5>Bernhard Perrett</h5>
-                                    <p>Software Engineer</p>
                                 </div>
                                 <div class="users-list-action">
                                     <div class="action-toggle">

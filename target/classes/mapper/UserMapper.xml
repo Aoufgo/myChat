@@ -48,7 +48,7 @@
     <select id="queryByNP" parameterType="com.ai.chat.pojo.User" resultType="com.ai.chat.pojo.User">
         select * from `user` where id = #{id} and password = #{password}
     </select>
-<!--    传什么就修改什么-->
+<!--传什么就修改什么-->
     <update id="update" parameterType="com.ai.chat.pojo.User">
         update `user`
         <set>

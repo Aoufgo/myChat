@@ -273,6 +273,7 @@
         const element = document.querySelector('.login_div');
         element.classList.add('animate__animated', 'animate__fadeOutUp','animate__faster');
         layer.msg("登录成功",{icon:1});
+        window.parent.frames['top'].location.reload();
         setTimeout("window.location = '${pageContext.request.contextPath}/chat'",500); //延迟
     }
     if (a===6){

@@ -56,6 +56,7 @@ public class UserServiceImpl implements UserService {
                 mav.addObject("type",7);
             }else {
                 //将user对象存入session域对象
+                user = mapper.queryById(user.getId());
                 session.setAttribute("user",user);
                 //修改在线状态为'在线'
                 user.setStatus(1);
