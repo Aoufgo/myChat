@@ -32,12 +32,24 @@ public class UserController {
     /**
      * 登录controller
      * @param user 前端user
+     * @param session 存入session
      * @return 反馈信息
      */
     @RequestMapping("login")
     public ModelAndView login(User user, HttpSession session){
         return service.login(user,session);
     }
+
+    /**
+     * 跳转到chat页面
+     * @param id
+     * @return
+     */
+    @GetMapping("jumpToChat/{id}")
+    public ModelAndView chat(@PathVariable String id){return service.chat(id);}
+
+
+
 
 
 

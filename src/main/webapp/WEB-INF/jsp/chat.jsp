@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
     <title></title>
@@ -19,10 +21,43 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/app.min.css">
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/animate.min.css"/>
+    <style>
+        figure.avatar.avatar-state-warning:before, figure.avatar.avatar-state-success:before {
+            top: 22px;
+            right: -4px;
+            border: 2px solid #fff;
+        }
 
+        .new-message-count {
+            width: 23px;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            -moz-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -webkit-justify-content: center;
+            -moz-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            line-height: 0;
+            font-size: 13px;
+            height: 23px;
+            background-color: #26a69a;
+            color: #fff;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;
+            margin-left: auto;
+        }
+    </style>
 </head>
 <body>
-
 <!-- Page loading -->
 <div class="page-loading"></div>
 <!-- ./ Page loading -->
@@ -508,50 +543,48 @@
 <!-- ./ Edit profile modal -->
 
 <!-- Header -->
-<header class="main-header">
-    <div id="logo">
-<%--        <a href="#">--%>
-<%--            <img src="dist/media/img/logo.png" alt="logo">--%>
-<%--        </a>--%>
-    </div>
-    <div class="header-nav">
-        <ul class="nav">
-            <li><a href="#" data-navigation-target="contact-information">Profile</a></li>
-            <li><a href="#" data-navigation-target="friends">Friends</a></li>
-            <li><a href="#" data-navigation-target="favorites">Favorites</a></li>
-            <li><a href="#" data-navigation-target="archived">Archived</a></li>
-        </ul>
-    </div>
-    <div class="header-right">
-<%--        <div class="navbar-toggler">--%>
-<%--            <a href="#">--%>
-<%--                <i data-feather="menu"></i>--%>
-<%--            </a>--%>
+<%--<header class="main-header">--%>
+<%--    <div id="logo">--%>
+<%--&lt;%&ndash;        <a href="#">&ndash;%&gt;--%>
+<%--&lt;%&ndash;            <img src="dist/media/img/logo.png" alt="logo">&ndash;%&gt;--%>
+<%--&lt;%&ndash;        </a>&ndash;%&gt;--%>
+<%--    </div>--%>
+<%--    <div class="header-nav">--%>
+<%--        <ul class="nav">--%>
+<%--            <li><a href="#" data-navigation-target="contact-information">Profile</a></li>--%>
+<%--            <li><a href="#" data-navigation-target="favorites">Favorites</a></li>--%>
+<%--            <li><a href="#" data-navigation-target="archived">Archived</a></li>--%>
+<%--        </ul>--%>
+<%--    </div>--%>
+<%--    <div class="header-right">--%>
+<%--&lt;%&ndash;        <div class="navbar-toggler">&ndash;%&gt;--%>
+<%--&lt;%&ndash;            <a href="#">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                <i data-feather="menu"></i>&ndash;%&gt;--%>
+<%--&lt;%&ndash;            </a>&ndash;%&gt;--%>
+<%--&lt;%&ndash;        </div>&ndash;%&gt;--%>
+<%--&lt;%&ndash;        <div class="dropdown">&ndash;%&gt;--%>
+<%--&lt;%&ndash;            <a href="#" data-toggle="dropdown">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                <span class="mr-2 d-none d-sm-inline-block">Mirabelle Tow</span>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                <figure class="avatar">&ndash;%&gt;--%>
+<%--&lt;%&ndash;&lt;%&ndash;                    <img src="./dist/media/img/avatar3.png" class="rounded-circle" alt="image">&ndash;%&gt;&ndash;%&gt;--%>
+<%--&lt;%&ndash;                </figure>&ndash;%&gt;--%>
+<%--&lt;%&ndash;            </a>&ndash;%&gt;--%>
+<%--&lt;%&ndash;            <div class="dropdown-menu dropdown-menu-right">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                <a href="#" class="dropdown-item" data-navigation-target="contact-information">Profile</a>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                <a href="#" class="dropdown-item" data-toggle="modal" data-target="#settingModal">Settings</a>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                <div class="dropdown-divider"></div>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                <a href="login.html" class="dropdown-item text-danger">Logout</a>&ndash;%&gt;--%>
+<%--&lt;%&ndash;            </div>&ndash;%&gt;--%>
 <%--        </div>--%>
-<%--        <div class="dropdown">--%>
-<%--            <a href="#" data-toggle="dropdown">--%>
-<%--                <span class="mr-2 d-none d-sm-inline-block">Mirabelle Tow</span>--%>
-<%--                <figure class="avatar">--%>
-<%--&lt;%&ndash;                    <img src="./dist/media/img/avatar3.png" class="rounded-circle" alt="image">&ndash;%&gt;--%>
-<%--                </figure>--%>
-<%--            </a>--%>
-<%--            <div class="dropdown-menu dropdown-menu-right">--%>
-<%--                <a href="#" class="dropdown-item" data-navigation-target="contact-information">Profile</a>--%>
-<%--                <a href="#" class="dropdown-item" data-toggle="modal" data-target="#settingModal">Settings</a>--%>
-<%--                <div class="dropdown-divider"></div>--%>
-<%--                <a href="login.html" class="dropdown-item text-danger">Logout</a>--%>
-<%--            </div>--%>
-        </div>
-    </div>
-</header>
+<%--    </div>--%>
+<%--</header>--%>
 <!-- ./ Header -->
 
 <!-- Layout -->
 <div class="layout">
 
     <!-- Content -->
-    <div class="content">
-
+    <div class="content" style="height: 108.9%;">
 
 
         <!-- Friends sidebar -->
@@ -571,183 +604,45 @@
                 <input type="text" class="form-control" placeholder="Search">
             </form>
             <div class="sidebar-body">
-                <p>6 Friends</p>
+                <p>${friends.size()} Friends</p>
                 <div>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <div>
-                                <figure class="avatar">
-                                    <span class="avatar-title bg-success rounded-circle">H</span>
-                                </figure>
-                            </div>
-                            <div class="users-list-body">
+                        <c:forEach items="${friends}" var="f">
+                            <li class="list-group-item">
                                 <div>
-                                    <h5>Harrietta Souten</h5>
-                                    <p>Dental Hygienist</p>
+                                    <c:if test="${f.user.status == 1}">
+                                    <figure class="avatar avatar-state-success">
+                                        </c:if>
+                                        <c:if test="${f.user.status != 1}">
+                                        <figure class="avatar avatar-state-warning">
+                                            </c:if>
+                                            <span class="avatar-title bg-success rounded-circle">${fn:substring(f.user.name,0,1)}</span>
+                                        </figure>
                                 </div>
-                                <div class="users-list-action">
-                                    <div class="action-toggle">
-                                        <div class="dropdown">
-                                            <a data-toggle="dropdown" href="#">
-                                                <i data-feather="more-horizontal"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a href="#" class="dropdown-item">New chat</a>
-                                                <a href="#" data-navigation-target="contact-information"
-                                                   class="dropdown-item">Profile</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a href="#" class="dropdown-item text-danger">Block</a>
+                                <div class="users-list-body">
+                                    <div>
+                                        <h5>${f.user.nickname}</h5>
+                                        <p>${f.user.name}</p>
+                                    </div>
+                                    <div class="new-message-count">1</div>
+                                    <div class="users-list-action">
+                                        <div class="action-toggle">
+                                            <div class="dropdown">
+                                                <a data-toggle="dropdown" href="#">
+                                                    <i data-feather="more-horizontal"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href="#" data-navigation-target="contact-information"
+                                                       class="dropdown-item">Profile</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a href="#" class="dropdown-item text-danger">Block</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div>
-                                <figure class="avatar avatar-state-warning">
-                                    <span class="avatar-title bg-success rounded-circle">A</span>
-                                </figure>
-                            </div>
-                            <div class="users-list-body">
-                                <div>
-                                    <h5>Aline McShee</h5>
-                                    <p>Marketing Assistant</p>
-                                </div>
-                                <div class="users-list-action">
-                                    <div class="action-toggle">
-                                        <div class="dropdown">
-                                            <a data-toggle="dropdown" href="#">
-                                                <i data-feather="more-horizontal"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a href="#" class="dropdown-item">New chat</a>
-                                                <a href="#" data-navigation-target="contact-information"
-                                                   class="dropdown-item">Profile</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a href="#" class="dropdown-item text-danger">Block</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div>
-                                <figure class="avatar avatar-state-success">
-                                    <span class="avatar-title bg-success rounded-circle">B</span>
-                                </figure>
-                            </div>
-                            <div class="users-list-body">
-                                <div>
-                                    <h5>Brietta Blogg</h5>
-                                    <p>Actuary</p>
-                                </div>
-                                <div class="users-list-action">
-                                    <div class="action-toggle">
-                                        <div class="dropdown">
-                                            <a data-toggle="dropdown" href="#">
-                                                <i data-feather="more-horizontal"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a href="#" class="dropdown-item">New chat</a>
-                                                <a href="#" data-navigation-target="contact-information"
-                                                   class="dropdown-item">Profile</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a href="#" class="dropdown-item text-danger">Block</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div>
-                                <figure class="avatar avatar-state-success">
-                                    <span class="avatar-title bg-success rounded-circle">K</span>
-                                </figure>
-                            </div>
-                            <div class="users-list-body">
-                                <div>
-                                    <h5>Karl Hubane</h5>
-                                    <p>Chemical Engineer</p>
-                                </div>
-                                <div class="users-list-action">
-                                    <div class="action-toggle">
-                                        <div class="dropdown">
-                                            <a data-toggle="dropdown" href="#">
-                                                <i data-feather="more-horizontal"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a href="#" class="dropdown-item">New chat</a>
-                                                <a href="#" data-navigation-target="contact-information"
-                                                   class="dropdown-item">Profile</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a href="#" class="dropdown-item text-danger">Block</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div>
-                                <figure class="avatar">
-                                    <span class="avatar-title bg-success rounded-circle">J</span>
-                                </figure>
-                            </div>
-                            <div class="users-list-body">
-                                <div>
-                                    <h5>Jillana Tows</h5>
-                                    <p>Project Manager</p>
-                                </div>
-                                <div class="users-list-action">
-                                    <div class="action-toggle">
-                                        <div class="dropdown">
-                                            <a data-toggle="dropdown" href="#">
-                                                <i data-feather="more-horizontal"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a href="#" class="dropdown-item">New chat</a>
-                                                <a href="#" data-navigation-target="contact-information"
-                                                   class="dropdown-item">Profile</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a href="#" class="dropdown-item text-danger">Block</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div>
-                                <figure class="avatar avatar-state-success">
-                                    <span class="avatar-title bg-info rounded-circle">AD</span>
-                                </figure>
-                            </div>
-                            <div class="users-list-body">
-                                <div>
-                                    <h5>Alina Derington</h5>
-                                    <p>Nurse</p>
-                                </div>
-                                <div class="users-list-action">
-                                    <div class="action-toggle">
-                                        <div class="dropdown">
-                                            <a data-toggle="dropdown" href="#">
-                                                <i data-feather="more-horizontal"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a href="#" class="dropdown-item">New chat</a>
-                                                <a href="#" data-navigation-target="contact-information"
-                                                   class="dropdown-item">Profile</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a href="#" class="dropdown-item text-danger">Block</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
+                            </li>
+                        </c:forEach>
                     </ul>
                 </div>
             </div>
@@ -776,6 +671,7 @@
             </form>
             <div class="sidebar-body">
                 <ul class="list-group list-group-flush">
+
                     <li class="list-group-item">
                         <div>
                             <figure class="avatar">
@@ -1411,237 +1307,9 @@
         <!-- Profile sidebar -->
 
         <!-- Chat -->
-        <div class="chat">
-            <div class="chat-body"> <!-- .no-message -->
-                <!--
-                <div class="no-message-container">
-                    <div class="row mb-5">
-                        <div class="col-md-4 offset-md-4">
-                            <img src="./dist/media/svg/undraw_empty_xct9.svg" class="img-fluid" alt="image">
-                        </div>
-                    </div>
-                    <p class="lead">Select a chat to read messages</p>
-                </div>
-                -->
-                <div class="messages">
-                    <div class="message-item outgoing-message">
-                        <div class="message-avatar">
-                            <figure class="avatar" title="Mirabelle Tow">
-                                <img src="./dist/media/img/avatar3.png" class="rounded-circle" alt="image">
-                            </figure>
-                        </div>
-                        <div>
-                            <div class="message-content">
-                                Hello how are you?
-                            </div>
-                            <div class="time">01:20 PM <i class="ti-double-check text-info"></i></div>
-                        </div>
-                    </div>
-                    <div class="message-item">
-                        <div class="message-avatar">
-                            <figure class="avatar" title="Byrom Guittet">
-                                <img src="./dist/media/img/avatar4.png" class="rounded-circle" alt="image">
-                            </figure>
-                        </div>
-                        <div>
-                            <div class="message-content">
-                                I'm fine, how are you 😃
-                            </div>
-                            <div class="time">01:35 PM</div>
-                        </div>
-                    </div>
-                    <div class="message-item outgoing-message">
-                        <div class="message-avatar">
-                            <figure class="avatar" title="Mirabelle Tow">
-                                <img src="./dist/media/img/avatar3.png" class="rounded-circle" alt="image">
-                            </figure>
-                        </div>
-                        <div>
-                            <div class="message-content">
-                                I'm fine thank you. I expect you to send me some files.
-                            </div>
-                            <div class="time">05:31 PM <i class="ti-double-check text-info"></i></div>
-                        </div>
-                    </div>
-                    <div class="message-item">
-                        <div class="message-avatar">
-                            <figure class="avatar" title="Byrom Guittet">
-                                <img src="./dist/media/img/avatar4.png" class="rounded-circle" alt="image">
-                            </figure>
-                        </div>
-                        <div>
-                            <div class="message-content">
-                                What files are you talking about? I'm sorry I can't remember right now.
-                            </div>
-                            <div class="time">10:12 PM</div>
-                        </div>
-                    </div>
-                    <div class="message-item outgoing-message">
-                        <div class="message-avatar">
-                            <figure class="avatar" title="Mirabelle Tow">
-                                <img src="./dist/media/img/avatar3.png" class="rounded-circle" alt="image">
-                            </figure>
-                        </div>
-                        <div>
-                            <div class="message-content">
-                                I want those files for you. I want you to send 1 PDF and 1 image file.
-                            </div>
-                            <div class="time">11:56 PM <i class="ti-double-check text-info"></i></div>
-                        </div>
-                    </div>
-                    <div class="message-item">
-                        <div class="message-avatar">
-                            <figure class="avatar" title="Byrom Guittet">
-                                <img src="./dist/media/img/avatar4.png" class="rounded-circle" alt="image">
-                            </figure>
-                        </div>
-                        <div>
-                            <div class="message-content message-file">
-                                <div class="file-icon">
-                                    <i class="fa fa-file-pdf-o"></i>
-                                </div>
-                                <div>
-                                    <div>important_documents.pdf <i class="text-muted small">(50KB)</i></div>
-                                    <ul class="list-inline">
-                                        <li class="list-inline-item mb-0"><a href="#">Download</a></li>
-                                        <li class="list-inline-item mb-0"><a href="#">View</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="time">11:59 PM</div>
-                        </div>
-                    </div>
-                    <div class="message-item">
-                        <div class="message-avatar">
-                            <figure class="avatar" title="Byrom Guittet">
-                                <img src="./dist/media/img/avatar4.png" class="rounded-circle" alt="image">
-                            </figure>
-                        </div>
-                        <div>
-                            <div class="message-content">
-                                I'm about to send the other file now.
-                            </div>
-                            <div class="time">07:15 AM</div>
-                        </div>
-                    </div>
-                    <div class="message-item outgoing-message">
-                        <div class="message-avatar">
-                            <figure class="avatar" title="Mirabelle Tow">
-                                <img src="./dist/media/img/avatar3.png" class="rounded-circle" alt="image">
-                            </figure>
-                        </div>
-                        <div>
-                            <div class="message-content">
-                                Thank you so much. These files are very important to me. I guess you didn't make any
-                                changes
-                                to these files. So I need the original versions of these files. Thank you very much
-                                again.
-                            </div>
-                            <div class="time">07:45 AM <i class="ti-double-check text-info"></i></div>
-                        </div>
-                    </div>
-                    <div class="message-item">
-                        <div class="message-avatar">
-                            <figure class="avatar" title="Byrom Guittet">
-                                <img src="./dist/media/img/avatar4.png" class="rounded-circle" alt="image">
-                            </figure>
-                        </div>
-                        <div>
-                            <div class="message-content">
-                                I thank you. We are glad to help you. 😃
-                            </div>
-                            <div class="time">08:00 AM</div>
-                        </div>
-                    </div>
-                    <div class="message-item outgoing-message">
-                        <div class="message-avatar">
-                            <figure class="avatar" title="Mirabelle Tow">
-                                <img src="./dist/media/img/avatar3.png" class="rounded-circle" alt="image">
-                            </figure>
-                        </div>
-                        <div>
-                            <div class="message-content">
-                                😃 😃 ❤ ❤
-                            </div>
-                            <div class="time">09:23 AM <i class="ti-double-check text-info"></i></div>
-                        </div>
-                    </div>
-                    <div class="message-item">
-                        <div class="message-avatar">
-                            <figure class="avatar" title="Byrom Guittet">
-                                <img src="./dist/media/img/avatar4.png" class="rounded-circle" alt="image">
-                            </figure>
-                        </div>
-                        <div>
-                            <div class="message-content message-image">
-                                <img src="dist/media/img/image1.png" class="rounded" alt="image">
-                            </div>
-                            <div class="time">10:43 AM</div>
-                        </div>
-                    </div>
-                    <div class="message-item outgoing-message">
-                        <div class="message-avatar">
-                            <figure class="avatar" title="Mirabelle Tow">
-                                <img src="./dist/media/img/avatar3.png" class="rounded-circle" alt="image">
-                            </figure>
-                        </div>
-                        <div>
-                            <div class="message-content">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet at dolores dolorum
-                                expedita, odio quas quod. Assumenda doloribus eaque eveniet excepturi exercitationem
-                                fuga fugit incidunt laboriosam necessitatibus obcaecati, optio ratione tempora tempore
-                                voluptate voluptatem. Aut doloribus eveniet exercitationem id! Atque commodi, ea
-                                exercitationem minima necessitatibus repellendus sit totam unde veniam.
-                            </div>
-                            <div class="message-content">
-                                😃 😃 ❤ ❤
-                            </div>
-                            <div class="time">10:50 AM <i class="ti-double-check text-info"></i></div>
-                        </div>
-                    </div>
-                    <div class="message-item messages-divider" data-label="1 message unread"></div>
-                    <div class="message-item">
-                        <div class="message-avatar">
-                            <figure class="avatar" title="Byrom Guittet">
-                                <img src="./dist/media/img/avatar4.png" class="rounded-circle" alt="image">
-                            </figure>
-                        </div>
-                        <div>
-                            <div class="message-content">
-                                I sent you all the files. Good luck with 😃
-                            </div>
-                            <div class="time">11:05 AM</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="chat-footer">
-                <form>
-                    <div>
-                        <button class="btn btn-light mr-3 d-none d-sm-inline-block" data-toggle="tooltip" title="Emoji" type="button">
-                            <i data-feather="smile"></i>
-                        </button>
-                        <button class="btn btn-danger mr-3 d-inline d-sm-none btn-close-chat" data-toggle="tooltip" title="Emoji" type="button">
-                            <i data-feather="arrow-left"></i>
-                        </button>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Write a message.">
-                    <div class="form-buttons">
-                        <button class="btn btn-light d-none d-sm-inline-block" data-toggle="tooltip" title="Add files" type="button">
-                            <i data-feather="paperclip"></i>
-                        </button>
-                        <button class="btn btn-light d-none d-sm-inline-block" data-toggle="tooltip"
-                                title="Send a voice record" type="button">
-                            <i data-feather="mic"></i>
-                        </button>
-                        <button class="btn btn-primary" type="submit">
-                            <i data-feather="send"></i>
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <!-- ./ Chat -->
+        <iframe width="100%" class="chat" id="frame" height="100%" src="${pageContext.request.contextPath}/chat_page"
+                frameborder="0" data-id="" seamless></iframe>
+
 
     </div>
     <!-- ./ Content -->
@@ -1650,12 +1318,28 @@
 <!-- ./ Layout -->
 
 <!-- Bundle -->
+<script src="${pageContext.request.contextPath}/static/js/jquery.min.js"></script>
+<script>
+    // $(function () {
+    //     var width = $("#friends").width();
+    //     console.log(width)
+    //     if (width<336.172){
+    //         $("#frame").hide();
+    //     }
+    // })
+</script>
 <script src="${pageContext.request.contextPath}/static/js/bundle.js"></script>
 
 <!-- App scripts -->
 <script src="${pageContext.request.contextPath}/static/js/app.min.js"></script>
 
 <!-- Examples -->
-<script src="${pageContext.request.contextPath}/static//js/examples.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/examples.js"></script>
+<script>
+    if (${!empty error}) {
+        layer.msg("${error}")
+    }
+</script>
+
 </body>
 </html>

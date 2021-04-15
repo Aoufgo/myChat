@@ -27,6 +27,13 @@ public interface UserService {
      */
     ModelAndView login(User user, HttpSession session);
 
+    /**
+     * 跳转到聊天页面
+     * @param id 用户id
+     * @return mav
+     */
+    ModelAndView chat(String id);
+
 
 
 

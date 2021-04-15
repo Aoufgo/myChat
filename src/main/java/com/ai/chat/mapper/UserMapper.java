@@ -1,5 +1,6 @@
 package com.ai.chat.mapper;
 
+import com.ai.chat.pojo.Relation;
 import com.ai.chat.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -60,6 +62,13 @@ public interface UserMapper {
      * @return 影响数据库的行数
      */
     int update(User user);
+
+    /**
+     * 获取id的好友和分组
+     * @param id 用户id
+     * @return 存放的list
+     */
+    List<Relation> getFriends(String id);
 
 
 }
