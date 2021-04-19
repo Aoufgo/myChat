@@ -37,7 +37,7 @@
 </head>
 <body>
 <div id="register_div" class="register_div">
-    <div class="middle-box text-center loginscreen ">
+    <div class="middle-box text-center loginscreen animate__animated animate__fadeIn animate__faster">
         <div>
 <form class="m-t" role="form" action="${pageContext.request.contextPath}/admin/updateUser" method="post" target="_parent">
     <input type="hidden" value="${user.id}" name="id">

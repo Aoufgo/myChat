@@ -1,10 +1,22 @@
 package com.ai.chat.socket;
 
+import com.ai.chat.mapper.MsgMapper;
+import com.ai.chat.mapper.UserMapper;
+import com.ai.chat.pojo.Message;
+import com.ai.chat.pojo.User;
+import com.ai.chat.service.AdminService;
+import com.ai.chat.service.MsgService;
+import com.ai.chat.service.UserService;
+import com.ai.chat.service.impl.AdminServiceImpl;
+import com.ai.chat.service.impl.MsgServiceImpl;
+import com.ai.chat.service.impl.UserServiceImpl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
@@ -28,17 +40,29 @@ public class WebSocket {
     /**
      * 以用户的姓名为key，WebSocket为对象保存起来
      */
-    private static Map<String, WebSocket> clients = new ConcurrentHashMap<String, WebSocket>();
+    private static final Map<String, WebSocket> clients = new ConcurrentHashMap<String, WebSocket>();
     /**
      * 会话
      */
     private Session session;
     /**
-     * 用户名称
+     * 用户id
      */
     private String userId;
 
-    /**
+    private static UserMapper userMapper;
+
+    private static MsgMapper msgMapper;
+
+    @Resource
+    public void setUserMapper(UserMapper userMapper) {
+        WebSocket.userMapper = userMapper;
+    }
+    @Resource
+    public void setMsgMapper(MsgMapper msgMapper) {
+        WebSocket.msgMapper = msgMapper;
+    }
+    /*
      * OnOpen 表示有浏览器链接过来的时候被调用
      * OnClose 表示浏览器发出关闭请求的时候被调用
      * OnMessage 表示浏览器发消息的时候被调用
@@ -56,12 +80,13 @@ public class WebSocket {
         log.info("现在来连接的客户id：" + session.getId() + "用户Id：" + userId);
         this.userId = userId;
         this.session = session;
+        clients.put(userId, this);
         log.info("有新连接加入！ 当前在线人数" + onlineNumber);
     }
 
     @OnError
     public void onError(Session session, Throwable error) {
-        log.info("服务端发生了错误" + error.getMessage());
+        log.info("服务端发生了错误" + error);
         //error.printStackTrace();
     }
 
@@ -71,18 +96,12 @@ public class WebSocket {
     @OnClose
     public void onClose() {
         onlineNumber--;
-        //webSockets.remove(this);
         clients.remove(userId);
-        try {
-            //messageType 1代表上线 2代表下线 3代表在线名单  4代表普通消息
-            Map<String, Object> map1 = new HashMap<>();
-            map1.put("messageType", 2);
-            map1.put("onlineUsers", clients.keySet());
-            map1.put("username", userId);
-            sendMessageAll(JSON.toJSONString(map1), userId);
-        } catch (IOException e) {
-            log.info(userId + "下线的时候通知所有人发生了错误");
-        }
+        //设置用户的在线状态为离线
+        User user = new User();
+        user.setStatus(0);
+        user.setId(userId);
+        userMapper.update(user);
         log.info("有连接关闭！ 当前在线人数" + onlineNumber);
     }
 
@@ -100,36 +119,29 @@ public class WebSocket {
             String textMessage = jsonObject.getString("message");
             String fromId = jsonObject.getString("userId");
             String toId = jsonObject.getString("to");
-            //如果不是发给所有，那么就发给某一个人
-            //messageType 1代表上线 2代表下线 3代表在线名单  4代表普通消息
+            String time = jsonObject.getString("sendTime");
+            //发送信息给
             Map<String, Object> map1 = new HashMap<>();
-            map1.put("messageType", 4);
             map1.put("textMessage", textMessage);
-            map1.put("fromusername", fromId);
-            if (toId.equals("All")) {
-                map1.put("tousername", "所有人");
-                sendMessageAll(JSON.toJSONString(map1), toId);
-            } else {
-                map1.put("tousername", toId);
-                sendMessageTo(JSON.toJSONString(map1), toId);
-            }
+            map1.put("fromId", fromId);
+            map1.put("toId", toId);
+            sendMessageTo(JSON.toJSONString(map1),toId);
+            //将信息存入数据库
+            Message msg = new Message(fromId,toId,textMessage,time);
+            msgMapper.add(msg);
         } catch (Exception e) {
-            log.info("发生了错误了:"+e.getMessage());
+            log.info("发生了错误了:"+e);
+            e.printStackTrace();
         }
     }
 
-    public void sendMessageTo(String message, String ToUserName) throws IOException {
+    public void sendMessageTo(String message,String toId) throws IOException {
         for (WebSocket item : clients.values()) {
-            if (item.userId.equals(ToUserName)) {
+            System.out.println(item.userId);
+            if (item.userId.equals(toId)) {
                 item.session.getAsyncRemote().sendText(message);
                 break;
             }
-        }
-    }
-
-    public void sendMessageAll(String message, String FromUserName) throws IOException {
-        for (WebSocket item : clients.values()) {
-            item.session.getAsyncRemote().sendText(message);
         }
     }
 

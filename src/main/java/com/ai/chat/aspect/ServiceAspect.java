@@ -1,4 +1,4 @@
-package com.ai.chat.service;
+package com.ai.chat.aspect;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;

@@ -58,6 +58,7 @@
     </style>
 </head>
 <body>
+<input type="hidden" value="${user.id}" id="userId">
 <!-- Page loading -->
 <div class="page-loading"></div>
 <!-- ./ Page loading -->
@@ -540,46 +541,6 @@
         </div>
     </div>
 </div>
-<!-- ./ Edit profile modal -->
-
-<!-- Header -->
-<%--<header class="main-header">--%>
-<%--    <div id="logo">--%>
-<%--&lt;%&ndash;        <a href="#">&ndash;%&gt;--%>
-<%--&lt;%&ndash;            <img src="dist/media/img/logo.png" alt="logo">&ndash;%&gt;--%>
-<%--&lt;%&ndash;        </a>&ndash;%&gt;--%>
-<%--    </div>--%>
-<%--    <div class="header-nav">--%>
-<%--        <ul class="nav">--%>
-<%--            <li><a href="#" data-navigation-target="contact-information">Profile</a></li>--%>
-<%--            <li><a href="#" data-navigation-target="favorites">Favorites</a></li>--%>
-<%--            <li><a href="#" data-navigation-target="archived">Archived</a></li>--%>
-<%--        </ul>--%>
-<%--    </div>--%>
-<%--    <div class="header-right">--%>
-<%--&lt;%&ndash;        <div class="navbar-toggler">&ndash;%&gt;--%>
-<%--&lt;%&ndash;            <a href="#">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                <i data-feather="menu"></i>&ndash;%&gt;--%>
-<%--&lt;%&ndash;            </a>&ndash;%&gt;--%>
-<%--&lt;%&ndash;        </div>&ndash;%&gt;--%>
-<%--&lt;%&ndash;        <div class="dropdown">&ndash;%&gt;--%>
-<%--&lt;%&ndash;            <a href="#" data-toggle="dropdown">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                <span class="mr-2 d-none d-sm-inline-block">Mirabelle Tow</span>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                <figure class="avatar">&ndash;%&gt;--%>
-<%--&lt;%&ndash;&lt;%&ndash;                    <img src="./dist/media/img/avatar3.png" class="rounded-circle" alt="image">&ndash;%&gt;&ndash;%&gt;--%>
-<%--&lt;%&ndash;                </figure>&ndash;%&gt;--%>
-<%--&lt;%&ndash;            </a>&ndash;%&gt;--%>
-<%--&lt;%&ndash;            <div class="dropdown-menu dropdown-menu-right">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                <a href="#" class="dropdown-item" data-navigation-target="contact-information">Profile</a>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                <a href="#" class="dropdown-item" data-toggle="modal" data-target="#settingModal">Settings</a>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                <div class="dropdown-divider"></div>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                <a href="login.html" class="dropdown-item text-danger">Logout</a>&ndash;%&gt;--%>
-<%--&lt;%&ndash;            </div>&ndash;%&gt;--%>
-<%--        </div>--%>
-<%--    </div>--%>
-<%--</header>--%>
-<!-- ./ Header -->
-
 <!-- Layout -->
 <div class="layout">
 
@@ -608,7 +569,7 @@
                 <div>
                     <ul class="list-group list-group-flush">
                         <c:forEach items="${friends}" var="f">
-                            <li class="list-group-item">
+                            <li class="list-group-item" onclick="linkTo(${f.id2})">
                                 <div>
                                     <c:if test="${f.user.status == 1}">
                                     <figure class="avatar avatar-state-success">
@@ -1307,8 +1268,10 @@
         <!-- Profile sidebar -->
 
         <!-- Chat -->
-        <iframe width="100%" class="chat" id="frame" height="100%" src="${pageContext.request.contextPath}/chat_page"
-                frameborder="0" data-id="" seamless></iframe>
+           <iframe width="100%" class="chat" id="chatFrame" name="chatFrame" height="100%"
+                   src="${pageContext.request.contextPath}/user/link/${friends[0].id2}"
+                    frameborder="0" data-id="" seamless scrolling="no">
+           </iframe>
 
 
     </div>
@@ -1319,15 +1282,7 @@
 
 <!-- Bundle -->
 <script src="${pageContext.request.contextPath}/static/js/jquery.min.js"></script>
-<script>
-    // $(function () {
-    //     var width = $("#friends").width();
-    //     console.log(width)
-    //     if (width<336.172){
-    //         $("#frame").hide();
-    //     }
-    // })
-</script>
+
 <script src="${pageContext.request.contextPath}/static/js/bundle.js"></script>
 
 <!-- App scripts -->
@@ -1339,7 +1294,12 @@
     if (${!empty error}) {
         layer.msg("${error}")
     }
+    function linkTo(id) {
+        //parent.window.frames['chatFrame'].location.href='${pageContext.request.contextPath}/user/link/'+id;
+        document.getElementById("chatFrame").src='${pageContext.request.contextPath}/user/link/'+id;
+    }
 </script>
+
 
 </body>
 </html>

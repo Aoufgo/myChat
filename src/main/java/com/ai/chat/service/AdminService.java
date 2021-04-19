@@ -3,6 +3,7 @@ package com.ai.chat.service;
 import com.ai.chat.pojo.User;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -10,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author aoufgo
  * @date 2021/4/5 下午4:28
  */
-@Repository
+@Service
 public interface AdminService {
 
     /**

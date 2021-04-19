@@ -18,7 +18,8 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/user")
 public class UserController {
     @Resource(name = "userServiceImpl")
-    UserService service;
+    private UserService service;
+    String rsKey = "result";
 
     /**
      * 注册controller
@@ -27,7 +28,16 @@ public class UserController {
      */
     @RequestMapping("register")
     public ModelAndView register(User user){
-        return service.register(user);
+        ModelAndView mav = service.register(user);
+        rsKey = "result";
+        if ((Boolean)mav.getModel().get(rsKey)){
+            mav.addObject("type",1);
+            mav.setViewName("login");
+        }else {
+            mav.addObject("type",0);
+            mav.setViewName("register");
+        }
+        return mav;
     }
     /**
      * 登录controller
@@ -37,7 +47,15 @@ public class UserController {
      */
     @RequestMapping("login")
     public ModelAndView login(User user, HttpSession session){
-        return service.login(user,session);
+        ModelAndView mav = service.login(user,session);
+        rsKey = "result";
+        if ((Boolean)mav.getModel().get(rsKey)){
+            mav.addObject("type",4);
+        }else {
+            mav.addObject("type",7);
+        }
+        mav.setViewName("login");
+        return mav;
     }
 
     /**
@@ -46,7 +64,20 @@ public class UserController {
      * @return
      */
     @GetMapping("jumpToChat/{id}")
-    public ModelAndView chat(@PathVariable String id){return service.chat(id);}
+    public ModelAndView chat(@PathVariable String id){
+        ModelAndView mav = service.chat(id);
+        mav.setViewName("chat");
+        return mav;
+    }
+
+    @GetMapping("link/{id}")
+    public ModelAndView linkTo(@PathVariable String id){
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("id",id);
+        mav.setViewName("chat_page");
+        return  mav;
+    }
+
 
 
 

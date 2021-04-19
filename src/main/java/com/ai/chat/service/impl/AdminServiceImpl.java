@@ -30,21 +30,15 @@ public class AdminServiceImpl implements AdminService{
         try{
             List<User> users = userMapper.query(user);
             mav.addObject("users", users);
-
         }catch (Exception e){
             mav.addObject("error",e.getCause().toString());
             e.printStackTrace();
         }
-        mav.setViewName("admin/userManage");
         return mav;
     }
-
-
-
     @Override
     public ModelAndView getUser(String id) {
         mav.addObject("user",userMapper.queryById(id));
-        mav.setViewName("admin/userEdit");
         return  mav;
     }
 
@@ -52,13 +46,12 @@ public class AdminServiceImpl implements AdminService{
     public ModelAndView delUser(String id) {
         try {
             userMapper.del(id);
-            mav.addObject("type",5);
+            mav.addObject("result",true);
         }catch (Exception e){
             mav.addObject("error",e.getCause().toString());
-            mav.addObject("type",4);
+            mav.addObject("result",false);
             e.printStackTrace();
         }
-        mav.setViewName("redirect:/admin/queryUser");
         return mav;
     }
 
@@ -66,13 +59,12 @@ public class AdminServiceImpl implements AdminService{
     public ModelAndView updateUser(User user) {
         try {
             userMapper.update(user);
-            mav.addObject("type",7);
+            mav.addObject("result",true);
         }catch (Exception e){
             mav.addObject("error",e.getCause().toString());
-            mav.addObject("type",6);
+            mav.addObject("result",false);
             e.printStackTrace();
         }
-        mav.setViewName("redirect:/admin/queryUser");
         return mav;
     }
     @Override
@@ -87,13 +79,12 @@ public class AdminServiceImpl implements AdminService{
             String password = Md5Util.md5(user.getPassword());
             user.setPassword(password);
             userMapper.add(user);
-            mav.addObject("type",1);
+            mav.addObject("result",true);
         }catch (Exception e){
             mav.addObject("error",e.getCause().toString());
-            mav.addObject("type",2);
+            mav.addObject("result",false);
             e.printStackTrace();
         }
-        mav.setViewName("admin/userAdd");
         return mav;
     }
 }

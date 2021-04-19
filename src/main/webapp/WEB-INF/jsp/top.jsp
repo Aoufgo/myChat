@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <html>
 
@@ -21,15 +21,17 @@
         .top-nav li a {
             color: #FFFFFF;
         }
+
         .top-nav {
-            background: #3f3f3f;
+            background: #c4c4c4;
         }
-        .fas{
+
+        .fas {
             color: #FFFFFF;
         }
     </style>
 </head>
-<body style="background-color: #f2f2f2">
+<body style="background-color: #fff">
 <div class="top-nav animate__animated animate__slideInDown">
     <ul class="top-nav-left">
         <li>
@@ -38,7 +40,9 @@
         </li>
         <c:if test="${empty user}">
             <li>
-                <span class="welcome"><font style="color: #FFFFFF; font-size: 13.333333px">欢迎您AiChat通讯录管理系统</font></span><!--文字可以使用span标签放置-->
+                <span class="welcome"><font
+                        style="color: #FFFFFF; font-size: 13.333333px">欢迎您AiChat通讯录管理系统</font></span>
+                <!--文字可以使用span标签放置-->
             </li>
             <li>
                 <i class="fas fa-sign-in-alt"></i>
@@ -50,13 +54,22 @@
         </c:if>
         <c:if test="${!empty user}">
             <li>
-                <span class="welcome">
-                    <font style="color: #FFFFFF; font-size: 13.333333px">
-                    欢迎用户
-                        <font style="color: #ff2b2a">
-                                ${user.name}
-                        </font>登录AiChat系统!
+                <img alt="image" class="img-circle" style="margin-top: 4px;border-radius: 50px"
+                     src="${pageContext.request.contextPath}/image/portrait/img.jpg" width=25 height=25>
+            </li>
+            <li>
+                <font style="color: #FFFFFF; font-size: 13px;margin-top: 1px">
+                    <font style="color: #fc6b0e">
+                            ${user.name}
                     </font>
+                </font>
+                <span class="welcome">
+                    <c:if test="${user.status == 1}">
+                        <font style="color: #0abb87;font-size: 13px">在线</font>
+                    </c:if>
+                    <c:if test="${user.status == 0}">
+                        <font style="color:gray;font-size: 13px">离线</font>
+                    </c:if>
                 </span><!--文字可以使用span标签放置-->
             </li>
             <li>
@@ -76,7 +89,7 @@
         </li>
         <li>
             <i class="fas fa-question-circle"></i>
-            <a  onclick="parent.frames['bottom'].help()" style="cursor: pointer"> 帮助</a>
+            <a onclick="parent.frames['bottom'].help()" style="cursor: pointer"> 帮助</a>
         </li>
         <c:if test="${!empty user}">
             <li>
@@ -88,7 +101,7 @@
 </div>
 <script>
     function quit() {
-        window.parent.frames['bottom'].location.href='user?method=quit';
+        window.parent.frames['bottom'].closeWebSocket();
         window.location.reload();
     }
 </script>

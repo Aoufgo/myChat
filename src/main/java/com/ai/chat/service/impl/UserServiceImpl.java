@@ -19,17 +19,17 @@ import java.util.Map;
 /**
  * @author aoufgo
  */
-@Repository
 @Service
 
 public class UserServiceImpl implements UserService {
     @Resource(name = "userMapper")
     private UserMapper mapper;
+    ModelAndView mav = new ModelAndView();
+
 
 
     @Override
     public ModelAndView register(User user) {
-        ModelAndView mav = new ModelAndView();
         try {
             //随机生成id
             user.setId(GenerateIdUtil.generateId());
@@ -38,25 +38,24 @@ public class UserServiceImpl implements UserService {
             user.setPassword(password);
             //添加数据库
             mapper.add(user);
-            mav.addObject("type", 1);
+            mav.addObject("result",true);
 
         } catch (Exception e) {
             mav.addObject("error", e.getCause().toString());
+            mav.addObject("result",false);
             e.printStackTrace();
         }
-        mav.setViewName("login");
         return mav;
     }
 
     @Override
     public ModelAndView login(User user, HttpSession session) {
-        ModelAndView mav = new ModelAndView();
         try {
             //md5加密
             String password = Md5Util.md5(user.getPassword());
             user.setPassword(password);
             if (mapper.queryByNP(user) == null) {
-                mav.addObject("type", 7);
+                mav.addObject("result",false);
             } else {
                 //将user对象存入session域对象
                 user = mapper.queryById(user.getId());
@@ -64,29 +63,25 @@ public class UserServiceImpl implements UserService {
                 //修改在线状态为'在线'
                 user.setStatus(1);
                 mapper.update(user);
-                mav.addObject("type", 4);
+                mav.addObject("result",true);
             }
         } catch (Exception e) {
             mav.addObject("error", e.getCause().toString());
             e.printStackTrace();
         }
-        mav.setViewName("login");
         return mav;
     }
 
     @Override
     public ModelAndView chat(String id) {
-        ModelAndView mav = new ModelAndView();
         try {
             //获取id的好友和分组
             List<Relation> friends = mapper.getFriends(id);
             mav.addObject("friends", friends);
-            System.out.println(friends);
         } catch (Exception e) {
             mav.addObject("error", e.getCause().toString());
             e.printStackTrace();
         }
-        mav.setViewName("chat");
         return mav;
     }
 

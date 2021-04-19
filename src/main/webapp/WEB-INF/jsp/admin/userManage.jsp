@@ -59,7 +59,7 @@
 <body style="text-align: center">
 <div class="row" style="width: 100%;margin: 0 auto">
     <div class="col-sm-12">
-        <div class="ibox float-e-margins animate__animated animate__fadeInUp animate__faster">
+        <div class="ibox float-e-margins animate__animated  animate__faster animate__fadeIn">
             <div class="ibox-title">
                 <h5>会员查询</h5>
             </div>

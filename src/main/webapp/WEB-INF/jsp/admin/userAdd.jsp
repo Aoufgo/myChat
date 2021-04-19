@@ -48,7 +48,7 @@
 
 <body>
 <div id="register_div" class="register_div">
-    <div class="middle-box text-center loginscreen animate__animated animate__fadeInUp animate__faster">
+    <div class="middle-box text-center loginscreen animate__animated animate__fadeIn animate__faster">
         <div>
             <h2>添加会员信息 </h2>
             <form class="m-t" role="form" action="${pageContext.request.contextPath}/admin/addUser"  method="post">
