@@ -110,7 +110,7 @@
         window.parent.location = 'index';
     }
     function offline1() {
-        $(".online").removeClass("online").addClass("offline").html("离线");
+        $(".online").removeClass("online").addClass("offline").html("离线").attr("onclick","top.location.reload()").css("cursor","pointer");
     }
     function online1() {
         $(".offline").removeClass("offline").addClass("online").html("在线");

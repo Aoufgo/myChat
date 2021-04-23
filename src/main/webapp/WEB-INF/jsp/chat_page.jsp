@@ -87,7 +87,7 @@
 <script src="${pageContext.request.contextPath}/static/js/app.min.js"></script>
 
 <!-- Examples -->
-<%--<script src="${pageContext.request.contextPath}/static/js/examples.js"></script>--%>
+<%--<script src="${pageContext.request.contextPath}/static/js/websocket.js"></script>--%>
 <%--获取历史记录,显示到页面上--%>
 <script>
     $(function () {
