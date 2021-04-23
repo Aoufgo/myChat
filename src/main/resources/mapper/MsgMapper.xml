@@ -13,8 +13,8 @@
         insert into `message` (fromId,toId,msg,sendTime)
         values (#{fromId},#{toId},#{msg},#{sendTime})
     </insert>
-    <select id="query" parameterType="com.ai.chat.pojo.User" resultType="com.ai.chat.pojo.User">
-        select * from `user`
+    <select id="query" parameterType="com.ai.chat.pojo.Message" resultType="com.ai.chat.pojo.Message">
+        select * from `message`
         <where>
             <if test="fromId != null and fromId != ''">
                 and fromId = #{fromId}
@@ -26,5 +26,14 @@
                 and sendTime = #{sendTime}
             </if>
         </where>
+    </select>
+    <select id="getChatLog" parameterType="string" resultType="com.ai.chat.pojo.Message">
+        select * from `message` where (fromId = #{fromId} and toId = #{toId}) or (fromId = #{toId} and toId = #{fromId})  order by sendTime
+    </select>
+    <update id="updateRead" parameterType="com.ai.chat.pojo.Message">
+        update message set isRead = 1 where fromId = #{fromId} and toId = #{toId}
+    </update>
+    <select id="getUnread" parameterType="string" resultType="java.util.HashMap">
+        select fromId,COUNT(*) count from `message` WHERE toId = #{toId} AND isRead = 0 GROUP BY fromId
     </select>
 </mapper>

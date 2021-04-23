@@ -67,16 +67,16 @@
 <%--    </div>--%>
     <div class="form-group">
         账号状态:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-        <c:if test="${user.accStatus == 0}">
+        <c:if test="${user.accStatus == 100}">
             <select name="accStatus">
-                <option value="0" >异常</option>
-                <option value="1" >正常</option>
+                <option value="100" >异常</option>
+                <option value="200" >正常</option>
             </select>
         </c:if>
-        <c:if test="${user.accStatus == 1}">
+        <c:if test="${user.accStatus == 200}">
             <select name="accStatus">
-                <option value="1" >正常</option>
-                <option value="0" >异常</option>
+                <option value="200" >正常</option>
+                <option value="100" >异常</option>
             </select>
         </c:if><br>
     </div>

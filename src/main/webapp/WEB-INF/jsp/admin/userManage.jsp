@@ -109,12 +109,12 @@
                                 <td>${user.age}</td>
                                 <td>${user.phone}</td>
                                 <td>
-                                    <c:if test="${user.status == 1}">在线</c:if>
-                                    <c:if test="${user.status == 0}">离线</c:if>
+                                    <c:if test="${user.status == 200}">在线</c:if>
+                                    <c:if test="${user.status == 100}">离线</c:if>
                                 </td>
                                 <td>
-                                    <c:if test="${user.accStatus == 1}">正常</c:if>
-                                    <c:if test="${user.accStatus == 0}">异常</c:if>
+                                    <c:if test="${user.accStatus == 200}">正常</c:if>
+                                    <c:if test="${user.accStatus == 100}">异常</c:if>
                                 </td>
                                 <td>
                                     <a href="${pageContext.request.contextPath}/admin/delUser?id=${user.id}">删除</a>

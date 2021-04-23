@@ -5,15 +5,14 @@ public class Message {
     private String toId;
     private String msg;
     private String sendTime;
+    private int isRead;
 
-    @Override
-    public String toString() {
-        return "Message{" +
-                "fromId='" + fromId + '\'' +
-                ", toId='" + toId + '\'' +
-                ", msg='" + msg + '\'' +
-                ", sendTime='" + sendTime + '\'' +
-                '}';
+    public Message(String fromId, String toId, String msg, String sendTime, int isRead) {
+        this.fromId = fromId;
+        this.toId = toId;
+        this.msg = msg;
+        this.sendTime = sendTime;
+        this.isRead = isRead;
     }
 
     public String getFromId() {
@@ -51,10 +50,22 @@ public class Message {
     public Message() {
     }
 
-    public Message(String fromId, String toId, String msg, String sendTime) {
-        this.fromId = fromId;
-        this.toId = toId;
-        this.msg = msg;
-        this.sendTime = sendTime;
+    @Override
+    public String toString() {
+        return "Message{" +
+                "fromId='" + fromId + '\'' +
+                ", toId='" + toId + '\'' +
+                ", msg='" + msg + '\'' +
+                ", sendTime='" + sendTime + '\'' +
+                ", isRead=" + isRead +
+                '}';
+    }
+
+    public int getIsRead() {
+        return isRead;
+    }
+
+    public void setIsRead(int isRead) {
+        this.isRead = isRead;
     }
 }

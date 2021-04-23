@@ -23,11 +23,19 @@
         }
 
         .top-nav {
-            background: #c4c4c4;
+            background: rgba(28, 148, 171, 0.65);
+            border-radius: 0 0 15px 15px;
+
         }
 
         .fas {
             color: #FFFFFF;
+        }
+        .online{
+            color: #0abb87;font-size: 13px;text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+        }
+        .offline{
+            color:gray;font-size: 13px
         }
     </style>
 </head>
@@ -46,7 +54,7 @@
             </li>
             <li>
                 <i class="fas fa-sign-in-alt"></i>
-                <a href="login" target="bottom">请登录</a>
+                <a href="login" target="_top">请登录</a>
             </li>
             <li>
                 <a href="register" target="bottom">免费注册</a>
@@ -59,17 +67,12 @@
             </li>
             <li>
                 <font style="color: #FFFFFF; font-size: 13px;margin-top: 1px">
-                    <font style="color: #fc6b0e">
+                    <font style="color: #fc6b0e;text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;">
                             ${user.name}
                     </font>
                 </font>
                 <span class="welcome">
-                    <c:if test="${user.status == 1}">
-                        <font style="color: #0abb87;font-size: 13px">在线</font>
-                    </c:if>
-                    <c:if test="${user.status == 0}">
-                        <font style="color:gray;font-size: 13px">离线</font>
-                    </c:if>
+                    <font class="offline">离线</font>
                 </span><!--文字可以使用span标签放置-->
             </li>
             <li>
@@ -99,10 +102,18 @@
         </c:if>
     </ul>
 </div>
+<script src="${pageContext.request.contextPath}/static/js/jquery.min.js"></script>
 <script>
     function quit() {
         window.parent.frames['bottom'].closeWebSocket();
-        window.location.reload();
+        $.get("user/quit");
+        window.parent.location = 'index';
+    }
+    function offline1() {
+        $(".online").removeClass("online").addClass("offline").html("离线");
+    }
+    function online1() {
+        $(".offline").removeClass("offline").addClass("online").html("在线");
     }
 </script>
 
