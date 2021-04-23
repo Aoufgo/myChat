@@ -27,7 +27,7 @@ $(function () {
                 //信息通知+1
                 $(".id2").each(function () {
                     if ($(this).val() === obj.fromId){
-                        const element = $(this).next().next().children("div.new-message-count");
+                        const element = $("#new-message-count-"+obj.fromId);
                         element.css('display','flex')
                         let m = element.html();
                         console.log(m)
@@ -46,7 +46,7 @@ $(function () {
                 $(".id2").each(function () {
                     if ($(this).val() === obj.id){
                         //修改在线状态
-                        const element = $(this).next().children("figure.avatar-state-warning");
+                        const element = $("#avatar-state-"+obj.id);
                         element.removeClass("avatar-state-warning");
                         element.addClass("avatar-state-success");
                     }
@@ -58,7 +58,7 @@ $(function () {
                 $(".id2").each(function () {
                     if ($(this).val() === obj.id){
                         //修改在线状态
-                        const element = $(this).next().children("figure.avatar-state-success");
+                        const element = $("#avatar-state-"+obj.id);
                         element.removeClass("avatar-state-success");
                         element.addClass("avatar-state-warning");
                     }

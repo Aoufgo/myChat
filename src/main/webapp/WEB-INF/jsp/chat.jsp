@@ -567,10 +567,10 @@
                                 <input value="${f.user.name}" type="hidden" id="name">
                                 <div>
                                     <c:if test="${f.user.status == 200}">
-                                    <figure class="avatar avatar-state-success">
+                                    <figure class="avatar avatar-state-success" id="avatar-state-${f.id2}">
                                         </c:if>
                                         <c:if test="${f.user.status != 200}">
-                                        <figure class="avatar avatar-state-warning">
+                                        <figure class="avatar avatar-state-warning" id="avatar-state-${f.id2}">
                                             </c:if>
                                             <span class="avatar-title bg-success rounded-circle">${fn:substring(f.user.name,0,1)}</span>
                                         </figure>
@@ -658,7 +658,7 @@
                         $(this).hide();
                     }
                 })
-            }else {
+            } else {
                 $(".list-group-item").show();
             }
         })
