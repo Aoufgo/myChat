@@ -116,6 +116,11 @@ public class UserController {
     public String quit(@PathVariable String id1,@PathVariable String id2){
         return (service.addF(id1, id2)? "yes":"no");
     }
+    @RequestMapping("getUser/{id}")
+    public String getUser(@PathVariable String id){
+        return (service.getUser(id)? "yes":"no");
+    }
+
 
 
 

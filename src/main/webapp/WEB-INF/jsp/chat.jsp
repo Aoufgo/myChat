@@ -235,7 +235,7 @@
                 <h5 class="modal-title">
                     <i data-feather="mail" class="mr-2"></i> 好友请求
                 </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="top.location.reload()">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i class="ti-close"></i>
                 </button>
             </div>
@@ -633,7 +633,10 @@
                 <c:if test="${!empty friends}">
                     src="${pageContext.request.contextPath}/user/link/${user.id}/${friends[0].id2}"
                 </c:if>
-                frameborder="0" data-id="" seamless scrolling="no" srcdoc="<p>请添加好友!</p>">
+                <c:if test="${empty friends}">
+                    srcdoc="<p>请添加好友!</p>"
+                </c:if>
+                frameborder="0" data-id="" seamless scrolling="no">
         </iframe>
 
 
@@ -672,8 +675,7 @@
             console.log($(this));
         })
     }
-</script>
-<script>
+
     $(function () {
         const element = $("#search")
         element.keyup(function () {
@@ -720,7 +722,18 @@
             e.preventDefault();
             var friendId = $(this).find('input[id=friendId]').val();
             var message = $(this).find('textarea[id=respMessage]').val();
-            send('${user.name}' + ':' + message, '${user.id}', friendId, new Date().getTime(), "friendResp")
+            $.get('${pageContext.request.contextPath}/user/getUser/' + friendId, function (resp) {
+                if (resp !== "yes") {
+                    layer.msg("找不到用户", {icon: 2})
+                    return;
+                }
+                if (resp === "yes") {
+                    send('${user.name}' + ':' + message, '${user.id}', friendId, new Date().getTime(), "friendResp")
+                    layer.msg("发送成功", {icon: 1})
+                    $("#addFriends").modal('hide');
+                }
+            })
+
         })
     })
 
@@ -728,7 +741,7 @@
         //隐藏邀请
         $(".list-group-item-" + id).hide();
         //设为已读
-        $.get('${pageContext.request.contextPath}/user/isRead/'+id+'/${user.id}')
+        $.get('${pageContext.request.contextPath}/user/isRead/' + id + '/${user.id}')
         $.get("${pageContext.request.contextPath}/user/addF/${user.id}/" + id, function (data) {
             console.log(data)
             if (data === "yes") {
@@ -739,11 +752,17 @@
         })
     }
 
+    $(function () {
+        $("#addFriendsResp").on("hide.bs.modal",function () {
+            top.location.reload();
+        })
+    })
+
     function refuse(id) {
         //隐藏邀请
         $(".list-group-item-" + id).hide();
         //设为已读
-        $.get('${pageContext.request.contextPath}/user/isRead/'+id+'/${user.id}')
+        $.get('${pageContext.request.contextPath}/user/isRead/' + id + '/${user.id}')
     }
 </script>
 

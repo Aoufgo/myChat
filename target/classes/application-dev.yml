@@ -7,7 +7,7 @@ spring:
   datasource:
     username: root
     password: Gsa123456
-    url: jdbc:mysql://localhost:3306/chatdemo?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/chatdemo?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC&allowMultiQueries=true
     driver-class-name: com.mysql.cj.jdbc.Driver
   mvc:
     view:
@@ -24,8 +24,8 @@ mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
   type-aliases-package: com.ai.chat.pojo
   #控制台打印mybatis执行的sql语句
-  #configuration:
-    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 
 

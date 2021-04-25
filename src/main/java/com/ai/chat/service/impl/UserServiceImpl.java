@@ -90,4 +90,10 @@ public class UserServiceImpl implements UserService {
         return relaMapper.addF(id1, id2) > 0;
     }
 
+    @Override
+    public Boolean getUser(String id) {
+        return mapper.queryById(id)!=null;
+    }
+
+
 }

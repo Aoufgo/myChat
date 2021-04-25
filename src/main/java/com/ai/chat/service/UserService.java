@@ -39,9 +39,16 @@ public interface UserService {
      * 添加好友关系
      * @param id1 id1
      * @param id2 id2
-     * @return 影响行数
+     * @return 添加成功
      */
     Boolean addF(String id1,String id2);
+    /**
+     * 是否有该用户
+     * @param id id
+     * @return
+     */
+    Boolean getUser(String id);
+
 
 
 
