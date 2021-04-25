@@ -1,6 +1,7 @@
 package com.ai.chat.service.impl;
 
 
+import com.ai.chat.mapper.RelaMapper;
 import com.ai.chat.pojo.Relation;
 import com.ai.chat.service.UserService;
 import com.ai.chat.mapper.UserMapper;
@@ -24,6 +25,8 @@ import java.util.Map;
 public class UserServiceImpl implements UserService {
     @Resource(name = "userMapper")
     private UserMapper mapper;
+    @Resource
+    private RelaMapper relaMapper;
     ModelAndView mav = new ModelAndView();
 
 
@@ -80,6 +83,11 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
         }
         return mav;
+    }
+
+    @Override
+    public Boolean addF(String id1, String id2) {
+        return relaMapper.addF(id1, id2) > 0;
     }
 
 }

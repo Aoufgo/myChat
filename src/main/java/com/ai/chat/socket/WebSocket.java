@@ -6,6 +6,7 @@ import com.ai.chat.pojo.Message;
 import com.ai.chat.pojo.User;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.sun.xml.internal.ws.server.ServerRtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -153,9 +154,15 @@ public class WebSocket {
             String fromId = jsonObject.getString("userId");
             String toId = jsonObject.getString("to");
             String time = jsonObject.getString("sendTime");
+            String type = jsonObject.getString("type");
             //发送信息给
             Map<String, Object> map1 = new HashMap<>();
-            map1.put("action", "send");
+            if ("message".equals(type)) {
+                map1.put("action", "send");
+            } else if ("friendResp".equals(type)){
+                map1.put("action", "friendResp");
+                map1.put("time",time);
+            }
             map1.put("textMessage", textMessage);
             map1.put("fromId", fromId);
             map1.put("toId", toId);

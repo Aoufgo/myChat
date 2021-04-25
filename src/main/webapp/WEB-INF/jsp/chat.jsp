@@ -104,6 +104,10 @@
         .nicescroll-rails.nicescroll-rails-vr {
             display: none !important;
         }
+
+        #mail_icon {
+            margin: 0;
+        }
     </style>
 </head>
 <body>
@@ -205,25 +209,41 @@
             </div>
             <div class="modal-body">
                 <div class="alert alert-info">向朋友发送好友请求</div>
-                <form>
+                <form id="addFriend">
                     <div class="form-group">
                         <label for="friendId" class="col-form-label">好友ID</label>
                         <input type="text" class="form-control" id="friendId">
                     </div>
                     <div class="form-group">
-                        <label for="message" class="col-form-label">请求信息</label>
-                        <textarea class="form-control" id="message"></textarea>
+                        <label for="respMessage" class="col-form-label">请求信息</label>
+                        <textarea class="form-control" id="respMessage"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">发送</button>
                     </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Submit</button>
             </div>
         </div>
     </div>
 </div>
 <!-- ./ Add friends modal -->
-
+<!-- Add friends modal -->
+<div class="modal fade" id="addFriendsResp" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i data-feather="mail" class="mr-2"></i> 好友请求
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="top.location.reload()">
+                    <i class="ti-close"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="resplist"></div>
+        </div>
+    </div>
+</div>
+<!-- ./ Add friends modal -->
 
 <!-- Setting modal -->
 <div class="modal fade" id="settingModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -534,6 +554,12 @@
             <header>
                 <span>Friends</span>
                 <ul class="list-inline">
+                    <li class="list-inline-item" data-toggle="tooltip" title="Friend Resp">
+                        <figure class="btn btn-outline-light" id="mail_icon" href="#" data-toggle="modal"
+                                data-target="#addFriendsResp">
+                            <i data-feather="mail"></i>
+                        </figure>
+                    </li>
                     <li class="list-inline-item" data-toggle="tooltip" title="Add friends">
                         <a class="btn btn-outline-light" href="#" data-toggle="modal" data-target="#addFriends">
                             <i data-feather="user-plus"></i>
@@ -545,8 +571,6 @@
             <form>
                 <label for="search">查询好友</label><input id="search" type="text" class="form-control"
                                                        placeholder="Search">
-                <script>
-                </script>
             </form>
             <div class="sidebar-body">
                 <p>${friends.size()} 个好友</p>
@@ -606,8 +630,10 @@
         <!-- ./ Friends sidebar -->
         <!-- Chat -->
         <iframe width="100%" class="chat" id="chatFrame" name="chatFrame" height="100%"
-                src="${pageContext.request.contextPath}/user/link/${user.id}/${friends[0].id2}"
-                frameborder="0" data-id="" seamless scrolling="no">
+                <c:if test="${!empty friends}">
+                    src="${pageContext.request.contextPath}/user/link/${user.id}/${friends[0].id2}"
+                </c:if>
+                frameborder="0" data-id="" seamless scrolling="no" srcdoc="<p>请添加好友!</p>">
         </iframe>
 
 
@@ -635,6 +661,7 @@
 
     function linkTo(id) {
         document.getElementById("chatFrame").src = '${pageContext.request.contextPath}/user/link/${user.id}/' + id;
+
     }
 
     function refreshFriends() {
@@ -667,18 +694,57 @@
         $.get("${pageContext.request.contextPath}/user/getUnread/${user.id}", function (data) {
             console.log(data)
             var obj = JSON.parse(data);
-            $(".id2").each(function () {
-                for (let o in obj) {
+            for (let o in obj) {
+                $(".id2").each(function () {
                     if (obj[o].fromId === $(this).val()) {
                         const element = $("#new-message-count-" + obj[o].fromId);
                         element.css('display', 'flex');
                         element.html(obj[o].count);
+                        return;
                     }
+                })
+                if (${!empty respList}) {
+                    $("#mail_icon").css("color", "red")
+                    <c:forEach items="${respList}" var="r">
+                    addResp('${r.fromId}', '${r.msg.trim()}', '${r.sendTime}')
+                    </c:forEach>
                 }
-            })
+            }
+
 
         })
     })
+    $(function () {
+        const element = $("#addFriend")
+        element.submit(function (e) {
+            e.preventDefault();
+            var friendId = $(this).find('input[id=friendId]').val();
+            var message = $(this).find('textarea[id=respMessage]').val();
+            send('${user.name}' + ':' + message, '${user.id}', friendId, new Date().getTime(), "friendResp")
+        })
+    })
+
+    function agree(id) {
+        //隐藏邀请
+        $(".list-group-item-" + id).hide();
+        //设为已读
+        $.get('${pageContext.request.contextPath}/user/isRead/'+id+'/${user.id}')
+        $.get("${pageContext.request.contextPath}/user/addF/${user.id}/" + id, function (data) {
+            console.log(data)
+            if (data === "yes") {
+                layer.msg("添加成功", {icon: 1})
+            } else {
+                layer.msg("添加失败", {icon: 2})
+            }
+        })
+    }
+
+    function refuse(id) {
+        //隐藏邀请
+        $(".list-group-item-" + id).hide();
+        //设为已读
+        $.get('${pageContext.request.contextPath}/user/isRead/'+id+'/${user.id}')
+    }
 </script>
 
 

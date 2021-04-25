@@ -35,6 +35,14 @@ public interface UserService {
      */
     ModelAndView chat(String id);
 
+    /**
+     * 添加好友关系
+     * @param id1 id1
+     * @param id2 id2
+     * @return 影响行数
+     */
+    Boolean addF(String id1,String id2);
+
 
 
 

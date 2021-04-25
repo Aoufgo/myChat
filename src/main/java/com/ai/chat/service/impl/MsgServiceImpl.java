@@ -70,4 +70,8 @@ public class MsgServiceImpl implements MsgService {
     public List<Map<String, Integer>> getUnread(String id) {
         return mapper.getUnread(id);
     }
+    @Override
+    public List<Message> getResp(String id) {
+        return mapper.getResp(id);
+    }
 }

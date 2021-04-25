@@ -76,6 +76,8 @@ public class UserController {
     @GetMapping("jumpToChat/{id}")
     public ModelAndView chat(@PathVariable String id){
         ModelAndView mav = service.chat(id);
+        //获取好友邀请信息
+        mav.addObject("respList",msgService.getResp(id));
         mav.setViewName("chat");
         return mav;
     }
@@ -109,6 +111,10 @@ public class UserController {
     @RequestMapping("getUnread/{id}")
     public String getUnread(@PathVariable String id){
         return  JSON.toJSONString(msgService.getUnread(id));
+    }
+    @RequestMapping("addF/{id1}/{id2}")
+    public String quit(@PathVariable String id1,@PathVariable String id2){
+        return (service.addF(id1, id2)? "yes":"no");
     }
 
 

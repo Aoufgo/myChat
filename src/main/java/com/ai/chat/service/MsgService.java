@@ -47,4 +47,11 @@ public interface MsgService {
      * @return 用户好友对应的未读消息数
      */
     List<Map<String,Integer>> getUnread(String id);
+    /**
+     * 获取用户的未读好友邀请
+     * @param id 用户Id
+     * @return 邀请信息
+     */
+    List<Message> getResp(String id);
+
 }

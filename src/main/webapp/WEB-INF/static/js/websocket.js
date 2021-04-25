@@ -19,46 +19,51 @@ $(function () {
             //消息转换成JSON对象
             var obj = JSON.parse(received_msg);
             //如果是发送信息的请求
-            if(obj.action === "send"){
+            if (obj.action === "send") {
                 //判断用户是否正在和对象聊天
-                if ($("#chatFrame[src$='"+obj.fromId+"']").length > 0){
-                    getTimeToHTML(obj.textMessage, "in", null,0);
+                if ($("#chatFrame[src$='" + obj.fromId + "']").length > 0) {
+                    getTimeToHTML(obj.textMessage, "in", null, 0);
                 }
                 //信息通知+1
                 $(".id2").each(function () {
-                    if ($(this).val() === obj.fromId){
-                        const element = $("#new-message-count-"+obj.fromId);
-                        element.css('display','flex')
+                    if ($(this).val() === obj.fromId) {
+                        const element = $("#new-message-count-" + obj.fromId);
+                        element.css('display', 'flex')
                         let m = element.html();
                         console.log(m)
-                        if (m === ''){
+                        if (m === '') {
                             element.html(1);
-                        }else {
+                        } else {
                             m++;
                             element.html(m);
                         }
                     }
                 })
             }
+            //判断是否是有用户发送好友请求
+            else if (obj.action === "friendResp") {
+                $("#mail_icon").css("color","red")
+                addResp(obj.fromId,obj.textMessage,obj.time)
+            }
             //判断是否是有用户在线请求
-            else if (obj.action === "online"){
+            else if (obj.action === "online") {
                 //查询好友列表是否有该id
                 $(".id2").each(function () {
-                    if ($(this).val() === obj.id){
+                    if ($(this).val() === obj.id) {
                         //修改在线状态
-                        const element = $("#avatar-state-"+obj.id);
+                        const element = $("#avatar-state-" + obj.id);
                         element.removeClass("avatar-state-warning");
                         element.addClass("avatar-state-success");
                     }
                 })
             }
             //判断是否是有用户离线请求
-            else if (obj.action === "offline"){
+            else if (obj.action === "offline") {
                 //查询好友列表是否有该id
                 $(".id2").each(function () {
-                    if ($(this).val() === obj.id){
+                    if ($(this).val() === obj.id) {
                         //修改在线状态
-                        const element = $("#avatar-state-"+obj.id);
+                        const element = $("#avatar-state-" + obj.id);
                         element.removeClass("avatar-state-success");
                         element.addClass("avatar-state-warning");
                     }
@@ -82,6 +87,22 @@ $(function () {
     }
 });
 
+function addResp(fromId,message,time) {
+    var Time = new Date();
+    Time.setTime(time);
+    $("#resplist").append(`<li class="list-group-item list-group-item-`+fromId+`">
+                    <div class="users-list-body">
+                        <div>
+                            <h5>`+fromId+`</h5><span style="color: #828282;font-size: 8px">`+Time+`</div>
+                            <p>`+message+`</p>
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="agree(`+fromId+`)">同意</button>
+                        <button type="button" class="btn btn-primary" onclick="refuse(`+fromId+`)">拒绝</button>
+                    </div>
+                </li>`)
+
+}
+
 function closeWebSocket() {
     //直接关闭websocket的连接
     webSocket.close();
@@ -99,7 +120,7 @@ function submitMsg() {
         message = $.trim(message);
         if (message) {
             var time = getTimeToHTML(message, 'outgoing-message', null);
-            send(message, $("#userId").val(), toId.val(), time);
+            send(message, $("#userId").val(), toId.val(), time, "message");
             input.val('');
         } else {
             input.focus();
@@ -114,8 +135,8 @@ function getTimeToHTML(message, type, time, isRead) {
         //获取系统时间
         var d = new Date();
         var minutes = d.getMinutes()
-        if (minutes.toString().length === 1){
-            minutes = '0'+minutes;
+        if (minutes.toString().length === 1) {
+            minutes = '0' + minutes;
         }
         var hour = d.getHours();
         if (hour > 12) {
@@ -138,8 +159,8 @@ function getTimeToHTML(message, type, time, isRead) {
         var day1 = d1.getFullYear() + "/" + month1 + "/" + d1.getDate();
 
         var minutes1 = d1.getMinutes()
-        if (minutes1.toString().length === 1){
-            minutes1 = '0'+minutes1;
+        if (minutes1.toString().length === 1) {
+            minutes1 = '0' + minutes1;
         }
         var hour1 = d1.getHours();
         if (hour1 > 12) {
@@ -176,7 +197,7 @@ function setMessageInnerHTML(message, type, time, isRead) {
                         <div class="message-content" >
                             ` + message + `
                         </div>
-                        `+ (isRead === 0 ? "<span class='new'>new</span>" : '') +`
+                        ` + (isRead === 0 ? "<span class='new'>new</span>" : '') + `
                         </div>
                     <div class="time ` + (isRead === 0 && type !== 'outgoing-message' ? 'ott' : '') + `" style="display: block">` + time + `` + (type === 'outgoing-message' ? '<i class="ti-double-check"></i>' : '') + `</div>
                 </div>
@@ -194,12 +215,14 @@ function setMessageInnerHTML(message, type, time, isRead) {
 /**
  *发送信息到服务器的方法
  */
-function send(message, id, toId, sendTime) {
+function send(message, id, toId, sendTime, type) {
+    console.log(type);
     var msg = {
         "message": message,
         "userId": id,
         "to": toId,
-        "sendTime": sendTime
+        "sendTime": sendTime,
+        "type": type
     };
     webSocket.send(JSON.stringify(msg));
 }
