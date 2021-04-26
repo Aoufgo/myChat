@@ -103,6 +103,12 @@
             <artifactId>spring-websocket</artifactId>
             <version>5.2.4.RELEASE</version>
         </dependency>
+<!--        文件上传插件-->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.3.2</version>
+        </dependency>
     </dependencies>
 
     <build>

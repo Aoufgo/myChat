@@ -73,6 +73,9 @@
             <if test="age != null and age != 0">
                 age = #{age},
             </if>
+            <if test="avatarUrl != null and avatarUrl != ''">
+                avatarUrl = #{avatarUrl},
+            </if>
         </set>
         where id = #{id}
     </update>

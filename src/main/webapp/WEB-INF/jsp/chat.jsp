@@ -218,10 +218,10 @@
                         <label for="respMessage" class="col-form-label">请求信息</label>
                         <textarea class="form-control" id="respMessage"></textarea>
                     </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">发送</button>
-                    </div>
                 </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" id="sendReq" class="btn btn-primary">发送</button>
             </div>
         </div>
     </div>
@@ -362,7 +362,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">
-                    <i data-feather="edit-2" class="mr-2"></i> Edit Profile
+                    <i data-feather="edit-2" class="mr-2"></i> 个人中心
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i class="ti-close"></i>
@@ -372,11 +372,11 @@
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" data-toggle="tab" href="#personal" role="tab"
-                           aria-controls="personal" aria-selected="true">Personal</a>
+                           aria-controls="personal" aria-selected="true">个人设置</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#about" role="tab" aria-controls="about"
-                           aria-selected="false">About</a>
+                           aria-selected="false">人脸注册</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#social-links" role="tab"
@@ -385,11 +385,30 @@
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane show active" id="personal" role="tabpanel">
-                        <form>
+                        <div class="form-group">
+                            <label class="col-form-label">头像</label>
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <figure class="avatar mr-3 item-rtl">
+                                        <img src="${user.avatarUrl}" class="rounded-circle" id="userAvatar"
+                                             alt="image">
+                                    </figure>
+                                </div>
+                                <div class="custom-file">
+                                    <form id="uploadForm">
+                                        <input type="file" class="custom-file-input" name="avatar" id="customFile">
+                                    </form>
+                                    <label class="custom-file-label" for="customFile">选择文件</label>
+                                </div>
+                            </div>
+                        </div>
+                        <form id="updateInfo">
+                            <input name="avatarUrl" type="hidden" id="avatarUrl">
+                            <input name="id" value="${id}" type="hidden">
                             <div class="form-group">
-                                <label for="fullname" class="col-form-label">Fullname</label>
+                                <label for="userNickname" class="col-form-label">昵称</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="fullname">
+                                    <input type="text" class="form-control" name="nickname" id="userNickname">
                                     <div class="input-group-append">
                                         <span class="input-group-text">
                                             <i data-feather="user"></i>
@@ -397,46 +416,32 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="form-group">
-                                <label class="col-form-label">Avatar</label>
-                                <div class="d-flex align-items-center">
-                                    <div>
-                                        <figure class="avatar mr-3 item-rtl">
-                                            <img src="./dist/media/img/avatar8.png" class="rounded-circle"
-                                                 alt="image">
-                                        </figure>
-                                    </div>
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="customFile">
-                                        <label class="custom-file-label" for="customFile">Choose file</label>
-                                    </div>
+                                <label for="gender" class="col-form-label">性别</label>
+                                <div class="input-group">
+                                    <select class="form-control" name="sex" id="gender">
+                                        <option value="f">男</option>
+                                        <option value="m">女</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="city" class="col-form-label">City</label>
+                                <label for="age" class="col-form-label">年龄</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="city" placeholder="Ex: Columbia">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">
-                                            <i data-feather="target"></i>
-                                        </span>
-                                    </div>
+                                    <input type="number" class="form-control" name="age" id="age">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="phone" class="col-form-label">Phone</label>
+                                <label for="phone" class="col-form-label">手机</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="phone" placeholder="(555) 555 55 55">
+                                    <input type="text" class="form-control" id="phone">
                                     <div class="input-group-append">
                                         <span class="input-group-text">
                                             <i data-feather="phone"></i>
                                         </span>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="website" class="col-form-label">Website</label>
-                                <input type="text" class="form-control" id="website" placeholder="https://">
                             </div>
                         </form>
                     </div>
@@ -540,7 +545,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save</button>
+                <button type="button" onclick="commit()" class="btn btn-primary">Save</button>
             </div>
         </div>
     </div>
@@ -666,6 +671,7 @@
         document.getElementById("chatFrame").src = '${pageContext.request.contextPath}/user/link/${user.id}/' + id;
 
     }
+
     function refreshFriends() {
         document.querySelector('#d').classList.add('refresh-icon');
         setTimeout('document.querySelector(\'#d\').classList.remove(\'refresh-icon\')', 1000);
@@ -674,6 +680,7 @@
             console.log($(this));
         })
     }
+
     $(function () {
         const element = $("#search")
         element.keyup(function () {
@@ -692,7 +699,6 @@
     })
     $(function () {
         $.get("${pageContext.request.contextPath}/user/getUnread/${user.id}", function (data) {
-            console.log(data)
             var obj = JSON.parse(data);
             for (let o in obj) {
                 $(".id2").each(function () {
@@ -715,23 +721,25 @@
         })
     })
     $(function () {
-        const element = $("#addFriend")
-        element.submit(function (e) {
+        $("#sendReq").click(function (e) {
             e.preventDefault();
             var friendId = $(this).find('input[id=friendId]').val();
             var message = $(this).find('textarea[id=respMessage]').val();
-            $.get('${pageContext.request.contextPath}/user/getUser/' + friendId, function (resp) {
-                if (resp !== "yes") {
-                    layer.msg("找不到用户", {icon: 2})
-                    return;
-                }
-                if (resp === "yes") {
-                    send('${user.name}' + ':' + message, '${user.id}', friendId, new Date().getTime(), "friendResp")
-                    layer.msg("发送成功", {icon: 1})
-                    $("#addFriends").modal('hide');
-                }
-            })
-
+            if (friendId === '${id}') {
+                layer.msg("您不能将自己加为好友!", {icon: 2});
+            } else {
+                $.get('${pageContext.request.contextPath}/user/getUser/' + friendId, function (resp) {
+                    if (resp !== "yes") {
+                        layer.msg("找不到用户", {icon: 2})
+                        return;
+                    }
+                    if (resp === "yes") {
+                        send('${user.name}' + ':' + message, '${user.id}', friendId, new Date().getTime(), "friendResp")
+                        layer.msg("发送成功", {icon: 1})
+                        $("#addFriends").modal('hide');
+                    }
+                })
+            }
         })
     })
 
@@ -749,17 +757,76 @@
             }
         })
     }
+
     $(function () {
-        $("#addFriendsResp").on("hide.bs.modal",function () {
+        $("#addFriendsResp").on("hide.bs.modal", function () {
             top.location.reload();
         })
     })
+
     function refuse(id) {
         //隐藏邀请
         $(".list-group-item-" + id).hide();
         //设为已读
         $.get('${pageContext.request.contextPath}/user/isRead/' + id + '/${user.id}')
     }
+
+    function showProfile() {
+        $.get("${pageContext.request.contextPath}/user/getInfo/${user.id}", function (resp) {
+            var r = JSON.parse(resp);
+            $("#userNickname").val(r.nickname);
+            if (r.sex === 'f') {
+                $("#gender").val("f");
+            } else {
+                $("#gender").val("m");
+            }
+            $("#age").val(r.age);
+            $("#phone").val(r.phone);
+            $("#userAvatar").attr("src",r.avatarUrl)
+        })
+        $('#editProfileModal').modal('show')
+
+    }
+
+    function commit() {
+        $.post("${pageContext.request.contextPath}/user/update",
+            $("#updateInfo").serializeArray(),
+            function (resp) {
+                if (resp === "yes") {
+                    layer.msg("修改成功", {icon: 1});
+                    //修改导航栏头像
+                   $("#avatar",window.parent.frames["topFrame"].document).attr("src",$("#avatarUrl").val())
+                } else {
+                    layer.msg("修改失败", {icon: 2});
+                }
+            })
+    }
+
+    $(function () {
+        $("#customFile").change(function () {
+            var formData = new FormData($('#uploadForm')[0]);
+            var localhostPath = window.document.location.href.substring(0, window.document.location.href.indexOf(window.document.location.pathname));
+            $.ajax({
+                type: 'post',
+                url: localhostPath + "${pageContext.request.contextPath}/user/uploadAvatar", //上传文件的请求路径必须是绝对路径
+                data: formData,
+                cache: false,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    var a = JSON.parse(data)
+                    $("#uploadForm").next().html(a.result);
+                    var avatarUrl = localhostPath + "${pageContext.request.contextPath}/avatar/"+a.name
+                    $("#userAvatar").attr("src",avatarUrl);
+                    $("#avatarUrl").val(avatarUrl);
+                },
+                error: function () {
+                    $("#uploadForm").next().html("上传失败");
+                }
+            });
+        });
+    })
+
 </script>
 
 

@@ -43,11 +43,24 @@ public interface UserService {
      */
     Boolean addF(String id1,String id2);
     /**
-     * 是否有该用户
+     * 获取用户信息
      * @param id id
-     * @return
+     * @return 是否有该用户
      */
     Boolean getUser(String id);
+    /**
+     * 用户信息
+     * @param id id
+     * @return 对象
+     */
+    User getInfo(String id);
+
+    /**
+     * 修改用户信息
+     * @param user 对象
+     * @return 是否修改成功
+     */
+    Boolean update(User user);
 
 
 
