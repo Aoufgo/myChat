@@ -666,7 +666,6 @@
         document.getElementById("chatFrame").src = '${pageContext.request.contextPath}/user/link/${user.id}/' + id;
 
     }
-
     function refreshFriends() {
         document.querySelector('#d').classList.add('refresh-icon');
         setTimeout('document.querySelector(\'#d\').classList.remove(\'refresh-icon\')', 1000);
@@ -675,7 +674,6 @@
             console.log($(this));
         })
     }
-
     $(function () {
         const element = $("#search")
         element.keyup(function () {
@@ -751,13 +749,11 @@
             }
         })
     }
-
     $(function () {
         $("#addFriendsResp").on("hide.bs.modal",function () {
             top.location.reload();
         })
     })
-
     function refuse(id) {
         //隐藏邀请
         $(".list-group-item-" + id).hide();
