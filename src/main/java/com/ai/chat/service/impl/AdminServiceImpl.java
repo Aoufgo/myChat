@@ -1,6 +1,8 @@
 package com.ai.chat.service.impl;
 
+import com.ai.chat.mapper.AdminMapper;
 import com.ai.chat.mapper.UserMapper;
+import com.ai.chat.pojo.Admin;
 import com.ai.chat.pojo.User;
 import com.ai.chat.service.AdminService;
 import com.ai.chat.util.GenerateIdUtil;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 
@@ -23,6 +26,8 @@ public class AdminServiceImpl implements AdminService{
     ModelAndView mav = new ModelAndView();
     @Resource
     private UserMapper userMapper;
+    @Resource
+    private AdminMapper adminMapper;
 
 
     @Override
@@ -83,6 +88,25 @@ public class AdminServiceImpl implements AdminService{
         }catch (Exception e){
             mav.addObject("error",e.getCause().toString());
             mav.addObject("result",false);
+            e.printStackTrace();
+        }
+        return mav;
+    }
+
+    @Override
+    public ModelAndView login(Admin admin, HttpSession session) {
+        try {
+            String adminPassword = Md5Util.md5(admin.getAdminPassword());
+            admin.setAdminPassword(adminPassword);
+            if (adminMapper.queryByNp(admin) == null) {
+                mav.addObject("result", false);
+            } else {
+                admin = adminMapper.queryById(admin.getAdminId());
+                session.setAttribute("admin", admin);
+                mav.addObject("result", true);
+            }
+        }catch (Exception e){
+//            mav.addObject("error",e.getCause().toString());
             e.printStackTrace();
         }
         return mav;

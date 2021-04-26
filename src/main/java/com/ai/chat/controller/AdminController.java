@@ -1,5 +1,6 @@
 package com.ai.chat.controller;
 
+import com.ai.chat.pojo.Admin;
 import com.ai.chat.pojo.User;
 import com.ai.chat.service.AdminService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author aoufgo
@@ -74,5 +76,26 @@ public class AdminController {
         mav.setViewName("admin/userAdd");
         return mav;
     }
+
+    /**
+     * 管理员登录方法
+     * @param admin
+     * @param session
+     * @return
+     */
+    @RequestMapping("adminLogin")
+    public ModelAndView adminLogin(Admin admin, HttpSession session){
+        ModelAndView mav = adminService.login(admin,session);
+        rsKey = "result";
+        if ((Boolean)mav.getModel().get(rsKey)) {
+            mav.addObject("type", 4);
+        }else {
+            mav.addObject("type",7);
+        }
+            mav.setViewName("admin/adminLogin");
+        return  mav;
+        }
+
+
 
 }

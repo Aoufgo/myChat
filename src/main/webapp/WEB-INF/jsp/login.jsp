@@ -177,7 +177,7 @@
 </head>
 <div style="position: absolute; bottom: 10px; right: 10px;">
     <font style="color: #ffffff;font-size: 13.33333333px">
-        <a onclick="parent.top.location='adminLogin.jsp'" style="cursor: pointer">
+        <a onclick="parent.top.location='${pageContext.request.contextPath}/admin_page/adminLogin'" style="cursor: pointer">
             管理员入口
         </a>
     </font>
