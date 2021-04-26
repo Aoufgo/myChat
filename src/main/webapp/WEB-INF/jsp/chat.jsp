@@ -601,7 +601,12 @@
                                         <c:if test="${f.user.status != 200}">
                                         <figure class="avatar avatar-state-warning" id="avatar-state-${f.id2}">
                                             </c:if>
-                                            <span class="avatar-title bg-success rounded-circle">${fn:substring(f.user.name,0,1)}</span>
+                                            <c:if test="${!empty f.user.avatarUrl}">
+                                                <img class="rounded-circle" src="${f.user.avatarUrl}">
+                                            </c:if>
+                                            <c:if test="${empty f.user.avatarUrl}">
+                                                <span class="avatar-title bg-success rounded-circle">${fn:substring(f.user.name,0,1)}</span>
+                                            </c:if>
                                         </figure>
                                 </div>
                                 <div class="users-list-body">
@@ -782,7 +787,7 @@
             }
             $("#age").val(r.age);
             $("#phone").val(r.phone);
-            $("#userAvatar").attr("src",r.avatarUrl)
+            $("#userAvatar").attr("src", r.avatarUrl)
         })
         $('#editProfileModal').modal('show')
 
@@ -795,7 +800,7 @@
                 if (resp === "yes") {
                     layer.msg("修改成功", {icon: 1});
                     //修改导航栏头像
-                   $("#avatar",window.parent.frames["topFrame"].document).attr("src",$("#avatarUrl").val())
+                    $("#avatar", window.parent.frames["topFrame"].document).attr("src", $("#avatarUrl").val())
                 } else {
                     layer.msg("修改失败", {icon: 2});
                 }
@@ -816,8 +821,8 @@
                 success: function (data) {
                     var a = JSON.parse(data)
                     $("#uploadForm").next().html(a.result);
-                    var avatarUrl = localhostPath + "${pageContext.request.contextPath}/avatar/"+a.name
-                    $("#userAvatar").attr("src",avatarUrl);
+                    var avatarUrl = localhostPath + "${pageContext.request.contextPath}/avatar/" + a.name
+                    $("#userAvatar").attr("src", avatarUrl);
                     $("#avatarUrl").val(avatarUrl);
                 },
                 error: function () {

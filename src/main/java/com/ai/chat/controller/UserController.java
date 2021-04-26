@@ -164,7 +164,7 @@ public class UserController {
             // 获取文件的后缀名
             String suffixName = fileName.substring(fileName.lastIndexOf("."));
             // 设置文件存储路径
-            String filePath = "/Volumes/mac-data/chatAvatar/";
+            String filePath = "/Volumes/MacData/chatAvatar/";
             // 用uuid给新文件命名
             String fileUUName = UUID.randomUUID().toString();
             String path = filePath + fileUUName + suffixName;

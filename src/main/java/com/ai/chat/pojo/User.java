@@ -44,6 +44,7 @@ public class User {
                 ", lastLoginTime='" + lastLoginTime + '\'' +
                 ", faceUrl='" + faceUrl + '\'' +
                 ", facePath='" + facePath + '\'' +
+                ", avatarUrl='" + avatarUrl + '\'' +
                 '}';
     }
 

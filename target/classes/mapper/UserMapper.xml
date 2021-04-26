@@ -17,6 +17,7 @@
         <result column="lastLoginTime" property="lastLoginTime"/>
         <result column="faceUrl" property="faceUrl"/>
         <result column="facePath" property="facePath"/>
+        <result column="avatarUrl" property="avatarUrl"/>
     </resultMap>
     <insert id="add" parameterType="com.ai.chat.pojo.User">
         insert into `user` (id,name,nickname,password,sex,age,phone)
@@ -72,6 +73,9 @@
             </if>
             <if test="age != null and age != 0">
                 age = #{age},
+            </if>
+            <if test="avatarUrl != null and avatarUrl != ''">
+                avatarUrl = #{avatarUrl},
             </if>
         </set>
         where id = #{id}
