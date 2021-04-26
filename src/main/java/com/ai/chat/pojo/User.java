@@ -15,6 +15,15 @@ public class User {
     private String lastLoginTime;
     private String faceUrl;
     private String facePath;
+    private String avatarUrl;
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
 
     public User() {
     }
@@ -35,6 +44,7 @@ public class User {
                 ", lastLoginTime='" + lastLoginTime + '\'' +
                 ", faceUrl='" + faceUrl + '\'' +
                 ", facePath='" + facePath + '\'' +
+                ", avatarUrl='" + avatarUrl + '\'' +
                 '}';
     }
 

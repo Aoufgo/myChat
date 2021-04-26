@@ -171,7 +171,7 @@ function getTimeToHTML(message, type, time, isRead) {
         }
         //如果不是同一天,则显示日期
         if (day !== day1) {
-            time = day + " " + hour1 + ":" + minutes;
+            time = day1 + " " + hour1 + ":" + minutes;
         } else {
             time = hour1 + ":" + minutes;
         }
@@ -189,7 +189,7 @@ function setMessageInnerHTML(message, type, time, isRead) {
             `<div class="message-item ` + type + `">
            <div class="message-avatar">
                 <figure class="avatar" title="` + (type === 'outgoing-message' ? 'Mirabelle Tow' : 'Byrom Guittet') + `">
-                    <img src="./dist/media/img/` + (type === 'outgoing-message' ? 'women_avatar5.jpg' : 'man_avatar3.jpg') + `" class="rounded-circle">
+                    <img class="rounded-circle ` + (type === 'outgoing-message' ? 'fromAvatar' : 'toAvatar') + `">
                 </figure>
                 </div>
                     <div>

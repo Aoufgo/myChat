@@ -14,6 +14,7 @@
     <link href="${pageContext.request.contextPath}/static/css/top.css" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/plugin/fontawesome/css/all.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/animate.min.css"/>
+    <script src="${pageContext.request.contextPath}/static/js/jquery.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title></title>
@@ -31,11 +32,16 @@
         .fas {
             color: #FFFFFF;
         }
-        .online{
-            color: #0abb87;font-size: 13px;text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+
+        .online {
+            color: #0abb87;
+            font-size: 13px;
+            text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
         }
-        .offline{
-            color:gray;font-size: 13px
+
+        .offline {
+            color: gray;
+            font-size: 13px
         }
     </style>
 </head>
@@ -62,8 +68,11 @@
         </c:if>
         <c:if test="${!empty user}">
             <li>
-                <img alt="image" class="img-circle" style="margin-top: 4px;border-radius: 50px"
-                     src="${pageContext.request.contextPath}/image/portrait/img.jpg" width=25 height=25>
+                <img id="avatar" alt="image" class="img-circle" style="margin-top: 4px;border-radius: 50px"
+                <c:if test="${!empty user.avatarUrl}"> src="${user.avatarUrl}"
+                </c:if>
+                <c:if test="${empty user.avatarUrl}">
+                     src="${pageContext.request.contextPath}/image/portrait/img.jpg" </c:if> width=25 height=25>
             </li>
             <li>
                 <font style="color: #FFFFFF; font-size: 13px;margin-top: 1px">
@@ -77,7 +86,7 @@
             </li>
             <li>
                 <i class="fas fa-user-edit"></i>
-                <a href="center" target="bottom">个人中心</a>
+                <a href="#" onclick="parent.frames['bottom'].showProfile()">个人中心</a>
             </li>
         </c:if>
     </ul>
@@ -102,16 +111,17 @@
         </c:if>
     </ul>
 </div>
-<script src="${pageContext.request.contextPath}/static/js/jquery.min.js"></script>
 <script>
     function quit() {
         window.parent.frames['bottom'].closeWebSocket();
         $.get("user/quit");
         window.parent.location = 'index';
     }
+
     function offline1() {
-        $(".online").removeClass("online").addClass("offline").html("离线").attr("onclick","top.location.reload()").css("cursor","pointer");
+        $(".online").removeClass("online").addClass("offline").html("离线").attr("onclick", "top.location.reload()").css("cursor", "pointer");
     }
+
     function online1() {
         $(".offline").removeClass("offline").addClass("online").html("在线");
     }

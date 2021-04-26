@@ -107,6 +107,10 @@
         $(".ott").removeClass("ott");
         $("#new-message-count-${id}",parent.document).html('').hide();
     })
+    $(function () {
+        $(".fromAvatar").attr("src",'${user.avatarUrl}');
+        $(".toAvatar").attr("src",'${toIdAvatar}');
+    })
 </script>
 </body>
 </html>

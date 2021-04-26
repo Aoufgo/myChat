@@ -27,7 +27,6 @@ public class ServiceAspect {
     @Before(value = "execution(* *..*Impl.*(..))")
     public void timeBefore(JoinPoint jp){
         //获取方法的定义
-        System.out.println("方法的定义:"+jp.getSignature());
         System.out.println("方法的名称:"+jp.getSignature().getName());
         System.out.println("业务执行的时间为"+new Date());
     }

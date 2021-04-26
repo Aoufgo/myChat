@@ -30,7 +30,6 @@ public class UserServiceImpl implements UserService {
     ModelAndView mav = new ModelAndView();
 
 
-
     @Override
     public ModelAndView register(User user) {
         try {
@@ -41,11 +40,11 @@ public class UserServiceImpl implements UserService {
             user.setPassword(password);
             //添加数据库
             mapper.add(user);
-            mav.addObject("result",true);
+            mav.addObject("result", true);
 
         } catch (Exception e) {
             mav.addObject("error", e.getCause().toString());
-            mav.addObject("result",false);
+            mav.addObject("result", false);
             e.printStackTrace();
         }
         return mav;
@@ -58,12 +57,12 @@ public class UserServiceImpl implements UserService {
             String password = Md5Util.md5(user.getPassword());
             user.setPassword(password);
             if (mapper.queryByNP(user) == null) {
-                mav.addObject("result",false);
+                mav.addObject("result", false);
             } else {
                 //将user对象存入session域对象
                 user = mapper.queryById(user.getId());
                 session.setAttribute("user", user);
-                mav.addObject("result",true);
+                mav.addObject("result", true);
             }
         } catch (Exception e) {
             mav.addObject("error", e.getCause().toString());
@@ -92,7 +91,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean getUser(String id) {
-        return mapper.queryById(id)!=null;
+        return mapper.queryById(id) != null;
+    }
+
+    @Override
+    public User getInfo(String id) {
+        return mapper.queryById(id);
+    }
+
+    @Override
+    public Boolean update(User user) {
+
+        return mapper.update(user) > 0;
     }
 
 
