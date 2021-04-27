@@ -81,6 +81,7 @@ $(function () {
         webSocket.onclose = function () {
             console.log("连接已关闭...");
             layer.msg("连接已经关闭....", {time: 1000});
+            $('#disconnected').modal('show')
             parent.frames['topFrame'].offline1();
         };
         //连接错误,服务器关闭回调
