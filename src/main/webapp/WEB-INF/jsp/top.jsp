@@ -50,7 +50,7 @@
     <ul class="top-nav-left">
         <li>
             <i class="fas fa-home"></i>
-            <a href="index.jsp" target="_top">主页</a>
+            <a href="${pageContext.request.contextPath}/index" target="_top">主页</a>
         </li>
         <c:if test="${empty user}">
             <li>
@@ -63,7 +63,7 @@
                 <a href="login" target="_top">请登录</a>
             </li>
             <li>
-                <a href="register" target="bottom">免费注册</a>
+                <a href="register" target="_top">免费注册</a>
             </li>
         </c:if>
         <c:if test="${!empty user}">
@@ -115,7 +115,7 @@
     function quit() {
         window.parent.frames['bottom'].closeWebSocket();
         $.get("user/quit");
-        window.parent.location = 'index';
+        top.location = '${pageContext.request.contextPath}/index';
     }
 
     function offline1() {

@@ -92,10 +92,16 @@
             width: 230px;
             height: 30px;
             border: 0px;
-            background-color: #007DDB;
             color:white;
             font-family: 微软雅黑;
             font-size: 16px;
+        }
+        .btn{
+            background-color: #6bb9c8;
+            border-color: #6bb9c8;
+        }
+        .btn:hover{
+            background-color: #3b99ab;
         }
 
         .textbox {
@@ -204,17 +210,17 @@
             <p><i class="far fa-smile-wink" style="size:1px"></i>
                 <a onclick="faceLogin()" style="cursor: pointer"><font style="font-size: 13.3333333px">人脸登录  </font></a>
                 <a onclick="forgetPassword()" style="cursor: pointer"><font style="font-size: 13.3333333px">忘记密码?  </font></a>
-                <font style="font-size:13.3333333px">没有账号?去<a href="register">注册</a></font>
+                <font style="font-size:13.3333333px">没有账号?去<a href="${pageContext.request.contextPath}/register">注册</a></font>
             </p>
         </form>
     </div>
     <!-- 验证码登录表单 -->
     <div class='div_mailLogin' id='mailLogin'>
-        <form name='mailLogin_form' method="post" action="user?method=login2">
-            <input name="userPhone" id="userPhone" class="textbox" type="text" placeholder="请输入手机号" value=""/><br/>
+        <form name='mailLogin_form' method="post" action="${pageContext.request.contextPath}/user/codeLogin">
+            <input name="phone" id="userPhone" class="textbox" type="text" placeholder="请输入手机号"/><br/>
             <div>
                 <input name="code" id="code" class="textbox code" type="text" placeholder="请输入验证码" autocomplete="off" value=""/>
-                <span><button class="btn" type="button" id="sendCode" style="width: 50px;margin-top: 0" >发送</button></span>
+                <button class="btn" type="button" id="sendCode" style="width: 45px" >发送</button>
             </div>
             <div style="height:20px;"></div>
             <input id="input_login_submit" class='btn' type="submit" name='login' value='登录' />

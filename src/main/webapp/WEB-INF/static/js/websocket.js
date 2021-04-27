@@ -18,7 +18,7 @@ $(function () {
             console.log("数据已接收:" + received_msg);
             //消息转换成JSON对象
             var obj = JSON.parse(received_msg);
-            //如果是发送信息的请求
+            //如果是发送信息的响应
             if (obj.action === "send") {
                 //判断用户是否正在和对象聊天
                 if ($("#chatFrame[src$='" + obj.fromId + "']").length > 0) {
@@ -40,12 +40,12 @@ $(function () {
                     }
                 })
             }
-            //判断是否是有用户发送好友请求
-            else if (obj.action === "friendResp") {
-                $("#mail_icon").css("color","red")
-                addResp(obj.fromId,obj.textMessage,obj.time)
+            //判断是否是有用户发送好友响应
+            else if (obj.action === "friendReq") {
+                $("#mail_icon").css("color", "red")
+                addReq(obj.fromId, obj.textMessage, obj.time)
             }
-            //判断是否是有用户在线请求
+            //判断是否是有用户在线响应
             else if (obj.action === "online") {
                 //查询好友列表是否有该id
                 $(".id2").each(function () {
@@ -57,7 +57,7 @@ $(function () {
                     }
                 })
             }
-            //判断是否是有用户离线请求
+            //判断是否是有用户离线响应
             else if (obj.action === "offline") {
                 //查询好友列表是否有该id
                 $(".id2").each(function () {
@@ -68,6 +68,12 @@ $(function () {
                         element.addClass("avatar-state-warning");
                     }
                 })
+            }
+            //判断是否有强制下线响应
+            else if (obj.action === "forceOffline") {
+                layer.msg("账号多端登录,您已被强制下线....");
+                console.log("账号多端登录,您已被强制下线....")
+                parent.frames['topFrame'].quit()
             }
         };
 
@@ -87,17 +93,17 @@ $(function () {
     }
 });
 
-function addResp(fromId,message,time) {
+function addReq(fromId, message, time) {
     var Time = new Date();
     Time.setTime(time);
-    $("#resplist").append(`<li class="list-group-item list-group-item-`+fromId+`">
+    $("#reqList").append(`<li class="list-group-item list-group-item-` + fromId + `">
                     <div class="users-list-body">
                         <div>
-                            <h5>`+fromId+`</h5><span style="color: #828282;font-size: 8px">`+Time+`</div>
-                            <p>`+message+`</p>
+                            <h5>` + fromId + `</h5><span style="color: #828282;font-size: 8px">` + Time + `</div>
+                            <p>` + message + `</p>
                         </div>
-                        <button type="button" class="btn btn-primary" onclick="agree(`+fromId+`)">同意</button>
-                        <button type="button" class="btn btn-primary" onclick="refuse(`+fromId+`)">拒绝</button>
+                        <button type="button" class="btn btn-primary" onclick="agree(` + fromId + `)">同意</button>
+                        <button type="button" class="btn btn-primary" onclick="refuse(` + fromId + `)">拒绝</button>
                     </div>
                 </li>`)
 
@@ -202,6 +208,8 @@ function setMessageInnerHTML(message, type, time, isRead) {
                     <div class="time ` + (isRead === 0 && type !== 'outgoing-message' ? 'ott' : '') + `" style="display: block">` + time + `` + (type === 'outgoing-message' ? '<i class="ti-double-check"></i>' : '') + `</div>
                 </div>
         </div>`);
+        //设置头像
+        window.frames["chatFrame"].setAvatar();
         setTimeout(function () {
             chat_body.scrollTop(chat_body.get(0).scrollHeight, -1).niceScroll({
                 cursorcolor: 'rgba(66, 66, 66, 0.20)',

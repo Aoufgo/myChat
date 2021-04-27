@@ -52,6 +52,6 @@ public interface MsgService {
      * @param id 用户Id
      * @return 邀请信息
      */
-    List<Message> getResp(String id);
+    List<Message> getReq(String id);
 
 }

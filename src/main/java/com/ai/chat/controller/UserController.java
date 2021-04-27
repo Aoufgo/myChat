@@ -5,8 +5,10 @@ import com.ai.chat.pojo.Relation;
 import com.ai.chat.pojo.User;
 import com.ai.chat.service.MsgService;
 import com.ai.chat.service.UserService;
+import com.ai.chat.util.SendCodeUtil;
 import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpRequest;
@@ -16,13 +18,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 /**
  * @author aoufgo
@@ -44,15 +46,23 @@ public class UserController {
      * @return 反馈信息
      */
     @RequestMapping("register")
-    public ModelAndView register(User user) {
-        ModelAndView mav = service.register(user);
-        rsKey = "result";
-        if ((Boolean) mav.getModel().get(rsKey)) {
-            mav.addObject("type", 1);
-            mav.setViewName("login");
-        } else {
-            mav.addObject("type", 0);
+    public ModelAndView register(User user,@RequestParam String code,HttpSession session) {
+        ModelAndView mav = new ModelAndView();
+        String code1 = (String) session.getAttribute("code");
+        System.out.println("验证码:"+code1);
+        if (code1 == null || !code1.equals(code)) {
+            mav.addObject("type", 2);
             mav.setViewName("register");
+        }else {
+            ModelAndView mav1 = service.register(user);
+            rsKey = "result";
+            if ((Boolean) mav1.getModel().get(rsKey)) {
+                mav.addObject("type", 1);
+                mav.setViewName("login");
+            } else {
+                mav.addObject("type", 0);
+                mav.setViewName("register");
+            }
         }
         return mav;
     }
@@ -76,6 +86,10 @@ public class UserController {
         mav.setViewName("login");
         return mav;
     }
+    @RequestMapping("codeLogin")
+    public ModelAndView codeLogin(@RequestParam String code, @RequestParam String phone,HttpSession session) {
+        return service.codeLogin(code,phone,session);
+    }
 
     /**
      * 跳转到chat页面
@@ -87,7 +101,7 @@ public class UserController {
     public ModelAndView chat(@PathVariable String id) {
         ModelAndView mav = service.chat(id);
         //获取好友邀请信息
-        mav.addObject("respList", msgService.getResp(id));
+        mav.addObject("reqList", msgService.getReq(id));
         mav.setViewName("chat");
         return mav;
     }
@@ -142,6 +156,10 @@ public class UserController {
     public String getUser(@PathVariable String id) {
         return (service.getUser(id) ? "yes" : "no");
     }
+    @RequestMapping("getUserByPhone/{phone}")
+    public String getUserByPhone(@PathVariable String phone) {
+        return (service.getUserByPhone(phone) ? "yes" : "no");
+    }
 
     @RequestMapping("getInfo/{id}")
     public String getInfo(@PathVariable String id) {
@@ -181,6 +199,44 @@ public class UserController {
         }
         return JSON.toJSONString(map);
     }
-
+    @RequestMapping("sendCode")
+    public String sendCode(@RequestParam String userPhone,HttpSession session ) throws IOException {
+        //调用发送验证码的方法
+        String code = SendCodeUtil.send(userPhone);
+        //创建json对象
+        JsonObject json = new JsonObject();
+        if (code == null) {
+            System.out.println("发送失败");
+            //作出响应  json数据
+            //将响应的结果添加到json对象中
+            json.addProperty("result", "no");
+        } else {
+            System.out.println("发送成功");
+            //设置验证码的有效期
+            //将服务器中的验证码存储起来   session
+            session.setAttribute("code", code);
+            //当过了有效期，将存储的验证码删除
+            //在固定时间后，删除session中的验证码  Timer
+            //创建计时器
+            Timer timer = new Timer();
+            //执行计时器五分钟后删除session的验证码
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    //删除session中的验证码
+                    session.removeAttribute("code");
+                    System.out.println("验证码已失效");
+                    //取消计时器
+                    timer.cancel();
+                }
+            }, 1000 * 60 * 5);
+            json.addProperty("result", "yes");
+        }
+        return json.toString();
+    }
+    @RequestMapping("checkName")
+    public String checkName(@RequestParam String name){
+        return (service.checkName(name) ? "yes" : "no");
+    }
 
 }

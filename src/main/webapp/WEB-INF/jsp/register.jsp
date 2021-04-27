@@ -33,12 +33,19 @@
             border-radius: 20px;
             background-color:white;
             width:500px;
-            height:818px;
+            height:830px;
             z-index:2;
             display: block;
             margin: 100px auto;
             border-top:none;
             text-align: center;
+        }
+        .btn.btn-primary{
+            background-color: #6bb9c8;
+            border-color: #6bb9c8;
+        }
+        .btn.btn-primary:hover{
+            background-color: #3b99ab;
         }
         .body1{
             background:url(${pageContext.request.contextPath}/image/4-6.jpg) no-repeat;
@@ -118,7 +125,8 @@
         <h2>欢迎注册AiChat </h2>
         <form class="m-t" role="form" action="user/register" method="post">
             <div class="form-group">
-                用户名:<input type="text" class="form-control" placeholder="请输入用户名" name="name" required=""><br>
+                用户名:<input type="text" class="form-control" placeholder="请输入用户名" name="name" id="userName" required=""><br>
+                <span id="msg">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
             </div>
             <div class="form-group">
                 昵称:<input type="text" class="form-control" placeholder="请输入昵称" name="nickname" required=""><br>
@@ -130,7 +138,7 @@
                 <br>
             </div>
             <div class="form-group">
-                年龄:<input type="text" name="age" id="age" class="form-control" placeholder="请输入年龄" required=""><br>
+                年龄:<input type="number" name="age" id="age" class="form-control" placeholder="请输入年龄" required=""><br>
             </div>
             <div class="form-group">
                 密码:<input type="password" name="password" id="userPassword" class="form-control" placeholder="请输入密码" required=""><br>
@@ -142,16 +150,16 @@
             </div>
             <div class="form-group">
                 手机号码:<input type="tel" name="phone" id="userPhone" class="form-control" placeholder="请输入手机号" required=""><br>
-                <span id="msg2"> </span>
+                <span id="msg2">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
             </div>
             <div class="form-group">
-                <input type="text" class="form-control form-control1" placeholder="请输入验证码" name="code" required="" id="code" style="width:170px;">
-                <button type="button"  class="sendCode" id="sendCode">发送验证码</button>
+                <input type="text" class="form-control form-control1" placeholder="请输入验证码" name="code" required="" id="code" style="width:200px;">
+                <button type="button"  class="sendCode btn btn-primary" id="sendCode">发送验证码</button>
             </div>
 
-            <button type="submit" class="btn btn-primary block full-width m-b">注 册</button>
+            <button type="submit" class="btn btn-primary block full-width m-b" id="submit">注 册</button>
 
-            <p class="text-muted text-center"><small>已经有账户了？</small><a href="login">点此登录</a>
+            <p class="text-muted text-center"><small>已经有账户了？</small><a href="${pageContext.request.contextPath}/login">点此登录</a>
             </p>
 
         </form>
@@ -159,9 +167,12 @@
 </div>
 </div>
 <script>
-    var a = ${type};
+    var a = ${type}
     if(a === 0){
         layer.msg("注册失败",{icon:2})
+    }
+    if(a === 2){
+        layer.msg("验证码错误!",{icon:2})
     }
 </script>
 </body>

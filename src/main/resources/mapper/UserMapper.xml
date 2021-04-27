@@ -83,6 +83,12 @@
     <select id="getFriends" resultMap="friendMap" parameterType="string">
        select * from relation as r left join `user` as u on r.id2=u.id where r.id1=#{id}
     </select>
+    <select id="queryByName" resultType="com.ai.chat.pojo.User" parameterType="string">
+        SELECT * FROM `user` where name =#{name}
+    </select>
+    <select id="queryByPhone" resultType="com.ai.chat.pojo.User" parameterType="string">
+        SELECT * FROM `user` where phone =#{phone}
+    </select>
     <!-- 查询用户信息和分组的结果集-->
     <resultMap id="friendMap" type="com.ai.chat.pojo.Relation">
         <result column="id1" property="id1"/>

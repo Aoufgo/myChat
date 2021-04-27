@@ -36,7 +36,7 @@
     <select id="getUnread" parameterType="string" resultType="java.util.HashMap">
         select fromId,COUNT(*) count from `message` WHERE toId = #{toId} AND isRead = 0 GROUP BY fromId
     </select>
-    <select id="getResp" parameterType="string" resultType="com.ai.chat.pojo.Message">
+    <select id="getReq" parameterType="string" resultType="com.ai.chat.pojo.Message">
         SELECT * FROM message WHERE fromId NOT IN
                                     (SELECT id2 FROM relation WHERE id1 = #{id}) AND toId = #{id} AND isRead = 0
     </select>

@@ -72,6 +72,38 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public ModelAndView codeLogin(String code, String phone, HttpSession session) {
+        ModelAndView mav = new ModelAndView();
+        try {
+            //校验验证码
+            String code1 = (String) session.getAttribute("code");
+            if (code1 == null || !code1.equals(code)) {
+                //验证码不正确
+                mav.addObject("type", 5);
+            } else {
+                //查询是否有该手机号
+                User user = mapper.queryByPhone(phone);
+                if (user == null) {
+                    //手机号错误
+                    mav.addObject("type", 2);
+                } else {
+                    //登录成功
+                    //将user对象存入session域对象
+                    user = mapper.queryById(user.getId());
+                    session.setAttribute("user", user);
+                    mav.addObject("type", 4);
+                }
+
+            }
+        } catch (Exception e) {
+            mav.addObject("error", e.getCause().toString());
+            e.printStackTrace();
+        }
+        mav.setViewName("login");
+        return mav;
+    }
+
+    @Override
     public ModelAndView chat(String id) {
         try {
             //获取id的好友和分组
@@ -92,6 +124,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public Boolean getUser(String id) {
         return mapper.queryById(id) != null;
+    }
+
+    @Override
+    public Boolean getUserByPhone(String phone) {
+        return mapper.queryByPhone(phone)!=null;
+    }
+
+    @Override
+    public Boolean checkName(String name) {
+        return mapper.queryByName(name) != null;
     }
 
     @Override

@@ -19,20 +19,24 @@
         .layout .content .chat {
             border-radius: 15px 15px 15px 15px;
         }
-        figure.msg{
+
+        figure.msg {
             margin: 0;
         }
-        .message-content{
+
+        .message-content {
             display: inline-block;
         }
-        .new{
+
+        .new {
             color: #828282;
             font-style: italic;
             position: relative;
             top: -16px;
             right: 35px;
         }
-        .ott{
+
+        .ott {
             padding-right: 32px;
         }
     </style>
@@ -43,7 +47,7 @@
     <div class="content">
         <div class="chat">
             <div class="chat-body"> <!-- .no-message -->
-                <div class="messages">
+                <div id="messages" class="messages">
                 </div>
             </div>
             <div class="chat-footer animate__animated  animate__faster animate__fadeIn">
@@ -58,7 +62,7 @@
                             <i data-feather="arrow-left"></i>
                         </button>
                     </div>
-                    <input type="text" id="inputBar" class="form-control" placeholder="Write a message.">
+                    <input type="text" id="inputBar" class="form-control" placeholder="开始聊天吧!">
                     <div class="form-buttons">
                         <button class="btn btn-light d-none d-sm-inline-block" data-toggle="tooltip" title="Add files"
                                 type="button">
@@ -105,12 +109,13 @@
         $.get('${pageContext.request.contextPath}/user/isRead/${id}/${fromId}')
         $(".new").hide();
         $(".ott").removeClass("ott");
-        $("#new-message-count-${id}",parent.document).html('').hide();
+        $("#new-message-count-${id}", parent.document).html('').hide();
     })
-    $(function () {
-        $(".fromAvatar").attr("src",'${user.avatarUrl}');
-        $(".toAvatar").attr("src",'${toIdAvatar}');
-    })
+
+    function setAvatar() {
+        $(".fromAvatar").attr("src", '${user.avatarUrl}');
+        $(".toAvatar").attr("src", '${toIdAvatar}');
+    }
 </script>
 </body>
 </html>

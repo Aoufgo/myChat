@@ -71,7 +71,7 @@ public class MsgServiceImpl implements MsgService {
         return mapper.getUnread(id);
     }
     @Override
-    public List<Message> getResp(String id) {
-        return mapper.getResp(id);
+    public List<Message> getReq(String id) {
+        return mapper.getReq(id);
     }
 }

@@ -29,6 +29,15 @@ public interface UserService {
     ModelAndView login(User user, HttpSession session);
 
     /**
+     * 用户短信登录
+     * @param code 验证码
+     * @param phone 手机
+     * @param session session域对象
+     * @return 页面
+     */
+    ModelAndView codeLogin(String code,String phone,HttpSession session);
+
+    /**
      * 跳转到聊天页面
      * @param id 用户id
      * @return mav
@@ -48,6 +57,20 @@ public interface UserService {
      * @return 是否有该用户
      */
     Boolean getUser(String id);
+
+    /**
+     * 获取用户信息
+     * @param phone 手机号
+     * @return 是否存在手机号
+     */
+    Boolean getUserByPhone(String phone);
+
+    /**
+     * 判断用户名是否重复
+     * @param name 用户名
+     * @return 是否重复
+     */
+    Boolean checkName(String name);
     /**
      * 用户信息
      * @param id id

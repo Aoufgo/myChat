@@ -215,8 +215,8 @@
                         <input type="text" class="form-control" id="friendId">
                     </div>
                     <div class="form-group">
-                        <label for="respMessage" class="col-form-label">请求信息</label>
-                        <textarea class="form-control" id="respMessage"></textarea>
+                        <label for="reqMessage" class="col-form-label">请求信息</label>
+                        <textarea class="form-control" id="reqMessage"></textarea>
                     </div>
                 </form>
             </div>
@@ -228,7 +228,7 @@
 </div>
 <!-- ./ Add friends modal -->
 <!-- Add friends modal -->
-<div class="modal fade" id="addFriendsResp" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="addFriendsReq" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -239,7 +239,7 @@
                     <i class="ti-close"></i>
                 </button>
             </div>
-            <div class="modal-body" id="resplist"></div>
+            <div class="modal-body" id="reqList"></div>
         </div>
     </div>
 </div>
@@ -545,7 +545,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" onclick="commit()" class="btn btn-primary">Save</button>
+                <button type="button" onclick="commit()" class="btn btn-primary">保存</button>
             </div>
         </div>
     </div>
@@ -559,9 +559,9 @@
             <header>
                 <span>Friends</span>
                 <ul class="list-inline">
-                    <li class="list-inline-item" data-toggle="tooltip" title="Friend Resp">
+                    <li class="list-inline-item" data-toggle="tooltip" title="Friend Req">
                         <figure class="btn btn-outline-light" id="mail_icon" href="#" data-toggle="modal"
-                                data-target="#addFriendsResp">
+                                data-target="#addFriendsReq">
                             <i data-feather="mail"></i>
                         </figure>
                     </li>
@@ -644,7 +644,7 @@
                     src="${pageContext.request.contextPath}/user/link/${user.id}/${friends[0].id2}"
                 </c:if>
                 <c:if test="${empty friends}">
-                    srcdoc="<p>请添加好友!</p>"
+                    srcdoc="<p>添加一个好友吧!</p>"
                 </c:if>
                 frameborder="0" data-id="" seamless scrolling="no">
         </iframe>
@@ -714,10 +714,10 @@
                         return;
                     }
                 })
-                if (${!empty respList}) {
+                if (${!empty reqList}) {
                     $("#mail_icon").css("color", "red")
-                    <c:forEach items="${respList}" var="r">
-                    addResp('${r.fromId}', '${r.msg.trim()}', '${r.sendTime}')
+                    <c:forEach items="${reqList}" var="r">
+                    addReq('${r.fromId}', '${r.msg.trim()}', '${r.sendTime}')
                     </c:forEach>
                 }
             }
@@ -728,8 +728,8 @@
     $(function () {
         $("#sendReq").click(function (e) {
             e.preventDefault();
-            var friendId = $(this).find('input[id=friendId]').val();
-            var message = $(this).find('textarea[id=respMessage]').val();
+            var friendId = $("#addFriend").find('input[id=friendId]').val();
+            var message = $("#addFriend").find('textarea[id=reqMessage]').val();
             if (friendId === '${id}') {
                 layer.msg("您不能将自己加为好友!", {icon: 2});
             } else {
@@ -739,7 +739,7 @@
                         return;
                     }
                     if (resp === "yes") {
-                        send('${user.name}' + ':' + message, '${user.id}', friendId, new Date().getTime(), "friendResp")
+                        send('${user.name}' + ':' + message, '${user.id}', friendId, new Date().getTime(), "friendReq")
                         layer.msg("发送成功", {icon: 1})
                         $("#addFriends").modal('hide');
                     }
@@ -754,7 +754,6 @@
         //设为已读
         $.get('${pageContext.request.contextPath}/user/isRead/' + id + '/${user.id}')
         $.get("${pageContext.request.contextPath}/user/addF/${user.id}/" + id, function (data) {
-            console.log(data)
             if (data === "yes") {
                 layer.msg("添加成功", {icon: 1})
             } else {
@@ -764,7 +763,7 @@
     }
 
     $(function () {
-        $("#addFriendsResp").on("hide.bs.modal", function () {
+        $("#addFriendsReq").on("hide.bs.modal", function () {
             top.location.reload();
         })
     })
@@ -800,7 +799,9 @@
                 if (resp === "yes") {
                     layer.msg("修改成功", {icon: 1});
                     //修改导航栏头像
-                    $("#avatar", window.parent.frames["topFrame"].document).attr("src", $("#avatarUrl").val())
+                    if ($("#avatarUrl").val()!=='') {
+                        $("#avatar", window.parent.frames["topFrame"].document).attr("src", $("#avatarUrl").val())
+                    }
                 } else {
                     layer.msg("修改失败", {icon: 2});
                 }

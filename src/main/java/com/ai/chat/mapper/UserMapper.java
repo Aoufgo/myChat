@@ -70,5 +70,18 @@ public interface UserMapper {
      */
     List<Relation> getFriends(String id);
 
+    /**
+     * 根据name获取用户
+     * @param name name
+     * @return 用户对象
+     */
+    User queryByName(String name);
+    /**
+     * 根据phone获取用户
+     * @param phone phone
+     * @return 用户对象
+     */
+    User queryByPhone(String phone);
+
 
 }

@@ -69,12 +69,15 @@ public class WebSocket {
      * @param session HttpSession对象
      */
     @OnOpen
-    public void onOpen(@PathParam("userId") String userId, Session session) {
-        onlineNumber++;
-        log.info("现在来连接的客户id：" + session.getId() + "用户Id：" + userId);
-        this.userId = userId;
-        this.session = session;
-        CLIENTS.put(userId, this);
+    public void onOpen(@PathParam("userId") String userId, Session session) throws IOException {
+        //判断用户是否在线
+        if (CLIENTS.get(userId)!=null){
+            //向用户发送强制下线响应
+            Map<String,String> map = new HashMap<>();
+            map.put("action","forceOffline");
+            System.out.println(map);
+            sendMessageTo(JSON.toJSONString(map),userId);
+        }
         //设置用户的在线状态为在线
         User user = new User();
         user.setStatus(200);
@@ -88,8 +91,13 @@ public class WebSocket {
             map1.put("id",userId);
             sendMessageAll(JSON.toJSONString(map1));
         } catch (IOException e) {
-            log.info(userId+ "上线的时候通知所有人发生了错误");
+            log.info(userId+ "上线的时候发生了错误");
         }
+        onlineNumber++;
+        log.info("现在来连接的客户id：" + session.getId() + "用户Id：" + userId);
+        this.userId = userId;
+        this.session = session;
+        CLIENTS.put(userId, this);
     }
 
     @OnError
@@ -159,8 +167,8 @@ public class WebSocket {
             Map<String, Object> map1 = new HashMap<>();
             if ("message".equals(type)) {
                 map1.put("action", "send");
-            } else if ("friendResp".equals(type)){
-                map1.put("action", "friendResp");
+            } else if ("friendReq".equals(type)){
+                map1.put("action", "friendReq");
                 map1.put("time",time);
             }
             map1.put("textMessage", textMessage);

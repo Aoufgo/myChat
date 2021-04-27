@@ -30,7 +30,7 @@ $(function (){
                     //将json字符串转换为json对象
                     var json= JSON.parse(resp);
                     var result= json.result;
-                    if (result===false)
+                    if (result==="no")
                         layer.msg("发送失败",{icon:2})
                     else {
                         layer.msg("发送成功",{icon:1})
