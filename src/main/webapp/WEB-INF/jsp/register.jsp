@@ -15,6 +15,7 @@
     <link href="${pageContext.request.contextPath}/static/css/custom.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/static/css/animate.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/static/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/static/css/style.css" rel="stylesheet">
     <script src="${pageContext.request.contextPath}/static/js/check.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/sendCode.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/bootstrap.min14ed.js?v=3.3.6"></script>
@@ -30,95 +31,71 @@
             height: 32px;
         }
         .register_div{
-            border-radius: 20px;
+            border-radius: .5rem;
             background-color:white;
             width:500px;
-            height:830px;
+            height:810px;
             z-index:2;
             display: block;
-            margin: 100px auto;
+            margin: 64px auto;
             border-top:none;
             text-align: center;
+        }
+        .form-group {
+            margin-bottom: 0;
         }
         .btn.btn-primary{
             background-color: #6bb9c8;
             border-color: #6bb9c8;
         }
         .btn.btn-primary:hover{
-            background-color: #3b99ab;
+            background-color: #3b99ab!important;
         }
-        .body1{
-            background:url(${pageContext.request.contextPath}/image/4-6.jpg) no-repeat;
-            background-size:100% 100%;
+        .overlay-gradient-bottom:after {
+            display: none;
         }
-        .body2{
-            background:url(${pageContext.request.contextPath}/image/6-8.jpg) no-repeat;
-            background-size:100% 100%;
-        }
-        .body3{
-            background:url(${pageContext.request.contextPath}/image/8-10.jpg) no-repeat;
-            background-size:100% 100%;
-        }
-        .body4{
-            background:url(${pageContext.request.contextPath}/image/10-14.jpg) no-repeat;
-            background-size:100% 100%;
-        }
-        .body5{
-            background:url(${pageContext.request.contextPath}/image/14-16.jpg) no-repeat;
-            background-size:100% 100%;
-        }
-        .body6{
-            background:url(${pageContext.request.contextPath}/image/16-18.jpg) no-repeat;
-            background-size:100% 100%;
-        }
-        .body7{
-            background:url(${pageContext.request.contextPath}/image/18-20.jpg) no-repeat;
-            background-size:100% 100%;
-        }
-        .body8{
-            background:url(${pageContext.request.contextPath}/image/20-4.jpg) no-repeat;
-            background-size:100% 100%;
+        .btn.btn-primary.block.full-width.m-b{
+            margin-top: 30px;
         }
     </style>
     <script>
         $(function () {
             var d = new Date();
             var hour = d.getHours();
-            console.log(hour)
-            if(hour<4){
-                $("body").attr("class","body8");
+            console.log('现在时间:' + hour)
+            if (hour < 4) {
+                $(".bg").css("background-image", "url(${pageContext.request.contextPath}/image/20-4.jpg)");
             }
-            if(hour>=4&&hour<6){
-                $("body").attr("class","body1");
+            if (hour >= 4 && hour < 6) {
+                $(".bg").css("background-image", "url(${pageContext.request.contextPath}/image/4-6.jpg)");
             }
-            if(hour>=6&&hour<8){
-                $("body").attr("class","body2");
+            if (hour >= 6 && hour < 8) {
+                $(".bg").css("background-image", "url(${pageContext.request.contextPath}/image/6-8.jpg)");
             }
-            if(hour>=8&&hour<10){
-                $("body").attr("class","body3");
+            if (hour >= 8 && hour < 10) {
+                $(".bg").css("background-image", "url(${pageContext.request.contextPath}/image/8-10.jpg)");
             }
-            if(hour>=10&&hour<14){
-                $("body").attr("class","body4");
+            if (hour >= 10 && hour < 14) {
+                $(".bg").css("background-image", "url(${pageContext.request.contextPath}/image/10-14.jpg)");
             }
-            if(hour>=14&&hour<16){
-                $("body").attr("class","body5");
+            if (hour >= 14 && hour < 16) {
+                $(".bg").css("background-image", "url(${pageContext.request.contextPath}/image/14-16.jpg)");
             }
-            if(hour>=16&&hour<18){
-                $("body").attr("class","body6");
+            if (hour >= 16 && hour < 18) {
+                $(".bg").css("background-image", "url(${pageContext.request.contextPath}/image/16-18.jpg)");
             }
-            if(hour>=18&&hour<20){
-                $("body").attr("class","body7");
+            if (hour >= 18 && hour < 20) {
+                $(".bg").css("background-image", "url(${pageContext.request.contextPath}/image/18-20.jpg)");
             }
-            if(20<=hour){
-                $("body").attr("class","body8");
+            if (20 <= hour) {
+                $(".bg").css("background-image", "url(${pageContext.request.contextPath}/image/20-4.jpg)");
             }
-
         })
 
     </script>
 </head>
 
-<body id="body" class="body">
+<body id="body" class="bg col-12 order-lg-2 order-1 min-vh-100 background-walk-y position-relative overlay-gradient-bottom">
 <div id="register_div" class="register_div">
     <div class="middle-box text-center loginscreen   animated fadeInDown">
     <div>

@@ -4,9 +4,11 @@ import com.ai.chat.pojo.User;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 /**
  * @author aoufgo
@@ -84,6 +86,27 @@ public interface UserService {
      * @return 是否修改成功
      */
     Boolean update(User user);
+
+    /**
+     * 上传用户头像
+     * @param file 头像文件
+     * @return 结果
+     */
+    String uploadAvatar(MultipartFile file) throws IOException;
+    /**
+     * 上传用户头像
+     * @param img img
+     * @param session s
+     * @return 结果
+     */
+    String faceRegister(String img,HttpSession session);
+    /**
+     * 验证用户头像
+     * @param img img
+     * @param session s
+     * @return 结果
+     */
+    String faceLogin(String img,HttpSession session);
 
 
 

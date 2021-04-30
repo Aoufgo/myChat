@@ -1,30 +1,21 @@
 package com.ai.chat.controller;
 
-import com.ai.chat.pojo.Message;
 import com.ai.chat.pojo.Relation;
 import com.ai.chat.pojo.User;
 import com.ai.chat.service.MsgService;
 import com.ai.chat.service.UserService;
 import com.ai.chat.util.SendCodeUtil;
 import com.alibaba.fastjson.JSON;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonObject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 
 /**
  * @author aoufgo
@@ -173,34 +164,11 @@ public class UserController {
     }
 
     @RequestMapping("uploadAvatar")
-    public String uploadAvatar(@RequestParam(value = "avatar") MultipartFile file, HttpServletRequest req) throws IOException {
-        // 判断文件是否为空，空则返回失败页面
-        Map<String, String> map = new HashMap<>();
-        if (!file.isEmpty()) {
-            // 获取文件名
-            String fileName = file.getOriginalFilename();
-            // 获取文件的后缀名
-            String suffixName = fileName.substring(fileName.lastIndexOf("."));
-            // 设置文件存储路径
-            String filePath = "/Volumes/MacData/chatAvatar/";
-            // 用uuid给新文件命名
-            String fileUUName = UUID.randomUUID().toString();
-            String path = filePath + fileUUName + suffixName;
-            System.out.println(path);
-            // 创建一个新文件
-            File dest = new File(path);
-            // 检测是否存在目录
-            if (!dest.getParentFile().exists()) {
-                dest.getParentFile().mkdirs();
-            }
-            file.transferTo(dest);
-            map.put("result", "上传成功");
-            map.put("name", fileUUName + suffixName);
-        }
-        return JSON.toJSONString(map);
+    public String uploadAvatar(@RequestParam(value = "avatar") MultipartFile file) throws IOException {
+        return service.uploadAvatar(file);
     }
     @RequestMapping("sendCode")
-    public String sendCode(@RequestParam String userPhone,HttpSession session ) throws IOException {
+    public String sendCode(@RequestParam String userPhone,HttpSession session ) {
         //调用发送验证码的方法
         String code = SendCodeUtil.send(userPhone);
         //创建json对象
@@ -237,6 +205,14 @@ public class UserController {
     @RequestMapping("checkName")
     public String checkName(@RequestParam String name){
         return (service.checkName(name) ? "yes" : "no");
+    }
+    @RequestMapping("faceRegister")
+    public String faceRegister(@RequestParam String img,HttpSession session){
+        return service.faceRegister(img, session);
+    }
+    @RequestMapping("faceLogin")
+    public String faceLogin(@RequestParam String img,HttpSession session){
+        return service.faceLogin(img, session);
     }
 
 }

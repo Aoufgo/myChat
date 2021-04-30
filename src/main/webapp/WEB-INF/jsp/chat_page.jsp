@@ -29,7 +29,7 @@
         }
 
         .new {
-            color: #828282;
+            color: #3b99ab;
             font-style: italic;
             position: relative;
             top: -16px;

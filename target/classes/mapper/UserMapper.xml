@@ -77,6 +77,9 @@
             <if test="avatarUrl != null and avatarUrl != ''">
                 avatarUrl = #{avatarUrl},
             </if>
+            <if test="faceUrl != null and faceUrl != ''">
+                faceUrl = #{faceUrl},
+            </if>
         </set>
         where id = #{id}
     </update>

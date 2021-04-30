@@ -108,6 +108,10 @@
         #mail_icon {
             margin: 0;
         }
+
+        #video {
+            transform: rotateY(180deg);
+        }
     </style>
 </head>
 <body>
@@ -127,14 +131,15 @@
             <div class="modal-body">
                 <div class="row mb-5">
                     <div class="col-md-6 offset-md-3">
-                        <img src="${pageContext.request.contextPath}/image/portrait/undraw_warning_cyit.svg" class="img-fluid" alt="image">
+                        <img src="${pageContext.request.contextPath}/image/portrait/undraw_warning_cyit.svg"
+                             class="img-fluid" alt="image">
                     </div>
                 </div>
-                <p class="lead text-center">Application disconnected</p>
+                <p class="lead text-center">服务器连接断开</p>
             </div>
             <div class="modal-footer justify-content-center">
-                <button type="button" onclick="top.location.reload()" class="btn btn-success btn-lg">Reconnect</button>
-                <a onclick="parent.frames['topFrame'].quit()" class="btn btn-link">Logout</a>
+                <button type="button" onclick="top.location.reload()" class="btn btn-success btn-lg">重新连接</button>
+                <a onclick="parent.frames['topFrame'].quit()" class="btn btn-link">退出登录</a>
             </div>
         </div>
     </div>
@@ -282,17 +287,21 @@
                         </form>
                     </div>
                     <div class="tab-pane" id="about" role="tabpanel">
-                        <form>
-                            <div class="form-group">
-                                <label for="about-text" class="col-form-label">Write a few words that describe
-                                    you</label>
-                                <textarea class="form-control" id="about-text"></textarea>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" checked id="customCheck1">
-                                <label class="custom-control-label" for="customCheck1">View profile</label>
-                            </div>
-                        </form>
+                        <center>
+                            <form>
+                                <div id="media">
+
+                                    <video style="border: #c3cad1 5px!important ;border-radius: 100%;" id="video"
+                                           width="280px" height="280px" autoplay></video>
+                                    <canvas id="canvas" width="300" height="300"
+                                            style="position: absolute;right: 100px;top: 83px"></canvas>
+                                    <img src="${pageContext.request.contextPath}/image/portrait/check.svg" id="check"
+                                         alt="image" hidden>
+                                </div>
+                                <div style="height: 20px"></div>
+                                <button type="button"  id="faceUpload" onclick="f()" class="btn btn-primary">更改FaceID</button>
+                            </form>
+                        </center>
                     </div>
                     <div class="tab-pane" id="social-links" role="tabpanel">
                         <form>
@@ -635,7 +644,7 @@
                 if (resp === "yes") {
                     layer.msg("修改成功", {icon: 1});
                     //修改导航栏头像
-                    if ($("#avatarUrl").val()!=='') {
+                    if ($("#avatarUrl").val() !== '') {
                         $("#avatar", window.parent.frames["topFrame"].document).attr("src", $("#avatarUrl").val())
                     }
                 } else {
@@ -669,6 +678,97 @@
         });
     })
 
+    //将video组件中的画面绘制到canvas中
+    $("#faceUpload").click(function () {
+        //获取canvas对象
+        var canvas = document.getElementById("canvas");
+        var c = canvas.getContext("2d");
+        //canvas获取图片
+        c.drawImage(video, 0, 0, 300, 300)
+        //从画布对象中获取图片信息
+        var imgSrc = canvas.toDataURL();
+        //对字符串拆分，获取图片内容
+        var img = imgSrc.split("base64,")[1];
+        //发送ajax请求完成人脸注册
+        $.ajax({
+            url: "${pageContext.request.contextPath}/user/faceRegister",
+            type: "post",
+            data: {"img": img},
+            success: function (resp) {
+                var json = JSON.parse(resp);
+                layer.msg(json.msg)
+            }
+        })
+    })
+</script>
+<script>
+    $(function () {
+        $("#editProfileModal").on("show.bs.modal", function () {
+            //获取视频组件
+            video = document.getElementById("video")
+            //通过浏览器打打开摄像头
+            window.stream = navigator.mediaDevices.getUserMedia({
+                audio: false,
+                video: true,
+                video: {//设置分辨率
+                    width: 500,
+                    height: 500}
+            }).then(function (mediaStream) {//mediaStream:流
+                video.srcObject = mediaStream;
+                video.autoloadmatadata = function () {
+                    video.play();
+                }
+            })
+        })
+        $("#editProfileModal").on("hide.bs.modal", function () {
+            video.pause();
+            video.srcObject = null;
+        })
+    })
+
+    function f() {
+        var canvas = document.getElementById('canvas'),  //获取canvas元素
+            context = canvas.getContext('2d'),  //获取画图环境，指明为2d
+            centerX = canvas.width / 2,   //Canvas中心点x轴坐标
+            centerY = canvas.height / 2,  //Canvas中心点y轴坐标
+            rad = Math.PI * 2 / 100, //将360度分成100份，那么每一份就是rad度
+            speed = 0.1; //起始位置?
+        //绘制外圈
+        function blueCircle(n) {
+            context.save();
+            context.strokeStyle = "#2fbf47"; //设置描边样式
+            context.lineWidth = 5; //设置线宽
+            context.beginPath(); //路径开始
+            context.arc(centerX, centerY, 145, -Math.PI / 2, -Math.PI / 2 + n * rad, false); //用于绘制圆弧context.arc(x坐标，y坐标，半径，起始角度，终止角度，顺时针/逆时针)
+            context.stroke(); //绘制
+            context.closePath(); //路径结束
+            context.restore();
+        }
+
+        //绘制对号
+        function check() {
+            context.save();
+            context.beginPath();
+            context.strokeStyle = "white";
+            var image = document.getElementById("check");
+            context.drawImage(image, centerX - 40, centerY - 40, 80, 80)
+            context.stroke();
+            context.closePath();
+            context.restore();
+        }
+
+        //循环获取
+        (function drawFrame() {
+            window.requestAnimationFrame(drawFrame, canvas);
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            blueCircle(speed);
+            if (speed < 100) {
+                //0.1可从后台获取值
+                speed += 2;
+            } else
+                check();
+        }())
+    }
 </script>
 
 

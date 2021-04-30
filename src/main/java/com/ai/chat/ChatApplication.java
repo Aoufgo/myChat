@@ -12,6 +12,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @ServletComponentScan   //扫描Servlet
 @MapperScan("com.ai.chat.mapper")  //自动扫描mapper文件
 @EnableAspectJAutoProxy//自动扫描所有的aspectJ代理,spring来生成代理对象
+
 @SpringBootApplication
 public class ChatApplication {
 

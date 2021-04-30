@@ -18,6 +18,7 @@ public class MyMvcConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/static/**").addResourceLocations("/WEB-INF/"+"/static/");
         //虚拟路径
         registry.addResourceHandler("/avatar/**").addResourceLocations("file:/Volumes/MacData/chatAvatar/");
+        registry.addResourceHandler("/faceImgs/**").addResourceLocations("file:/Volumes/MacData/faceImgs/");
     }
 
 }

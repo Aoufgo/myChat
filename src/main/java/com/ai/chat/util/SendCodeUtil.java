@@ -50,7 +50,7 @@ public class SendCodeUtil {
      * @return 返回验证码，如果返回位null，表示发送失败，否则成功
      */
     public static String send(String userPhone){
-        DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", "LTAI4FyNPFCE7uyU2uwozAEw", "FNAJUVoVR2TFy5Akzgi8wBu22gIChD");
+        DefaultProfile profile = DefaultProfile.getProfile("cn-qingdao", "LTAI4G29eFjgKFPDUYFMSkUM", "jVJOurME74scJHP3wN9zMnb5ygXMp2");
         IAcsClient client = new DefaultAcsClient(profile);
 
         CommonRequest request = new CommonRequest();
@@ -58,10 +58,10 @@ public class SendCodeUtil {
         request.setSysDomain("dysmsapi.aliyuncs.com");
         request.setSysVersion("2017-05-25");
         request.setSysAction("SendSms");
-        request.putQueryParameter("RegionId", "cn-hangzhou");
+        request.putQueryParameter("RegionId", "cn-qingdao");
         request.putQueryParameter("PhoneNumbers", userPhone);
-        request.putQueryParameter("SignName", "Lq商城");
-        request.putQueryParameter("TemplateCode", "SMS_206735114");
+        request.putQueryParameter("SignName", "ABC商城");
+        request.putQueryParameter("TemplateCode", "SMS_206750054");
 
         //随机生成6位数验证码
         String code = randomCode();

@@ -6,16 +6,20 @@ import com.ai.chat.pojo.Relation;
 import com.ai.chat.service.UserService;
 import com.ai.chat.mapper.UserMapper;
 import com.ai.chat.pojo.User;
+import com.ai.chat.util.FaceUtil;
 import com.ai.chat.util.GenerateIdUtil;
 import com.ai.chat.util.Md5Util;
-import org.springframework.stereotype.Repository;
+import com.alibaba.fastjson.JSON;
+import com.google.gson.JsonObject;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import java.util.List;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
 
 /**
  * @author aoufgo
@@ -65,7 +69,6 @@ public class UserServiceImpl implements UserService {
                 mav.addObject("result", true);
             }
         } catch (Exception e) {
-            mav.addObject("error", e.getCause().toString());
             e.printStackTrace();
         }
         return mav;
@@ -128,7 +131,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean getUserByPhone(String phone) {
-        return mapper.queryByPhone(phone)!=null;
+        return mapper.queryByPhone(phone) != null;
     }
 
     @Override
@@ -147,5 +150,112 @@ public class UserServiceImpl implements UserService {
         return mapper.update(user) > 0;
     }
 
+    @Override
+    public String uploadAvatar(MultipartFile file) throws IOException {
+        Map<String, String> map = new HashMap<>();
+        if (!file.isEmpty()) {
+            // 获取文件名
+            String fileName = file.getOriginalFilename();
+            // 获取文件的后缀名
+            String suffixName = fileName.substring(fileName.lastIndexOf("."));
+            // 设置文件存储路径
+            String filePath = "/Volumes/MacData/chatAvatar/";
+            // 用uuid给新文件命名
+            String fileUUName = UUID.randomUUID().toString();
+            String path = filePath + fileUUName + suffixName;
+            System.out.println(path);
+            // 创建一个新文件
+            File dest = new File(path);
+            // 检测是否存在目录
+            if (!dest.getParentFile().exists()) {
+                dest.getParentFile().mkdirs();
+            }
+            file.transferTo(dest);
+            map.put("result", "上传成功");
+            map.put("name", fileUUName + suffixName);
+        }
+        return JSON.toJSONString(map);
+    }
+
+    @Override
+    public String faceRegister(String img, HttpSession session) {
+        JsonObject jsonObject = new JsonObject();
+        try {
+            String facePath = "/Volumes/MacData/faceImgs/";
+            //根据要存储的目录file对象
+            File file = new File(facePath);
+            //检查目录是否存在
+            if (!file.exists()) {
+                //如果目录不存在，创建出目录
+                file.mkdirs();
+            }
+            //获取登录对象
+            User user = (User) session.getAttribute("user");
+            facePath += user.getName() + ".jpg";
+            //图片的访问路径
+            String faceUrl = "/faceImgs/" + user.getName() + ".jpg";
+            //将img通过base64解码，还原为原始二进制形式
+            byte[] imgByte = Base64.decodeBase64(img);
+            //创建输出流，将图片信息写出
+            OutputStream out = null;
+            out = new FileOutputStream(facePath);
+            //创建输入读取imgByte图片信息
+            InputStream in = new ByteArrayInputStream(imgByte);
+            byte buffer[] = new byte[1024];
+            int len;
+            while ((len = in.read(buffer)) != -1) {
+                //将读取到的内容写出
+                out.write(buffer, 0, len);
+            }
+            out.close();
+            in.close();
+            //将faceUrl以及facePath存储到数据库中
+            User u = new User();
+            u.setId(user.getId());
+            u.setFaceUrl(faceUrl);
+            mapper.update(u);
+            jsonObject.addProperty("msg", "注册成功");
+        } catch (Exception e) {
+            jsonObject.addProperty("msg", "注册失败");
+            e.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
+
+    @Override
+    public String faceLogin(String img, HttpSession session) {
+        //查询到所有的用户
+        List<User> list = mapper.query(new User());
+        //拿要登录的人脸信息与每一个用户的人脸对比
+        //假设登陆失败
+        boolean checkFace=false;
+        //遍历每一个人用户信息
+        for(User u : list){
+            String facePath ="/Volumes/MacData/faceImgs/"+u.getName()+".jpg";
+            //拿要登录的人脸信息与每一个用户的人脸对比
+            if (u.getAccStatus()==200 && u.getFaceUrl()!=null&& !u.getFaceUrl().equals("")){
+                //拿登录的人脸与每一个用户的人脸对比，看是否为同一个人
+                checkFace= FaceUtil.checkFace(img,facePath);
+                if (checkFace){
+                    //如果结果为true
+                    //将该对象存储到session
+                    session.setAttribute("user",u);
+                    break;
+                }
+            }
+        }
+        //响应结果
+        JsonObject jsonObject=new JsonObject();
+        if (checkFace){
+            jsonObject.addProperty("msg","登录成功");
+        }else{
+            jsonObject.addProperty("msg","没有查询到人脸信息，或账号禁止登录");
+        }
+        return jsonObject.toString();
+    }
+
 
 }
+
+
+

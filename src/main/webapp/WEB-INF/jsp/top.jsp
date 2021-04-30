@@ -92,14 +92,6 @@
     </ul>
     <ul class="top-nav-right">
         <li>
-            <i class="fas fa-book"></i>
-            <a href="borrow?method=queryByIdBorrow2&userId=${user.id}" target="bottom">xxx</a>
-        </li>
-        <li>
-            <i class="fas fa-shopping-cart"></i>
-            <a href="sold?method=queryByIdSold1&userId=${user.id}" target="bottom">xxx</a>
-        </li>
-        <li>
             <i class="fas fa-question-circle"></i>
             <a onclick="parent.frames['bottom'].help()" style="cursor: pointer"> 帮助</a>
         </li>
