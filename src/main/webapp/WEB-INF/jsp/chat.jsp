@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/animate.min.css"/>
 
     <script src="${pageContext.request.contextPath}/static/js/jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/md5.js"></script>
     <style>
         figure.avatar.avatar-state-warning:before, figure.avatar.avatar-state-success:before {
             top: 22px;
@@ -220,8 +221,8 @@
                            aria-selected="false">人脸注册</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#social-links" role="tab"
-                           aria-controls="social-links" aria-selected="false">Social Links</a>
+                        <a class="nav-link" data-toggle="tab" href="#updatePW" role="tab"
+                           aria-controls="updatePW" aria-selected="false">修改密码</a>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -303,88 +304,25 @@
                             </form>
                         </center>
                     </div>
-                    <div class="tab-pane" id="social-links" role="tabpanel">
+                    <div class="tab-pane" id="updatePW" role="tabpanel">
                         <form>
                             <div class="form-group">
+                                <label for="newpw" class="col-form-label">新密码</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Username">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text bg-facebook">
-                                            <i class="ti-facebook"></i>
-                                        </span>
-                                    </div>
+                                    <input type="password" class="form-control" name="newpw" id="newpw">
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label for="newpw1" class="col-form-label">确认密码</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Username">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text bg-twitter">
-                                            <i class="ti-twitter"></i>
-                                        </span>
-                                    </div>
+                                    <input type="password" class="form-control" name="newpw1" id="newpw1">
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Username">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text bg-instagram">
-                                            <i class="ti-instagram"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Username">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text bg-linkedin">
-                                            <i class="ti-linkedin"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Username">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text bg-dribbble">
-                                            <i class="ti-dribbble"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Username">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text bg-youtube">
-                                            <i class="ti-youtube"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Username">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text bg-google">
-                                            <i class="ti-google"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Username">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text bg-whatsapp">
-                                            <i class="fa fa-whatsapp"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
+                            <div style="height: 20px"></div>
+                            <button type="button" onclick="changePW()" class="btn btn-primary">
+                                提交
+                            </button>
+                            <div style="height: 20px"></div>
                         </form>
                     </div>
                 </div>
@@ -512,6 +450,31 @@
 <!-- Examples -->
 <script src="${pageContext.request.contextPath}/static/js/websocket.js"></script>
 <script src="${pageContext.request.contextPath}/static/plugin/layui/layui.all.js"></script>
+<script>
+    function changePW(){
+        var userPassword = $("#newpw").val();
+        var userPassword2 = $("#newpw1").val();
+        if (userPassword !== userPassword2||userPassword2 === '') {
+            layer.msg("两次密码不一致",{icon:2});
+            return;
+        }
+        $.ajax({
+            url: "${pageContext.request.contextPath}/user/update",
+            type: "post",
+            data: {"password": userPassword, "id": '${id}'},
+            success: function (resp) {
+                if (resp==="yes"){
+                    layer.msg("修改成功")
+                }else {
+                    layer.msg("修改失败")
+                }
+            },
+            error: function () {
+                layer.msg("请求失败")
+            }
+        })
+    }
+</script>
 <script>
     if (${!empty error}) {
         layer.msg("${error}")

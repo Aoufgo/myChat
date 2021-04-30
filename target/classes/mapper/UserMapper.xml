@@ -81,7 +81,17 @@
                 faceUrl = #{faceUrl},
             </if>
         </set>
-        where id = #{id}
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+        </where>
     </update>
     <select id="getFriends" resultMap="friendMap" parameterType="string">
        select * from relation as r left join `user` as u on r.id2=u.id where r.id1=#{id}

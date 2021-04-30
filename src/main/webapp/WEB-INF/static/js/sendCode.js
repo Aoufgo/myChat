@@ -51,5 +51,38 @@ $(function (){
             layer.msg("请输入手机号!")
         }
     })
+    $("#resendCode").click(function () {
+        var userPhone= $("#rephone").val();
+        if (userPhone!==""){
+            //向服务器发送请求，让服务器向获取的手机号发送验证码
+            $.ajax({
+                url : "user/sendCode",
+                type: "post",
+                data:{"userPhone":userPhone},
+                success : function (resp){
+                    console.log(resp)//响应的结果位json字符串
+                    //将json字符串转换为json对象
+                    var json= JSON.parse(resp);
+                    var result= json.result;
+                    if (result==="no")
+                        layer.msg("发送失败",{icon:2})
+                    else {
+                        layer.msg("发送成功",{icon:1})
+                        //设置按钮不能被点击
+                        $("#resendCode").attr("disabled",true);
+                        //计时器
+                        //setInterval(code,time):code执行的语句  time:间隔的时间
+                        i= setInterval("countDown()",1000);
+                    }
+                },
+                error:function () {
+                    layer.msg("请求失败",{icon:2})
+                }
+            })
+        }else {
+            layer.msg("请输入手机号!")
+        }
+
+    })
 
 })

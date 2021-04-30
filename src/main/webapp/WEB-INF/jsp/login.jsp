@@ -50,49 +50,13 @@
         }
 
         svg rect {
-            fill: #3b99ab;
-        }
-
-        #Layer_1 {
-            position: absolute;
-            right: 48.7%;
-            top: 60%;
-            z-index: 999;
-            display: none;
+            fill: #ffffff;
         }
 
     </style>
 </head>
 <body class="form-membership">
-<div class="loader loader--style6" title="5">
-    <svg version="1.1" id="Layer_1"  xmlns="http://www.w3.org/2000/svg"
-         xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-         width="24px" height="30px" viewBox="0 0 24 30" style="enable-background:new 0 0 50 50;" xml:space="preserve">
-    <rect x="0" y="13" width="4" height="5" fill="#333">
-        <animate attributeName="height" attributeType="XML"
-                 values="5;21;5"
-                 begin="0s" dur="0.6s" repeatCount="indefinite"/>
-        <animate attributeName="y" attributeType="XML"
-                 values="13; 5; 13"
-                 begin="0s" dur="0.6s" repeatCount="indefinite"/>
-    </rect>
-        <rect x="10" y="13" width="4" height="5" fill="#333">
-            <animate attributeName="height" attributeType="XML"
-                     values="5;21;5"
-                     begin="0.15s" dur="0.6s" repeatCount="indefinite"/>
-            <animate attributeName="y" attributeType="XML"
-                     values="13; 5; 13"
-                     begin="0.15s" dur="0.6s" repeatCount="indefinite"/>
-        </rect>
-        <rect x="20" y="13" width="4" height="5" fill="#333">
-            <animate attributeName="height" attributeType="XML"
-                     values="5;21;5"
-                     begin="0.3s" dur="0.6s" repeatCount="indefinite"/>
-            <animate attributeName="y" attributeType="XML"
-                     values="13; 5; 13"
-                     begin="0.3s" dur="0.6s" repeatCount="indefinite"/>
-        </rect>
-  </svg>
+<div class="loader loader--style6">
     <div class="bg col-12 order-lg-2 order-1 min-vh-100 background-walk-y position-relative overlay-gradient-bottom"
          style="position: absolute !important;">
         <div class="form-wrapper">
@@ -118,7 +82,7 @@
             <div class="tab-content">
                 <div class="tab-pane show active" id="password" role="tabpanel">
                     <!-- form -->
-                    <form method="post" action="${pageContext.request.contextPath}/user/login">
+                    <form id="pwfrom" method="post" action="${pageContext.request.contextPath}/user/login">
                         <div class="form-group">
                             <input type="text" name="id" class="form-control" placeholder="请输入账号" required autofocus>
                         </div>
@@ -135,15 +99,15 @@
                                     class="far fa-smile-wink"
                                     style="size:1px"></i>人脸登录
                             </a>
-                            <a onclick="forgetPassword()" style="cursor: pointer">忘记密码? </a>
+                            <a data-target="#resetPW" data-toggle="modal" style="cursor: pointer">忘记密码? </a>
                         </div>
-                        <button class="btn btn-primary btn-block" onclick="$('#Layer_1').show();" type="submit">登入</button>
+                        <button class="btn btn-primary btn-block login" type="submit">登入</button>
                     </form>
                     <!-- ./ form -->
                 </div>
                 <div class="tab-pane show" id="codeTab" role="tabpanel">
-                    <form method="post" action="${pageContext.request.contextPath}/user/codeLogin">
-                        <div class=" form-group">
+                    <form method="post" id="codefrom" action="${pageContext.request.contextPath}/user/codeLogin">
+                        <div class="form-group">
                             <input type="text" name="phone" id="userPhone" class="form-control" placeholder="请输入手机号"
                                    required
                                    autofocus>
@@ -158,7 +122,7 @@
                                 </button>
                             </div>
                         </div>
-                        <button class="btn btn-primary btn-block" onclick="$('#Layer_1').show();" type="submit">登入</button>
+                        <button class="btn btn-primary btn-block login" type="submit">登入</button>
                     </form>
                 </div>
                 <hr>
@@ -200,16 +164,92 @@
                 </div>
             </div>
         </div>
-
-        <%--<div class=" col-12 order-lg-2 order-1 min-vh-100 background-walk-y position-relative overlay-gradient-bottom"--%>
-        <%--&lt;%&ndash;     data-background="${pageContext.request.contextPath}/image/10-14.jpg"&ndash;%&gt;--%>
-        <%--     style="background-image: url(${pageContext.request.contextPath}/image/10-14.jpg);">--%>
-        <%--</div>--%>
-
+        <%--/faceRegister--%>
+        <%--resetPassword--%>
+        <div class="modal fade" id="resetPW" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <i class="far fa-edit"></i>重置密码
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="ti-close"></i>
+                        </button>
+                    </div>
+                    <div class="tab-pane" role="tabpanel">
+                        <center>
+                            <form style="margin: 32px">
+                                <div class=" form-group">
+                                    <input type="text" name="phone" id="rephone" class="form-control"
+                                           placeholder="请输入手机号"
+                                           required
+                                           autofocus>
+                                </div>
+                                <div class="form-group ">
+                                    <div class="input-group">
+                                        <input type="text" name="code" id="recode" class="form-control code"
+                                               placeholder="请输入验证码">
+                                        <button class="input-group-append" type="button"
+                                                style="padding: 0; cursor: pointer;border: none;background-color: #ffffff;height: 42px;">
+                                            <span class="input-group-text" id="resendCode">发送</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class=" form-group">
+                                    <input type="password" name="password" id="repw" class="form-control"
+                                           placeholder="请输入新密码"
+                                           required
+                                           autofocus>
+                                </div>
+                                <div class=" form-group">
+                                    <input type="password" name="password1" id="repw1" class="form-control"
+                                           placeholder="确认密码"
+                                           required
+                                           autofocus>
+                                </div>
+                                <div style="height: 20px"></div>
+                                <button type="button" onclick="changePW()" class="btn btn-primary">
+                                    提交
+                                </button>
+                                <div style="height: 20px"></div>
+                            </form>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%--/resetPassword--%>
     </div>
 </div>
 
 </body>
+<script>
+
+    function changePW() {
+        var userPassword = $("#repw").val();
+        var userPassword2 = $("#repw1").val();
+        if (userPassword2 === '') {
+            layer.msg("两次密码不一致");
+            return;
+        }
+        if (userPassword !== userPassword2) {
+            layer.msg("两次密码不一致");
+            return;
+        }
+        $.ajax({
+            url: "${pageContext.request.contextPath}/user/changePW",
+            type: "post",
+            data: {"password": $("#repw").val(), "phone": $("#rephone").val(),"code":$("#recode").val()},
+            success: function (resp) {
+                layer.msg(resp)
+            },
+            error: function () {
+                layer.msg("请求失败")
+            }
+        })
+    }
+</script>
 <script>
     var a =
     ${type}
@@ -312,6 +352,47 @@
         })
     })
 
+    function loading() {
+        $(".login").html(`<svg version="1.1" id="Layer_1"  xmlns="http://www.w3.org/2000/svg"
+                     xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                     width="24px" height="30px" viewBox="0 0 24 30" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+    <rect x="0" y="13" width="4" height="5" fill="#333">
+        <animate attributeName="height" attributeType="XML"
+                 values="5;21;5"
+                 begin="0s" dur="0.6s" repeatCount="indefinite"/>
+        <animate attributeName="y" attributeType="XML"
+                 values="13; 5; 13"
+                 begin="0s" dur="0.6s" repeatCount="indefinite"/>
+    </rect>
+                    <rect x="10" y="13" width="4" height="5" fill="#333">
+                        <animate attributeName="height" attributeType="XML"
+                                 values="5;21;5"
+                                 begin="0.15s" dur="0.6s" repeatCount="indefinite"/>
+                        <animate attributeName="y" attributeType="XML"
+                                 values="13; 5; 13"
+                                 begin="0.15s" dur="0.6s" repeatCount="indefinite"/>
+                    </rect>
+                    <rect x="20" y="13" width="4" height="5" fill="#333">
+                        <animate attributeName="height" attributeType="XML"
+                                 values="5;21;5"
+                                 begin="0.3s" dur="0.6s" repeatCount="indefinite"/>
+                        <animate attributeName="y" attributeType="XML"
+                                 values="13; 5; 13"
+                                 begin="0.3s" dur="0.6s" repeatCount="indefinite"/>
+                    </rect>
+  </svg>`)
+
+    }
+
+    $(function () {
+        $("#pwfrom").submit(function () {
+            loading();
+        })
+        $("#codefrom").submit(function () {
+            loading();
+        })
+    })
+
     function loginFace() {
         //获取canvas对象
         var canvas = document.getElementById("canvas");
@@ -325,7 +406,7 @@
         //关闭人脸窗口
         $("#faceLogin").modal("hide");
         //打开加载动画
-        $("#Layer_1").show();
+        loading();
         //发送ajax请求完成人脸登录
 
         $.ajax({
@@ -336,7 +417,6 @@
                 var json = JSON.parse(resp);
                 if (json.msg === "登录成功") {
                     //跳转到登录成功后的页面
-                    $("#Layer_1").hide();
                     const element = document.querySelector('.form-wrapper');
                     element.classList.add('animate__animated', 'animate__fadeOutUp', 'animate__faster');
                     layer.msg("登录成功", {icon: 1});

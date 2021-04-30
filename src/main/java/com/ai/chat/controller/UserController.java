@@ -214,5 +214,9 @@ public class UserController {
     public String faceLogin(@RequestParam String img,HttpSession session){
         return service.faceLogin(img, session);
     }
+    @RequestMapping("changePW")
+    public String changerPW(@RequestParam String code,User user,HttpSession session){
+        return service.changePW(code,user,session);
+    }
 
 }

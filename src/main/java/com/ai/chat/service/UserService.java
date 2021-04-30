@@ -108,6 +108,15 @@ public interface UserService {
      */
     String faceLogin(String img,HttpSession session);
 
+    /**
+     * 异步修改密码
+     * @param code 验证码
+     * @param user 用户对象,存有手机和密码
+     * @param session s
+     * @return 结果
+     */
+    String changePW(String code,User user,HttpSession session);
+
 
 
 

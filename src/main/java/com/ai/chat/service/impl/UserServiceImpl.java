@@ -146,7 +146,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean update(User user) {
-
+        //密码MD5加密
+        if (user.getPassword() != null && !user.getPassword().equals("")) {
+            user.setPassword(Md5Util.md5(user.getPassword()));
+        }
         return mapper.update(user) > 0;
     }
 
@@ -228,33 +231,49 @@ public class UserServiceImpl implements UserService {
         List<User> list = mapper.query(new User());
         //拿要登录的人脸信息与每一个用户的人脸对比
         //假设登陆失败
-        boolean checkFace=false;
+        boolean checkFace = false;
         //遍历每一个人用户信息
-        for(User u : list){
-            String facePath ="/Volumes/MacData/faceImgs/"+u.getName()+".jpg";
+        for (User u : list) {
+            String facePath = "/Volumes/MacData/faceImgs/" + u.getName() + ".jpg";
             //拿要登录的人脸信息与每一个用户的人脸对比
-            if (u.getAccStatus()==200 && u.getFaceUrl()!=null&& !u.getFaceUrl().equals("")){
+            if (u.getAccStatus() == 200 && u.getFaceUrl() != null && !u.getFaceUrl().equals("")) {
                 //拿登录的人脸与每一个用户的人脸对比，看是否为同一个人
-                checkFace= FaceUtil.checkFace(img,facePath);
-                if (checkFace){
+                checkFace = FaceUtil.checkFace(img, facePath);
+                if (checkFace) {
                     //如果结果为true
                     //将该对象存储到session
-                    session.setAttribute("user",u);
+                    session.setAttribute("user", u);
                     break;
                 }
             }
         }
         //响应结果
-        JsonObject jsonObject=new JsonObject();
-        if (checkFace){
-            jsonObject.addProperty("msg","登录成功");
-        }else{
-            jsonObject.addProperty("msg","没有查询到人脸信息，或账号禁止登录");
+        JsonObject jsonObject = new JsonObject();
+        if (checkFace) {
+            jsonObject.addProperty("msg", "登录成功");
+        } else {
+            jsonObject.addProperty("msg", "没有查询到人脸信息，或账号禁止登录");
         }
         return jsonObject.toString();
     }
 
-
+    @Override
+    public String changePW(String code, User user, HttpSession session) {
+        //校验验证码
+        String code1 = (String) session.getAttribute("code");
+        if (code1 == null || !code1.equals(code)) {
+            return "验证码不正确";
+        } else {
+            //查询是否有该手机号
+            if (mapper.queryByPhone(user.getPhone()) == null) {
+                return "手机号错误";
+            } else {
+                //修改密码
+                user.setPassword(Md5Util.md5(user.getPassword()));
+                return mapper.update(user) > 0 ? "修改成功" : "修改失败";
+            }
+        }
+    }
 }
 
 
