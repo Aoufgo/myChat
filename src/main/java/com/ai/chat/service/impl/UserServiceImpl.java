@@ -44,6 +44,7 @@ public class UserServiceImpl implements UserService {
             user.setPassword(password);
             //添加数据库
             mapper.add(user);
+            mav.addObject("id",user.getId());
             mav.addObject("result", true);
 
         } catch (Exception e) {

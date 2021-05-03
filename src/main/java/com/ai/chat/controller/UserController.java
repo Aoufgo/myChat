@@ -49,6 +49,7 @@ public class UserController {
             rsKey = "result";
             if ((Boolean) mav1.getModel().get(rsKey)) {
                 mav.addObject("type", 1);
+                mav.addObject("id",mav1.getModel().get("id"));
                 mav.setViewName("login");
             } else {
                 mav.addObject("type", 0);

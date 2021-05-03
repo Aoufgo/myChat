@@ -60,7 +60,7 @@
 <div class="loader loader--style6">
     <div class="bg col-12 order-lg-2 order-1 min-vh-100 background-walk-y position-relative overlay-gradient-bottom"
          style="position: absolute !important;">
-        <div class="form-wrapper">
+        <div class="form-wrapper" style="padding-top: 2rem;">
 
             <!-- logo -->
             <div class="logo" style="margin-bottom: 30px">
@@ -275,7 +275,18 @@
         element.classList.add('animate__animated', 'animate__headShake');
     }
     if (a === 1) {
-        layer.msg("注册成功，请登录。", {icon: 1})
+        layer.open({
+            type: 1
+            ,shadeClose: true
+            ,title: false //不显示标题栏
+            ,closeBtn: false
+            ,area: '300px;'
+            ,shade: 0.8
+            ,resize: false
+            ,btnAlign: 'c'
+            ,moveType: 1 //拖拽模式，0或者1
+            ,content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">`注册成功，你的ID为:${id},请妥善保管!`<br></div>'
+        });
     }
     if (a === 4) {
         const element = document.querySelector('.form-wrapper');

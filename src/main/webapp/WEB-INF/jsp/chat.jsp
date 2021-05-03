@@ -532,8 +532,6 @@
                     </c:forEach>
                 }
             }
-
-
         })
     })
     $(function () {
@@ -571,13 +569,11 @@
                 layer.msg("添加失败", {icon: 2})
             }
         })
-    }
-
-    $(function () {
         $("#addFriendsReq").on("hide.bs.modal", function () {
             top.location.reload();
         })
-    })
+    }
+
 
     function refuse(id) {
         //隐藏邀请
