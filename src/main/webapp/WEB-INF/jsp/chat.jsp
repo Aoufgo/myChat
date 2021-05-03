@@ -496,13 +496,16 @@
 
     $(function () {
         const element = $("#search")
-        element.keyup(function () {
+        element.bind('keyup',function () {
+            console.log(element.val())
             if (element.val() !== '') {
                 $(".list-group-item").each(function () {
                     if ($(this).children("input#id2").val().indexOf(element.val()) === -1 &&
                         $(this).children("input#nickname").val().indexOf(element.val()) === -1 &&
                         $(this).children("input#name").val().indexOf(element.val()) === -1) {
                         $(this).hide();
+                    }else{
+                        $(this).show();
                     }
                 })
             } else {
