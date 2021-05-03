@@ -12,7 +12,7 @@
 <head>
     <title></title>
     <!-- Favicon -->
-    <link rel="icon" href="${pageContext.request.contextPath}/image/favicon.png" type="image/png">
+    <link rel="icon" href="${pageContext.request.contextPath}/image/icon/favicon.png" type="image/png">
 
     <!-- Bundle Styles -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/bundle.css">
@@ -334,9 +334,9 @@
     </div>
 </div>
 <!-- Layout -->
-<div class="layout">
+<div class="layout" style="height: 100%">
     <!-- Content -->
-    <div class="content" style="height: 108.9%;">
+    <div class="content">
         <!-- Friends sidebar -->
         <div id="friends" class="sidebar animate__animated animate__slideInLeft">
             <header>

@@ -12,6 +12,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login</title>
+    <link rel="icon" href="${pageContext.request.contextPath}/image/icon/favicon.png" type="image/png">
 
     <!-- Bundle Styles -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/plugin/fontawesome/css/all.css"/>
@@ -62,8 +63,8 @@
         <div class="form-wrapper">
 
             <!-- logo -->
-            <div class="logo">
-                <img src="dist/media/img/small-logo.png" alt="logo">
+            <div class="logo" style="margin-bottom: 30px">
+                <img style="width: 80px;height: 80px;" src="${pageContext.request.contextPath}/image/icon/small-logo.png" alt="logo">
             </div>
             <!-- ./ logo -->
 

@@ -10,6 +10,7 @@
 <head>
     <meta charset="utf-8">
     <title>用户注册</title>
+    <link rel="icon" href="${pageContext.request.contextPath}/image/icon/favicon.png" type="image/png">
     <script src="${pageContext.request.contextPath}/static/js/jquery.min.js"></script>
     <link href="${pageContext.request.contextPath}/static/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/static/css/custom.css" rel="stylesheet">

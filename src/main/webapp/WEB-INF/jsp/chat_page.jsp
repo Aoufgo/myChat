@@ -43,7 +43,7 @@
 </head>
 <body>
 <input type="hidden" value="${id}" id="toId">
-<div class="layout">
+<div class="layout" style="height: 100%;">
     <div class="content">
         <div class="chat">
             <div class="chat-body"> <!-- .no-message -->
@@ -51,7 +51,7 @@
                 </div>
             </div>
             <div class="chat-footer animate__animated  animate__faster animate__fadeIn">
-                <form>
+                <form style="margin: 0">
                     <div>
                         <button class="btn btn-light mr-3 d-none d-sm-inline-block" data-toggle="tooltip" title="Emoji"
                                 type="button">

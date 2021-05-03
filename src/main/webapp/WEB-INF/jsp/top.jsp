@@ -49,8 +49,9 @@
 <div class="top-nav animate__animated animate__slideInDown">
     <ul class="top-nav-left">
         <li>
-            <i class="fas fa-home"></i>
-            <a href="${pageContext.request.contextPath}/index" target="_top">主页</a>
+            <a href="${pageContext.request.contextPath}/index" target="_top">
+                <img  style="margin-top: 6px" src="${pageContext.request.contextPath}/image/icon/logo1.png" alt="logo">
+            </a>
         </li>
         <c:if test="${empty user}">
             <li>
