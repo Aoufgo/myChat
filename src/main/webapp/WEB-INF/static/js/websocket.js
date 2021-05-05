@@ -37,6 +37,10 @@ $(function () {
                             m++;
                             element.html(m);
                         }
+                        //将未读消息排序前置
+                        if ($(this).parent().prev()) {
+                            $(this).parents("ul").children(":first").before($(this).parent());
+                        }
                     }
                 })
             }
@@ -54,6 +58,13 @@ $(function () {
                         const element = $("#avatar-state-" + obj.id);
                         element.removeClass("avatar-state-warning");
                         element.addClass("avatar-state-success");
+                        //将所有离线且没有消息的好友后置
+                        $(".list-group-item").each(function () {
+                            if ($(this).next() && $(this).find(".avatar-state-warning").length > 0 && $(this).find(".new-message-count").html() === "") {
+                                $(this).parents("ul").children(":last").after($(this))
+                            }
+
+                        })
                     }
                 })
             }
@@ -66,6 +77,10 @@ $(function () {
                         const element = $("#avatar-state-" + obj.id);
                         element.removeClass("avatar-state-success");
                         element.addClass("avatar-state-warning");
+                        //将好友后置
+                        if ($(this).parent().next() && $("#new-message-count-" + obj.id).html() === "") {
+                            $(this).parents("ul").children(":last").after($(this).parent());
+                        }
                     }
                 })
             }

@@ -109,9 +109,13 @@
         $.get('${pageContext.request.contextPath}/user/isRead/${id}/${fromId}')
         $(".new").hide();
         $(".ott").removeClass("ott");
-        $("#new-message-count-${id}", parent.document).html('').hide();
+        const  element =$("#new-message-count-${id}", parent.document);
+        element.html('').hide();
+        //如果用户离线,则列表移动到最后
+        if (element.parents("li").find(".avatar-state-warning").length>0){
+            element.parents("ul").children(":last").after(element.parents("li"))
+        }
     })
-
     function setAvatar() {
         $(".fromAvatar").attr("src", '${user.avatarUrl}');
         $(".toAvatar").attr("src", '${toIdAvatar}');

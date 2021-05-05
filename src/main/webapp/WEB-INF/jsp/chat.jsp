@@ -522,6 +522,10 @@
                         const element = $("#new-message-count-" + obj[o].fromId);
                         element.css('display', 'flex');
                         element.html(obj[o].count);
+                        //将未读消息排序前置
+                        if ($(this).parent().prev()) {
+                            $(this).parents("ul").children(":first").before($(this).parent());
+                        }
                         return;
                     }
                 })
@@ -731,6 +735,16 @@
                 check();
         }())
     }
+</script>
+<script>
+    //将离线好友放到最下面
+    $(function () {
+        $(".avatar-state-warning").each(function () {
+            if ($(this).parents("li").next()&& $(this).parents("li").find(".new-message-count").html()==="") {
+                $(this).parents("ul").children(":last").after($(this).parents("li"));
+            }
+        })
+    })
 </script>
 
 
