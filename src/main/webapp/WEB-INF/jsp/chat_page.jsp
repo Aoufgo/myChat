@@ -120,6 +120,17 @@
         $(".fromAvatar").attr("src", '${user.avatarUrl}');
         $(".toAvatar").attr("src", '${toIdAvatar}');
     }
+    $(function () {
+        const  element =$("#list-group-item-${id}", parent.document);
+        element.css("background-color","#ededed");
+        //页面关闭时调用
+        $(window).bind("beforeunload",function(){
+            //响应事件
+            const  element =$("#list-group-item-${id}", parent.document);
+            element.css("background-color","");
+        });
+    })
+
 </script>
 </body>
 </html>

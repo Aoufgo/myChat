@@ -71,8 +71,33 @@
         <div class="container ">
             <div class="row">
                 <div class="col-md-12 offset-lg--1 col-lg-6">
-                    <img src="${pageContext.request.contextPath}/image/showImage/Xnip2021-05-04_13-55-57.png"
-                         class="img-fluid mx-auto d-block" alt="Xnip2021 05-04_13-55-57"/>
+                    <div id="carousel-1" class="carousel slide " data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <li data-target="#carousel-1" data-slide-to="0" class="active">
+                            </li>
+                            <li data-target="#carousel-1" data-slide-to="1" class="">
+                            </li>
+                            <li data-target="#carousel-1" data-slide-to="2" class="">
+                            </li>
+                        </ol>
+                        <div class="carousel-inner" role="listbox">
+                            <div class="carousel-item active">
+                                <img class="d-inline-block w-100" alt="slide 1" src="${pageContext.request.contextPath}/image/showImage/12.png">
+                                <div class="carousel-caption">
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img alt="slide 2" class="d-inline-block w-100" src="${pageContext.request.contextPath}/image/showImage/19.png">
+                                <div class="carousel-caption">
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img class="d-inline-block w-100" alt="slide 3" src="${pageContext.request.contextPath}/image/showImage/20.png">
+                                <div class="carousel-caption">
+                                </div>
+                            </div>
+                        </div><a class="carousel-nav-controls carousel-control-prev" href="#carousel-1" role="button" data-slide="prev"><svg width="26" height="26" viewBox="0 0 32 32"><path class="carousel-nav-icon carousel-prev-icon" d="M22,2L9,16,22,30"></path></svg><span class="sr-only">Previous</span></a><a class="carousel-nav-controls carousel-control-next" href="#carousel-1" role="button" data-slide="next"><svg width="26" height="26" viewBox="0 0 32 32"><path class="carousel-nav-icon carousel-next-icon" d="M10.344,2l13,14-13,14"></path></svg><span class="sr-only">Next</span></a>
+                    </div>
                 </div>
                 <div class="align-self-center offset-md-1 col-md-10 col-sm-10 offset-sm-1 offset-1 col-10 offset-lg-1 col-lg-4">
                     <h1 class="mg-md mx-auto d-block">

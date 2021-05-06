@@ -228,6 +228,8 @@
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane show active" id="personal" role="tabpanel">
+                        <div class="alert alert-info"><span id="id">ID</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span id="username">用户名</span></div>
                         <div class="form-group">
                             <label class="col-form-label">头像</label>
                             <div class="d-flex align-items-center">
@@ -443,7 +445,7 @@
                 <div id="friendBar">
                     <ul class="list-group list-group-flush">
                         <c:forEach items="${friends}" var="f">
-                            <li class="list-group-item">
+                            <li class="list-group-item" id="list-group-item-${f.id2}" style="border-radius:15px">
                                 <input value="${f.id2}" type="hidden" id="id2" class="id2">
                                 <input value="${f.user.nickname}" type="hidden" id="nickname">
                                 <input value="${f.user.name}" type="hidden" id="name">
@@ -670,12 +672,15 @@
             }
             $("#age").val(r.age);
             $("#phone").val(r.phone);
-            $("#userAvatar").attr("src", r.avatarUrl)
+            $("#userAvatar").attr("src", r.avatarUrl);
+            $("#id").html("ID:"+r.id);
+            $("#username").html("用户名:"+r.name);
         })
         $('#editProfileModal').modal('show')
     }
+
     function fProfile(id) {
-        $.get("${pageContext.request.contextPath}/user/getInfo/"+id, function (resp) {
+        $.get("${pageContext.request.contextPath}/user/getInfo/" + id, function (resp) {
             var r = JSON.parse(resp);
             $("#fNickname").html(r.nickname);
             if (r.sex === 'f') {
@@ -689,7 +694,7 @@
             $("#fAvatar").attr("src", r.avatarUrl);
             var time = new Date();
             time.setTime(r.lastLoginTime);
-            $("#fLastLogin").html("上次登录: "+time);
+            $("#fLastLogin").html("上次登录: " + time);
         })
         $('#friendProfileModal').modal('show')
     }
