@@ -335,6 +335,74 @@
         </div>
     </div>
 </div>
+<!-- Profile modal -->
+<div class="modal fade" id="friendProfileModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i data-feather="user" class="mr-2"></i> 好友信息
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="ti-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <figure class="avatar avatar-xl mb-4">
+                        <img src="" id="fAvatar" class="rounded-circle" alt="image">
+                    </figure>
+                    <h5 class="mb-1" id="fNickname"></h5>
+                    <small class="text-muted font-italic" id="fLastLogin">Last seen: Today</small>
+                </div>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="mt-4 mb-4">
+                            <h6>ID</h6>
+                            <p class="text-muted" id="fId"></p>
+                        </div>
+                        <div class="mt-4 mb-4">
+                            <h6>年龄</h6>
+                            <p class="text-muted" id="fAge"></p>
+                        </div>
+                        <div class="mt-4 mb-4">
+                            <h6>性别</h6>
+                            <p class="text-muted" id="fSex"></p>
+                        </div>
+                        <div class="mt-4 mb-4">
+                            <h6>Phone</h6>
+                            <p class="text-muted" id="fPhone"></p>
+                        </div>
+                        <div class="mt-4 mb-4">
+                            <h6 class="mb-3">Settings</h6>
+                            <div class="form-group">
+                                <div class="form-item custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="customSwitch11">
+                                    <label class="custom-control-label" for="customSwitch11">Block</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-item custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" checked=""
+                                           id="customSwitch12">
+                                    <label class="custom-control-label" for="customSwitch12">Mute</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-item custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="customSwitch13">
+                                    <label class="custom-control-label" for="customSwitch13">Get
+                                        notification</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Profile sidebar -->
 <!-- Layout -->
 <div class="layout" style="height: 100%">
     <!-- Content -->
@@ -375,7 +443,7 @@
                 <div id="friendBar">
                     <ul class="list-group list-group-flush">
                         <c:forEach items="${friends}" var="f">
-                            <li class="list-group-item" onclick="linkTo(${f.id2})">
+                            <li class="list-group-item">
                                 <input value="${f.id2}" type="hidden" id="id2" class="id2">
                                 <input value="${f.user.nickname}" type="hidden" id="nickname">
                                 <input value="${f.user.name}" type="hidden" id="name">
@@ -395,7 +463,7 @@
                                         </figure>
                                 </div>
                                 <div class="users-list-body">
-                                    <div>
+                                    <div onclick="linkTo(${f.id2})">
                                         <h5>${f.user.nickname}</h5>
                                         <p>${f.user.name}</p>
                                     </div>
@@ -407,8 +475,8 @@
                                                     <i data-feather="more-horizontal"></i>
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                    <a href="#" data-navigation-target="contact-information"
-                                                       class="dropdown-item">Profile</a>
+                                                    <a href="#" onclick="fProfile(${f.id2})"
+                                                       class="dropdown-item">详细信息</a>
                                                     <div class="dropdown-divider"></div>
                                                     <a href="#" class="dropdown-item text-danger">Block</a>
                                                 </div>
@@ -481,6 +549,7 @@
     if (${!empty error}) {
         layer.msg("${error}")
     }
+
 
     function linkTo(id) {
         document.getElementById("chatFrame").src = '${pageContext.request.contextPath}/user/link/${user.id}/' + id;
@@ -604,7 +673,25 @@
             $("#userAvatar").attr("src", r.avatarUrl)
         })
         $('#editProfileModal').modal('show')
-
+    }
+    function fProfile(id) {
+        $.get("${pageContext.request.contextPath}/user/getInfo/"+id, function (resp) {
+            var r = JSON.parse(resp);
+            $("#fNickname").html(r.nickname);
+            if (r.sex === 'f') {
+                $("#fSex").html("男");
+            } else {
+                $("#fSex").val("女");
+            }
+            $("#fAge").html(r.age);
+            $("#fId").html(r.id);
+            $("#fPhone").html(r.phone);
+            $("#fAvatar").attr("src", r.avatarUrl);
+            var time = new Date();
+            time.setTime(r.lastLoginTime);
+            $("#fLastLogin").html("上次登录: "+time);
+        })
+        $('#friendProfileModal').modal('show')
     }
 
     function commit() {
@@ -753,5 +840,7 @@
 </script>
 
 
+</div>
+</div>
 </body>
 </html>

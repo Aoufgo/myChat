@@ -67,6 +67,11 @@ public class UserServiceImpl implements UserService {
                 //将user对象存入session域对象
                 user = mapper.queryById(user.getId());
                 session.setAttribute("user", user);
+                //获取时间
+                User user1 = new User();
+                user1.setLastLoginTime(new Date().getTime()+"");
+                user1.setId(user.getId());
+                mapper.update(user1);
                 mav.addObject("result", true);
             }
         } catch (Exception e) {
@@ -95,6 +100,11 @@ public class UserServiceImpl implements UserService {
                     //将user对象存入session域对象
                     user = mapper.queryById(user.getId());
                     session.setAttribute("user", user);
+                    //获取时间
+                    User user1 = new User();
+                    user1.setLastLoginTime(new Date().getTime()+"");
+                    user1.setId(user.getId());
+                    mapper.update(user1);
                     mav.addObject("type", 4);
                 }
 
@@ -105,6 +115,43 @@ public class UserServiceImpl implements UserService {
         }
         mav.setViewName("login");
         return mav;
+    }
+
+    @Override
+    public String faceLogin(String img, HttpSession session) {
+        //查询到所有的用户
+        List<User> list = mapper.query(new User());
+        //拿要登录的人脸信息与每一个用户的人脸对比
+        //假设登陆失败
+        boolean checkFace = false;
+        //遍历每一个人用户信息
+        for (User u : list) {
+            String facePath = "/Volumes/MacData/faceImgs/" + u.getName() + ".jpg";
+            //拿要登录的人脸信息与每一个用户的人脸对比
+            if (u.getAccStatus() == 200 && u.getFaceUrl() != null && !u.getFaceUrl().equals("")) {
+                //拿登录的人脸与每一个用户的人脸对比，看是否为同一个人
+                checkFace = FaceUtil.checkFace(img, facePath);
+                if (checkFace) {
+                    //如果结果为true
+                    //将该对象存储到session
+                    //获取时间
+                    User user1 = new User();
+                    user1.setLastLoginTime(new Date().getTime()+"");
+                    user1.setId(u.getId());
+                    mapper.update(user1);
+                    session.setAttribute("user", u);
+                    break;
+                }
+            }
+        }
+        //响应结果
+        JsonObject jsonObject = new JsonObject();
+        if (checkFace) {
+            jsonObject.addProperty("msg", "登录成功");
+        } else {
+            jsonObject.addProperty("msg", "没有查询到人脸信息，或账号禁止登录");
+        }
+        return jsonObject.toString();
     }
 
     @Override
@@ -222,38 +269,6 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             jsonObject.addProperty("msg", "注册失败");
             e.printStackTrace();
-        }
-        return jsonObject.toString();
-    }
-
-    @Override
-    public String faceLogin(String img, HttpSession session) {
-        //查询到所有的用户
-        List<User> list = mapper.query(new User());
-        //拿要登录的人脸信息与每一个用户的人脸对比
-        //假设登陆失败
-        boolean checkFace = false;
-        //遍历每一个人用户信息
-        for (User u : list) {
-            String facePath = "/Volumes/MacData/faceImgs/" + u.getName() + ".jpg";
-            //拿要登录的人脸信息与每一个用户的人脸对比
-            if (u.getAccStatus() == 200 && u.getFaceUrl() != null && !u.getFaceUrl().equals("")) {
-                //拿登录的人脸与每一个用户的人脸对比，看是否为同一个人
-                checkFace = FaceUtil.checkFace(img, facePath);
-                if (checkFace) {
-                    //如果结果为true
-                    //将该对象存储到session
-                    session.setAttribute("user", u);
-                    break;
-                }
-            }
-        }
-        //响应结果
-        JsonObject jsonObject = new JsonObject();
-        if (checkFace) {
-            jsonObject.addProperty("msg", "登录成功");
-        } else {
-            jsonObject.addProperty("msg", "没有查询到人脸信息，或账号禁止登录");
         }
         return jsonObject.toString();
     }

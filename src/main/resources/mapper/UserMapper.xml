@@ -80,6 +80,9 @@
             <if test="faceUrl != null and faceUrl != ''">
                 faceUrl = #{faceUrl},
             </if>
+            <if test="lastLoginTime != null and lastLoginTime != ''">
+                lastLoginTime = #{lastLoginTime},
+            </if>
         </set>
         <where>
             <if test="id != null and id != ''">
