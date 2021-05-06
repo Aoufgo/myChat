@@ -126,7 +126,7 @@
 <!-- ./ Body plate -->
 
 <!-- Disconnected modal -->
-<div class="modal fade" id="disconnected" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="disconnected" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-zoom" role="document">
         <div class="modal-content">
             <div class="modal-body">
@@ -140,7 +140,8 @@
             </div>
             <div class="modal-footer justify-content-center">
                 <button type="button" onclick="top.location.reload()" class="btn btn-success btn-lg">重新连接</button>
-                <a onclick="parent.frames['topFrame'].quit()" class="btn btn-link">退出登录</a>
+                <a onclick="closeWebSocket();$.get('user/quit');top.location ='${pageContext.request.contextPath}/index';"
+                   href="${pageContext.request.contextPath}/index" class="btn btn-link">退出</a>
             </div>
         </div>
     </div>
@@ -300,7 +301,8 @@
                                          alt="image" hidden>
                                 </div>
                                 <div style="height: 20px"></div>
-                                <button type="button"  id="faceUpload" onclick="f()" class="btn btn-primary">更改FaceID</button>
+                                <button type="button" id="faceUpload" onclick="f()" class="btn btn-primary">更改FaceID
+                                </button>
                             </form>
                         </center>
                     </div>
@@ -451,11 +453,11 @@
 <script src="${pageContext.request.contextPath}/static/js/websocket.js"></script>
 <script src="${pageContext.request.contextPath}/static/plugin/layui/layui.all.js"></script>
 <script>
-    function changePW(){
+    function changePW() {
         var userPassword = $("#newpw").val();
         var userPassword2 = $("#newpw1").val();
-        if (userPassword !== userPassword2||userPassword2 === '') {
-            layer.msg("两次密码不一致",{icon:2});
+        if (userPassword !== userPassword2 || userPassword2 === '') {
+            layer.msg("两次密码不一致", {icon: 2});
             return;
         }
         $.ajax({
@@ -463,9 +465,9 @@
             type: "post",
             data: {"password": userPassword, "id": '${id}'},
             success: function (resp) {
-                if (resp==="yes"){
+                if (resp === "yes") {
                     layer.msg("修改成功")
-                }else {
+                } else {
                     layer.msg("修改失败")
                 }
             },
@@ -496,21 +498,23 @@
 
     $(function () {
         const element = $("#search")
-        element.bind('keyup',function () {
+        element.bind('keyup', function () {
             console.log(element.val())
-            if (element.val() !== '') {
-                $(".list-group-item").each(function () {
-                    if ($(this).children("input#id2").val().indexOf(element.val()) === -1 &&
-                        $(this).children("input#nickname").val().indexOf(element.val()) === -1 &&
-                        $(this).children("input#name").val().indexOf(element.val()) === -1) {
-                        $(this).hide();
-                    }else{
-                        $(this).show();
-                    }
-                })
-            } else {
-                $(".list-group-item").show();
-            }
+            var count = 0;
+            $(".list-group-item").each(function () {
+                if ($(this).children("input#id2").val().indexOf(element.val()) === -1 &&
+                    $(this).children("input#nickname").val().indexOf(element.val().toUpperCase()) === -1 &&
+                    $(this).children("input#nickname").val().indexOf(element.val().toLowerCase()) === -1 &&
+                    $(this).children("input#name").val().indexOf(element.val().toUpperCase()) === -1 &&
+                    $(this).children("input#name").val().indexOf(element.val().toLowerCase()) === -1) {
+                    $(this).hide();
+                } else {
+                    $(this).show();
+                    count++;
+                }
+            })
+            $(".sidebar-body").children("p:first").html(count + " 个好友");
+
         })
     })
     $(function () {
@@ -678,7 +682,8 @@
                 video: true,
                 video: {//设置分辨率
                     width: 500,
-                    height: 500}
+                    height: 500
+                }
             }).then(function (mediaStream) {//mediaStream:流
                 video.srcObject = mediaStream;
                 video.autoloadmatadata = function () {
@@ -740,7 +745,7 @@
     //将离线好友放到最下面
     $(function () {
         $(".avatar-state-warning").each(function () {
-            if ($(this).parents("li").next()&& $(this).parents("li").find(".new-message-count").html()==="") {
+            if ($(this).parents("li").next() && $(this).parents("li").find(".new-message-count").html() === "") {
                 $(this).parents("ul").children(":last").after($(this).parents("li"));
             }
         })

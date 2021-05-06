@@ -1,9 +1,13 @@
 package com.ai.chat.config;
 
 
+import com.ai.chat.aspect.Interceptor.LoginInterceptor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import javax.annotation.Resource;
 
 /**
  * @author aoufgo
@@ -11,6 +15,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class MyMvcConfig implements WebMvcConfigurer {
+    @Resource
+    LoginInterceptor loginInterceptor;
     /**资源处理器:设置静态资源的url*/
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -20,5 +26,8 @@ public class MyMvcConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/avatar/**").addResourceLocations("file:/Volumes/MacData/chatAvatar/");
         registry.addResourceHandler("/faceImgs/**").addResourceLocations("file:/Volumes/MacData/faceImgs/");
     }
-
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(loginInterceptor).addPathPatterns("/admin_page/**").excludePathPatterns("/admin_page/adminLogin").excludePathPatterns("/static/**");
+    }
 }

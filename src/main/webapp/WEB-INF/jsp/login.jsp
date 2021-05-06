@@ -393,7 +393,9 @@
                                  begin="0.3s" dur="0.6s" repeatCount="indefinite"/>
                     </rect>
   </svg>`)
-
+    }
+    function stoploading(){
+        $(".login").html('登入');
     }
 
     $(function () {
@@ -420,7 +422,6 @@
         //打开加载动画
         loading();
         //发送ajax请求完成人脸登录
-
         $.ajax({
             url: "${pageContext.request.contextPath}/user/faceLogin",
             type: "post",
@@ -435,6 +436,7 @@
                     setTimeout("top.location = '${pageContext.request.contextPath}/index'", 500); //延迟
                 } else {
                     layer.msg(json.msg, {icon: 2})
+                    stoploading();
                 }
             }
         })
