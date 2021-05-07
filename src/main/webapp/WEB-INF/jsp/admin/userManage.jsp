@@ -180,6 +180,9 @@
     if (a==7){
         layer.msg("修改成功",{icon:1})
     }
+    if (a==8){
+        layer.msg("登录成功",{icon:1})
+    }
     if (${!empty error}){
         layer.msg("${error}")
     }

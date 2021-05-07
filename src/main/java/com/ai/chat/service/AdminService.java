@@ -30,6 +30,13 @@ public interface AdminService {
      * @return mav
      */
     ModelAndView getUser(String id);
+
+    /**
+     * 获取管理员
+     * @param adminId
+     * @return
+     */
+    ModelAndView getAdmin(int adminId);
     /**
      * 删除用户方法
      * @param id 用户id
@@ -51,12 +58,57 @@ public interface AdminService {
      */
     ModelAndView addUser(User user);
 
-
+    /**
+     * 管理员登录
+     * @param admin
+     * @param session
+     * @return
+     */
     ModelAndView login(Admin admin, HttpSession session);
 
+    /**
+     * 添加管理员
+     * @param admin
+     * @return
+     */
+    ModelAndView register(Admin admin);
 
+    /**
+     * 查询管理员
+     * @param admin
+     * @return
+     */
+    ModelAndView queryAdmin(Admin admin);
 
+    ModelAndView queryAdmin1(Admin admin);
 
+    /**
+     * 删除管理员
+     * @param adminId
+     * @return
+     */
+    ModelAndView del(int adminId);
 
+    /**
+     * 查询管理员ID
+     * @param adminId
+     * @return
+     */
+    ModelAndView queryAdminId(int adminId);
 
+    Admin queryByAdminName(Admin admin);
+
+    /**
+     * 修改管理员
+     * @param admin
+     * @return
+     */
+    ModelAndView updateAdmin(Admin admin);
+
+    /**
+     * 根据名字更新登录时间  未完成  ********
+     * @param admin
+     * @return
+     */
+    ModelAndView updateLoginTime(Admin admin);
 }

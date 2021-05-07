@@ -29,7 +29,11 @@ public class AdminServiceImpl implements AdminService{
     @Resource
     private AdminMapper adminMapper;
 
-
+    /**
+     * 查询用户信息
+     * @param user 条件
+     * @return
+     */
     @Override
     public ModelAndView queryUser(User user) {
         try{
@@ -41,12 +45,34 @@ public class AdminServiceImpl implements AdminService{
         }
         return mav;
     }
+
+    /**
+     * 获取用户id
+     * @param id 用户id
+     * @return
+     */
     @Override
     public ModelAndView getUser(String id) {
         mav.addObject("user",userMapper.queryById(id));
         return  mav;
     }
 
+    /**
+     * 获取管理员Id
+     * @param adminId
+     * @return
+     */
+    @Override
+    public ModelAndView getAdmin(int adminId) {
+        mav.addObject("admin",adminMapper.queryById(adminId));
+        return mav;
+    }
+
+    /**
+     * 删除用户
+     * @param id 用户id
+     * @return
+     */
     @Override
     public ModelAndView delUser(String id) {
         try {
@@ -60,6 +86,11 @@ public class AdminServiceImpl implements AdminService{
         return mav;
     }
 
+    /**
+     * 编辑用户信息
+     * @param user 更新过的用户信息
+     * @return
+     */
     @Override
     public ModelAndView updateUser(User user) {
         try {
@@ -72,6 +103,12 @@ public class AdminServiceImpl implements AdminService{
         }
         return mav;
     }
+
+    /**
+     * 添加用户
+     * @param user 用户的信息
+     * @return
+     */
     @Override
     public ModelAndView addUser(User user) {
         try {
@@ -93,6 +130,12 @@ public class AdminServiceImpl implements AdminService{
         return mav;
     }
 
+    /**
+     * 管理员登录
+     * @param admin
+     * @param session
+     * @return
+     */
     @Override
     public ModelAndView login(Admin admin, HttpSession session) {
         try {
@@ -101,12 +144,136 @@ public class AdminServiceImpl implements AdminService{
             if (adminMapper.queryByNp(admin) == null) {
                 mav.addObject("result", false);
             } else {
-                admin = adminMapper.queryById(admin.getAdminId());
+                admin = adminMapper.queryByNp(admin);
                 session.setAttribute("admin", admin);
                 mav.addObject("result", true);
             }
         }catch (Exception e){
 //            mav.addObject("error",e.getCause().toString());
+            e.printStackTrace();
+        }
+        return mav;
+    }
+
+    /**
+     * 添加管理员
+     * @param admin
+     * @return
+     */
+    @Override
+    public ModelAndView register(Admin admin) {
+        try {
+            String adminPassword = Md5Util.md5(admin.getAdminPassword());
+            admin.setAdminPassword(adminPassword);
+            adminMapper.insertAdmin(admin);
+            mav.addObject("result", true);
+        }catch (Exception e){
+            mav.addObject("error", e.getCause().toString());
+            mav.addObject("result", false);
+            e.printStackTrace();
+        }
+        return mav;
+    }
+
+    /**
+     * 查询管理员
+     * @param admin
+     * @return
+     */
+    @Override
+    public ModelAndView queryAdmin(Admin admin) {
+        try {
+            List<Admin> admins = adminMapper.queryAll(admin);
+            mav.addObject("admins", admins);
+        }catch (Exception e){
+            mav.addObject("error",e.getCause().toString());
+            e.printStackTrace();
+        }
+        return mav;
+    }
+
+    @Override
+    public ModelAndView queryAdmin1(Admin admin) {
+        System.out.println(admin);
+        try{
+            List<Admin> admins = adminMapper.query(admin);
+            mav.addObject("admins",admins);
+        }catch (Exception e){
+            mav.addObject("error",e.getCause().toString());
+            e.printStackTrace();
+        }
+        return mav;
+    }
+
+
+
+
+    /**
+     * 根据ID删除管理员
+     * @param adminId
+     * @return
+     */
+    @Override
+    public ModelAndView del(int adminId) {
+        try {
+            adminMapper.delAdmin(adminId);
+            mav.addObject("result", true);
+        }catch (Exception e){
+            mav.addObject("error",e.getCause().toString());
+
+            mav.addObject("result",false);
+            e.printStackTrace();
+        }
+        return mav;
+    }
+
+    /**
+     * 查询管理员
+     * @param adminId
+     * @return
+     */
+    @Override
+    public ModelAndView queryAdminId(int adminId) {
+        mav.addObject("admin",adminMapper.queryById(adminId));
+        return mav;
+    }
+
+    @Override
+    public Admin queryByAdminName(Admin admin) {
+        return adminMapper.queryByAdminName(admin);
+    }
+
+    /**
+     * 编辑发送管理员
+     * @param admin
+     * @return
+     */
+    @Override
+    public ModelAndView updateAdmin(Admin admin) {
+        try {
+            adminMapper.update(admin);
+            mav.addObject("result",true);
+        }catch (Exception e){
+            mav.addObject("error",e.getCause().toString());
+            mav.addObject("result",false);
+            e.printStackTrace();
+        }
+        return mav;
+    }
+
+    /**
+     * 根据名字更新登录时间
+     * @param admin
+     * @return
+     */
+    @Override
+    public ModelAndView updateLoginTime(Admin admin) {
+        try {
+            adminMapper.updateByAdminName(admin);
+            mav.addObject("result",true);
+        }catch (Exception e){
+            mav.addObject("error",e.getCause().toString());
+            mav.addObject("result",false);
             e.printStackTrace();
         }
         return mav;

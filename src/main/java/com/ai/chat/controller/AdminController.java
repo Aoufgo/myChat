@@ -10,6 +10,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @author aoufgo
@@ -24,54 +26,82 @@ public class AdminController {
 
     String rsKey = "result";
 
+    /**
+     * 查询用户
+     *
+     * @param user
+     * @return
+     */
     @RequestMapping("queryUser")
-    public ModelAndView queryUser(User user){
+    public ModelAndView queryUser(User user) {
         ModelAndView mav = adminService.queryUser(user);
         mav.setViewName("admin/userManage");
         return mav;
     }
+
     /**
      * @param id 用户id
      * @return 返回到页面该用户
      */
     @GetMapping("getUser")
-    public ModelAndView getUser(String id){
-        ModelAndView mav= adminService.getUser(id);
+    public ModelAndView getUser(String id) {
+        ModelAndView mav = adminService.getUser(id);
         mav.setViewName("admin/userEdit");
         return mav;
     }
+
+    /**
+     * 编辑用户
+     *
+     * @param user
+     * @return
+     */
     @RequestMapping("updateUser")
-    public ModelAndView updateUser(User user){
+    public ModelAndView updateUser(User user) {
         ModelAndView mav = adminService.updateUser(user);
         rsKey = "result";
-        if ((Boolean)mav.getModel().get(rsKey)){
-            mav.addObject("type",7);
-        }else {
-            mav.addObject("type",6);
+        if ((Boolean) mav.getModel().get(rsKey)) {
+            mav.addObject("type", 7);
+        } else {
+            mav.addObject("type", 6);
         }
         mav.setViewName("redirect:/admin/queryUser");
         return mav;
     }
+
+    /**
+     * 删除用户
+     *
+     * @param id
+     * @return
+     */
     @GetMapping("delUser")
-    public ModelAndView delUser(String id){
+    public ModelAndView delUser(String id) {
         ModelAndView mav = adminService.delUser(id);
         rsKey = "result";
-        if ((Boolean)mav.getModel().get(rsKey)){
-            mav.addObject("type",5);
-        }else {
-            mav.addObject("type",4);
+        if ((Boolean) mav.getModel().get(rsKey)) {
+            mav.addObject("type", 5);
+        } else {
+            mav.addObject("type", 4);
         }
         mav.setViewName("redirect:/admin/queryUser");
         return mav;
     }
+
+    /**
+     * 添加用户
+     *
+     * @param user
+     * @return
+     */
     @RequestMapping("addUser")
-    public ModelAndView addUser(User user){
+    public ModelAndView addUser(User user) {
         ModelAndView mav = adminService.addUser(user);
         rsKey = "result";
-        if ((Boolean)mav.getModel().get(rsKey)){
-            mav.addObject("type",1);
-        }else {
-            mav.addObject("type",2);
+        if ((Boolean) mav.getModel().get(rsKey)) {
+            mav.addObject("type", 1);
+        } else {
+            mav.addObject("type", 2);
         }
         mav.setViewName("admin/userAdd");
         return mav;
@@ -79,23 +109,116 @@ public class AdminController {
 
     /**
      * 管理员登录方法
+     *
      * @param admin
      * @param session
      * @return
      */
-    @RequestMapping("adminLogin")
-    public ModelAndView adminLogin(Admin admin, HttpSession session){
-        ModelAndView mav = adminService.login(admin,session);
+    @RequestMapping("login")
+    public ModelAndView adminLogin(Admin admin, HttpSession session) {
+        /**
+         * 根据名字更新登录时间    未完成***************
+         */
+        ModelAndView mav = adminService.login(admin, session);
+        Admin admin1 = (Admin) session.getAttribute("admin");
         rsKey = "result";
-        if ((Boolean)mav.getModel().get(rsKey)) {
+        if ((Boolean) mav.getModel().get(rsKey)) {
+            System.out.println(admin1.getRoleId() + "------");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            admin1.setAdminLoginTime(sdf.format(new Date()));
+            adminService.updateLoginTime(admin1);
+            mav.addObject("type", 9);
+        } else {
+            mav.addObject("type", 8);
+        }
+        mav.setViewName("admin/adminLogin");
+        return mav;
+    }
+    /**
+     * 查询全部管理员
+     *
+     * @return
+     */
+    @RequestMapping("queryAdmin")
+    public ModelAndView queryAdmin(Admin admin) {
+        ModelAndView mav = adminService.queryAdmin(admin);
+        mav.setViewName("admin/adminManage");
+        return mav;
+    }
+
+    @RequestMapping("queryAdmin1")
+    public ModelAndView queryAdmin1(Admin admin) {
+        ModelAndView mav = adminService.queryAdmin1(admin);
+        mav.setViewName("admin/adminManage");
+        return mav;
+    }
+
+
+    /**
+     * 删除管理员
+     *
+     * @param adminId
+     * @return
+     */
+    @RequestMapping("delAdmin")
+    public ModelAndView delAdmin(int adminId) {
+        ModelAndView mav = adminService.del(adminId);
+        rsKey = "result";
+        if ((Boolean) mav.getModel().get(rsKey)) {
+            mav.addObject("type", 5);
+        } else {
             mav.addObject("type", 4);
-        }else {
-            mav.addObject("type",7);
         }
-            mav.setViewName("admin/adminLogin");
-        return  mav;
+        mav.setViewName("redirect:/admin/queryAdmin");
+        return mav;
+
+    }
+
+    /**
+     * 管理员Id
+     *
+     * @param adminId
+     * @return
+     */
+    @GetMapping("getAdmin")
+    public ModelAndView getAdmin(int adminId) {
+        ModelAndView mav = adminService.queryAdminId(adminId);
+        mav.setViewName("admin/adminEdit");
+        return mav;
+    }
+
+    /**
+     * 编辑管理员
+     *
+     * @param admin
+     * @return
+     */
+    @RequestMapping("updateAdmin")
+    public ModelAndView updateAdmin(Admin admin) {
+        ModelAndView mav = adminService.updateAdmin(admin);
+        rsKey = "result";
+        if ((Boolean) mav.getModel().get(rsKey)) {
+            mav.addObject("type", 7);
+        } else {
+            mav.addObject("type", 6);
         }
+        mav.setViewName("redirect:/admin/queryAdmin");
+        return mav;
 
+    }
 
-
+    @RequestMapping("insertAdmin")
+    public ModelAndView insertAdmin(Admin admin) {
+        admin.setStatus(1);
+        admin.setRoleId(2);
+        ModelAndView mav = adminService.register(admin);
+        rsKey = "result";
+        if ((Boolean) mav.getModel().get(rsKey)) {
+            mav.addObject("type", 1);
+        } else {
+            mav.addObject("type", 2);
+        }
+        mav.setViewName("redirect:/admin/queryAdmin");
+        return mav;
+    }
 }
