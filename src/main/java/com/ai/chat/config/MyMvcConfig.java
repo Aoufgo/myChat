@@ -1,7 +1,7 @@
 package com.ai.chat.config;
 
 
-import com.ai.chat.aspect.Interceptor.LoginInterceptor;
+import com.ai.chat.Interceptor.LoginInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;

@@ -192,7 +192,9 @@
                     <i class="ti-close"></i>
                 </button>
             </div>
-            <div class="modal-body" id="reqList"></div>
+            <div class="modal-body" id="reqList">
+                <div class="alert alert-info">朋友向你发送的好友请求</div>
+            </div>
         </div>
     </div>
 </div>

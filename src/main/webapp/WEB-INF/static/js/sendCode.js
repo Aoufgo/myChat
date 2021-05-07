@@ -5,12 +5,25 @@ var i;
 function countDown() {
     count--;
     //设置按钮文字为:59秒后再次发送
-    $("#sendCode").html(count);
+    $("#sendCodemsg").html(count);
     //计时为0时，结束计时器
     if (count<=0){
         //设置按钮可以被点击
-        $("#sendCode").html("发送");
+        $("#sendCodemsg").html("发送");
         $("#sendCode").attr("disabled",false);
+        clearInterval(i)
+    }
+}
+//倒计时方法
+function countDown1() {
+    count--;
+    //设置按钮文字为:59秒后再次发送
+    $("#sendCodemsg1").html(count);
+    //计时为0时，结束计时器
+    if (count<=0){
+        //设置按钮可以被点击
+        $("#sendCodemsg1").html("发送");
+        $("#resendCode").attr("disabled",false);
         clearInterval(i)
     }
 }
@@ -72,7 +85,7 @@ $(function (){
                         $("#resendCode").attr("disabled",true);
                         //计时器
                         //setInterval(code,time):code执行的语句  time:间隔的时间
-                        i= setInterval("countDown()",1000);
+                        i= setInterval("countDown1()",1000);
                     }
                 },
                 error:function () {

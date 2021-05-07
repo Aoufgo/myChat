@@ -1,7 +1,6 @@
-package com.ai.chat.aspect.Interceptor;
+package com.ai.chat.Interceptor;
 
 import com.ai.chat.pojo.Admin;
-import com.fasterxml.jackson.databind.cfg.HandlerInstantiator;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 

@@ -117,9 +117,9 @@
                             <div class="input-group">
                                 <input type="text" name="code" id="code" class="form-control code"
                                        placeholder="请输入验证码">
-                                <button class="input-group-append" type="button"
+                                <button class="input-group-append" type="button" id="sendCode"
                                         style="padding: 0; cursor: pointer;border: none;background-color: #ffffff;height: 42px;">
-                                    <span class="input-group-text" id="sendCode">发送</span>
+                                    <span class="input-group-text" id="sendCodemsg">发送</span>
                                 </button>
                             </div>
                         </div>
@@ -151,8 +151,6 @@
                                            width="280px" height="280px" autoplay></video>
                                     <canvas id="canvas" width="300" height="300"
                                             style="position: absolute;right: 100px;top: 83px"></canvas>
-                                    <img src="${pageContext.request.contextPath}/image/portrait/check.svg" id="check"
-                                         alt="image" hidden>
                                 </div>
                                 <div style="height: 20px"></div>
                                 <button type="button" id="faceUpload" onclick="loginFace()" class="btn btn-primary">
@@ -191,9 +189,9 @@
                                     <div class="input-group">
                                         <input type="text" name="code" id="recode" class="form-control code"
                                                placeholder="请输入验证码">
-                                        <button class="input-group-append" type="button"
+                                        <button class="input-group-append" type="button" id="resendCode"
                                                 style="padding: 0; cursor: pointer;border: none;background-color: #ffffff;height: 42px;">
-                                            <span class="input-group-text" id="resendCode">发送</span>
+                                            <span class="input-group-text" id="sendCodemsg1" >发送</span>
                                         </button>
                                     </div>
                                 </div>

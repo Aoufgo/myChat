@@ -63,7 +63,6 @@ $(function () {
                             if ($(this).next() && $(this).find(".avatar-state-warning").length > 0 && $(this).find(".new-message-count").html() === "") {
                                 $(this).parents("ul").children(":last").after($(this))
                             }
-
                         })
                     }
                 })
@@ -91,7 +90,6 @@ $(function () {
                 parent.frames['topFrame'].quit()
             }
         };
-
         //连接关闭的回调事件
         webSocket.onclose = function () {
             console.log("连接已关闭...");
