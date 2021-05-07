@@ -9,7 +9,7 @@ $(function () {
         webSocket.onopen = function () {
             console.log("已建立连接");
             parent.frames['topFrame'].online1();
-            layer.msg('已经连通了websocket', {time: 1000});
+            layer.msg('已经连通了服务器', {time: 1000});
 
         };
         //接收后台服务端的消息
