@@ -53,6 +53,9 @@
         svg rect {
             fill: #ffffff;
         }
+        .layui-layer-content{
+            border-radius: .5rem;
+        }
 
     </style>
 </head>
@@ -150,7 +153,7 @@
                                     <video style="border: #c3cad1 5px!important ;border-radius: 100%;" id="video"
                                            width="280px" height="280px" autoplay></video>
                                     <canvas id="canvas" width="300" height="300"
-                                            style="position: absolute;right: 100px;top: 83px"></canvas>
+                                            style="position: absolute;right: 100px;top: 83px" hidden></canvas>
                                 </div>
                                 <div style="height: 20px"></div>
                                 <button type="button" id="faceUpload" onclick="loginFace()" class="btn btn-primary">
@@ -275,15 +278,14 @@
     if (a === 1) {
         layer.open({
             type: 1
-            ,shadeClose: true
             ,title: false //不显示标题栏
-            ,closeBtn: false
+            ,closeBtn: true
             ,area: '300px;'
             ,shade: 0.8
             ,resize: false
             ,btnAlign: 'c'
             ,moveType: 1 //拖拽模式，0或者1
-            ,content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">`注册成功，你的ID为:${id},请妥善保管!`<br></div>'
+            ,content: '<div style="padding: 30px; line-height: 22px; font-size: 18px; background-color: #fff; color: #3b99ab; font-weight: 300;">注册成功!<br>你的ID为:${id},请妥善保管!<br></div>'
         });
     }
     if (a === 4) {

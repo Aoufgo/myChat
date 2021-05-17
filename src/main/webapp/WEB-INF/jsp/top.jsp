@@ -78,7 +78,7 @@
             <li>
                 <font style="color: #FFFFFF; font-size: 13px;margin-top: 1px">
                     <font style="color: #fc6b0e;text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;">
-                            ${user.name}
+                            ${user.nickname}
                     </font>
                 </font>
                 <span class="welcome">
@@ -92,16 +92,16 @@
         </c:if>
     </ul>
     <ul class="top-nav-right">
-        <li>
-            <i class="fas fa-question-circle"></i>
-            <a onclick="parent.frames['bottom'].help()" style="cursor: pointer"> 帮助</a>
-        </li>
         <c:if test="${!empty user}">
             <li>
                 <i class="fas fa-sign-out-alt"></i>
                 <a onclick="quit()" style="cursor: pointer">安全退出</a>
             </li>
         </c:if>
+        <li>
+            <i class="fas fa-question-circle"></i>
+            <a onclick="parent.frames['bottom'].help()" style="cursor: pointer"> 联系我们</a>
+        </li>
     </ul>
 </div>
 <script>

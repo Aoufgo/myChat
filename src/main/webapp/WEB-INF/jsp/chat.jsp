@@ -147,7 +147,29 @@
     </div>
 </div>
 <!-- ./ Disconnected modal -->
-
+<!-- Add friends modal -->
+<div class="modal fade" id="help" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i data-feather="help-circle" class="mr-2"></i> 联系我们
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="ti-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-info">
+                    GROUP:创新AI<br>
+                    Email:lcodndks@163.com<br>
+                    QQ:2465636144
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ./ Add friends modal -->
 <!-- Add friends modal -->
 <div class="modal fade" id="addFriends" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document">
@@ -387,7 +409,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="form-item custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" checked=""
+                                    <input type="checkbox" class="custom-control-input"
                                            id="customSwitch12">
                                     <label class="custom-control-label" for="customSwitch12">Mute</label>
                                 </div>
@@ -606,12 +628,12 @@
                         return;
                     }
                 })
-                if (${!empty reqList}) {
-                    $("#mail_icon").css("color", "red")
-                    <c:forEach items="${reqList}" var="r">
-                    addReq('${r.fromId}', '${r.msg.trim()}', '${r.sendTime}')
-                    </c:forEach>
-                }
+            }
+            if (${!empty reqList}) {
+                $("#mail_icon").css("color", "red")
+                <c:forEach items="${reqList}" var="r">
+                addReq('${r.fromId}', '${r.msg.trim()}', '${r.sendTime}')
+                </c:forEach>
             }
         })
     })
@@ -674,9 +696,13 @@
             }
             $("#age").val(r.age);
             $("#phone").val(r.phone);
-            $("#userAvatar").attr("src", r.avatarUrl);
-            $("#id").html("ID:"+r.id);
-            $("#username").html("用户名:"+r.name);
+            if (r.avatarUrl === "") {
+                $("#userAvatar").attr("src", "${pageContext.request.contextPath}/image/portrait/img.jpg");
+            } else {
+                $("#userAvatar").attr("src", r.avatarUrl);
+            }
+            $("#id").html("ID:" + r.id);
+            $("#username").html("用户名:" + r.name);
         })
         $('#editProfileModal').modal('show')
     }
@@ -693,7 +719,11 @@
             $("#fAge").html(r.age);
             $("#fId").html(r.id);
             $("#fPhone").html(r.phone);
-            $("#fAvatar").attr("src", r.avatarUrl);
+            if (r.avatarUrl === "") {
+                $("#fAvatar").attr("src", "${pageContext.request.contextPath}/image/portrait/img.jpg");
+            } else {
+                $("#fAvatar").attr("src", r.avatarUrl);
+            }
             var time = new Date();
             time.setTime(r.lastLoginTime);
             $("#fLastLogin").html("上次登录: " + time);
@@ -791,6 +821,11 @@
         })
     })
 
+    function help() {
+        $("#help").modal("show");
+
+    }
+
     function f() {
         var canvas = document.getElementById('canvas'),  //获取canvas元素
             context = canvas.getContext('2d'),  //获取画图环境，指明为2d
@@ -845,9 +880,5 @@
         })
     })
 </script>
-
-
-</div>
-</div>
 </body>
 </html>

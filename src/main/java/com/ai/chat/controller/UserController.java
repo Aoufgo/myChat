@@ -217,7 +217,7 @@ public class UserController {
     }
     @RequestMapping("changePW")
     public String changerPW(@RequestParam String code,User user,HttpSession session){
-        return service.changePW(code,user,session);
+        return service.changePW(user,code,session);
     }
 
 }

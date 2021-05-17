@@ -62,6 +62,7 @@ public class SendCodeUtil {
         request.putQueryParameter("PhoneNumbers", userPhone);
         request.putQueryParameter("SignName", "ABC商城");
         request.putQueryParameter("TemplateCode", "SMS_206750054");
+        request.setMethod(MethodType.POST);
 
         //随机生成6位数验证码
         String code = randomCode();

@@ -115,7 +115,7 @@ public interface UserService {
      * @param session s
      * @return 结果
      */
-    String changePW(String code,User user,HttpSession session);
+    String changePW(User user,String code,HttpSession session);
 
 
 

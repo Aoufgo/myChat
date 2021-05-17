@@ -40,7 +40,9 @@
             border-top:none;
             text-align: center;
         }
-        body{
+        .btn-primary:hover {
+            background-color: #c10606 !important;
+            border-color: #c10606 !important;
         }
     </style>
 </head>

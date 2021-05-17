@@ -83,9 +83,8 @@ public class WebSocket {
         user.setStatus(200);
         user.setId(userId);
         userMapper.update(user);
-        log.info("有新连接加入！ 当前在线人数" + onlineNumber);
         try {
-            //给所有人自己修改在线状态
+            //将所有人对自己修改在线状态
             Map<String, Object> map1 = new HashMap<>();
             map1.put("action","online");
             map1.put("id",userId);
@@ -94,6 +93,7 @@ public class WebSocket {
             log.info(userId+ "上线的时候发生了错误");
         }
         onlineNumber++;
+        log.info("有新连接加入！ 当前在线人数" + onlineNumber);
         log.info("现在来连接的客户id：" + session.getId() + "用户Id：" + userId);
         this.userId = userId;
         this.session = session;

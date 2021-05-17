@@ -73,12 +73,6 @@ public interface AdminService {
      */
     ModelAndView register(Admin admin);
 
-    /**
-     * 查询管理员
-     * @param admin
-     * @return
-     */
-    ModelAndView queryAdmin(Admin admin);
 
     ModelAndView queryAdmin1(Admin admin);
 

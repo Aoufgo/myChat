@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
                 session.setAttribute("user", user);
                 //获取时间
                 User user1 = new User();
-                user1.setLastLoginTime(new Date().getTime()+"");
+                user1.setLastLoginTime(System.currentTimeMillis()+"");
                 user1.setId(user.getId());
                 mapper.update(user1);
                 mav.addObject("result", true);
@@ -102,7 +102,7 @@ public class UserServiceImpl implements UserService {
                     session.setAttribute("user", user);
                     //获取时间
                     User user1 = new User();
-                    user1.setLastLoginTime(new Date().getTime()+"");
+                    user1.setLastLoginTime(System.currentTimeMillis()+"");
                     user1.setId(user.getId());
                     mapper.update(user1);
                     mav.addObject("type", 4);
@@ -136,7 +136,7 @@ public class UserServiceImpl implements UserService {
                     //将该对象存储到session
                     //获取时间
                     User user1 = new User();
-                    user1.setLastLoginTime(new Date().getTime()+"");
+                    user1.setLastLoginTime(System.currentTimeMillis()+"");
                     user1.setId(u.getId());
                     mapper.update(user1);
                     session.setAttribute("user", u);
@@ -274,7 +274,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String changePW(String code, User user, HttpSession session) {
+    public String changePW( User user, String code,HttpSession session) {
         //校验验证码
         String code1 = (String) session.getAttribute("code");
         if (code1 == null || !code1.equals(code)) {
