@@ -50,7 +50,7 @@ public class SendCodeUtil {
      * @return 返回验证码，如果返回位null，表示发送失败，否则成功
      */
     public static String send(String userPhone){
-        DefaultProfile profile = DefaultProfile.getProfile("cn-qingdao", "LTAI4G29eFjgKFPDUYFMSkUM", "jVJOurME74scJHP3wN9zMnb5ygXMp2");
+        DefaultProfile profile = DefaultProfile.getProfile("cn-qingdao", "", "");
         IAcsClient client = new DefaultAcsClient(profile);
 
         CommonRequest request = new CommonRequest();
